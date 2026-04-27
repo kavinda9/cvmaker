@@ -1,0 +1,206 @@
+/* ═══════════════════════════════════════════════════════════
+   templates.css  –  CV Maker · Shared CV Template Styles
+   This file is injected INTO the iframe alongside each
+   cv00X.html template. It defines the design tokens and
+   utility classes that all templates can share.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── CV-scoped Design Tokens ────────────────────────────────── */
+:root {
+  /* Page */
+  --cv-bg: #ffffff;
+  --cv-w: 794px; /* A4 at 96 dpi */
+  --cv-h: 1123px;
+
+  /* Typography */
+  --cv-font-display: "Playfair Display", Georgia, serif;
+  --cv-font-body: "DM Sans", system-ui, sans-serif;
+
+  --cv-text-xs: 0.6rem; /* 9.6px  */
+  --cv-text-sm: 0.7rem; /* 11.2px */
+  --cv-text-base: 0.78rem; /* 12.5px */
+  --cv-text-md: 0.875rem; /* 14px   */
+  --cv-text-lg: 1.05rem; /* 16.8px */
+  --cv-text-xl: 1.35rem; /* 21.6px */
+  --cv-text-2xl: 1.75rem; /* 28px   */
+  --cv-text-3xl: 2.25rem; /* 36px   */
+
+  /* Ink */
+  --cv-ink: #1a1814;
+  --cv-ink-2: #4a4740;
+  --cv-ink-3: #8c887f;
+  --cv-ink-inv: #ffffff;
+
+  /* Accent (overridden per template) */
+  --cv-accent: #c8622a;
+  --cv-accent-dim: #f2e4d8;
+
+  /* Spacing */
+  --cv-sp-1: 0.25rem;
+  --cv-sp-2: 0.5rem;
+  --cv-sp-3: 0.75rem;
+  --cv-sp-4: 1rem;
+  --cv-sp-5: 1.25rem;
+  --cv-sp-6: 1.5rem;
+  --cv-sp-8: 2rem;
+}
+
+/* ── Base Reset (inside iframe) ─────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: var(--cv-w);
+  min-height: var(--cv-h);
+  background: var(--cv-bg);
+  font-family: var(--cv-font-body);
+  font-size: var(--cv-text-base);
+  color: var(--cv-ink);
+  line-height: 1.55;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ── Shared typography helpers ──────────────────────────────── */
+.cv-name {
+  font-family: var(--cv-font-display);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.cv-section-title {
+  font-family: var(--cv-font-display);
+  font-size: var(--cv-text-sm);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cv-ink-3);
+}
+
+.cv-role {
+  font-weight: 600;
+  color: var(--cv-ink);
+}
+
+.cv-org {
+  font-weight: 400;
+  color: var(--cv-ink-2);
+}
+
+.cv-date {
+  font-size: var(--cv-text-xs);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--cv-ink-3);
+  text-transform: uppercase;
+}
+
+.cv-bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cv-bullet-list li {
+  position: relative;
+  padding-left: var(--cv-sp-4);
+  font-size: var(--cv-text-sm);
+  color: var(--cv-ink-2);
+  line-height: 1.5;
+}
+
+.cv-bullet-list li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: var(--cv-accent);
+  font-weight: 700;
+}
+
+/* ── Divider ────────────────────────────────────────────────── */
+.cv-rule {
+  width: 100%;
+  height: 1px;
+  background: #e0ddd8;
+  border: none;
+  margin: 0;
+}
+
+.cv-rule--accent {
+  height: 2px;
+  background: var(--cv-accent);
+}
+
+/* ── Skill tags ─────────────────────────────────────────────── */
+.cv-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cv-sp-1);
+}
+
+.cv-tag {
+  display: inline-block;
+  padding: 2px var(--cv-sp-2);
+  border-radius: 2px;
+  background: var(--cv-accent-dim);
+  color: var(--cv-ink-2);
+  font-size: var(--cv-text-xs);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* ── Language dots ──────────────────────────────────────────── */
+.cv-lang-dots {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.cv-lang-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ddd9d0;
+  transition: background 0.2s;
+}
+
+.cv-lang-dot.on {
+  background: var(--cv-accent);
+}
+
+/* ── Contact row items ──────────────────────────────────────── */
+.cv-contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cv-sp-1) var(--cv-sp-4);
+  list-style: none;
+}
+
+.cv-contact-list li {
+  font-size: var(--cv-text-xs);
+  color: var(--cv-ink-2);
+  letter-spacing: 0.03em;
+}
+
+/* ── Print ──────────────────────────────────────────────────── */
+@media print {
+  html,
+  body {
+    width: 210mm;
+    min-height: 297mm;
+  }
+  .cv-rule,
+  .cv-rule--accent {
+    -webkit-print-color-adjust: exact;
+  }
+}
