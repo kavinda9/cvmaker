@@ -3,364 +3,1162 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CV Maker</title>
+    <title>CV Maker — Build a CV Worth Remembering</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/form.css" />
-    <link rel="stylesheet" href="css/templates.css" />
+    <style>
+      /* ── Tokens ─────────────────────────────────────────────── */
+      :root {
+        --bg: #0e0c0a;
+        --bg-2: #161310;
+        --surface: #1e1a16;
+        --border: #2e2923;
+        --ink: #f5f3ef;
+        --ink-2: #aaa49c;
+        --ink-3: #5c5852;
+        --accent: #c8622a;
+        --accent-lt: #e8845a;
+        --accent-dim: #3d1f0f;
+
+        --font-display: "Playfair Display", Georgia, serif;
+        --font-body: "DM Sans", system-ui, sans-serif;
+      }
+
+      /* ── Reset ──────────────────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--font-body);
+        background: var(--bg);
+        color: var(--ink);
+        min-height: 100dvh;
+        overflow-x: hidden;
+      }
+
+      /* ── Noise texture overlay ──────────────────────────────── */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+        opacity: 0.035;
+        pointer-events: none;
+        z-index: 999;
+      }
+
+      /* ── Nav ─────────────────────────────────────────────────── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 3rem;
+        border-bottom: 1px solid transparent;
+        transition:
+          border-color 0.4s,
+          background 0.4s;
+      }
+      nav.scrolled {
+        background: rgba(14, 12, 10, 0.88);
+        backdrop-filter: blur(12px);
+        border-color: var(--border);
+      }
+
+      .nav__brand {
+        font-family: var(--font-display);
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--ink);
+        text-decoration: none;
+        letter-spacing: -0.02em;
+      }
+      .nav__brand span {
+        color: var(--accent);
+      }
+
+      .nav__cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1.25rem;
+        border: 1px solid var(--accent);
+        border-radius: 3px;
+        background: transparent;
+        color: var(--accent);
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .nav__cta:hover {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      /* ── Hero ────────────────────────────────────────────────── */
+      .hero {
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 7rem 2rem 4rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Radial glow behind hero text */
+      .hero::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 700px;
+        height: 700px;
+        background: radial-gradient(
+          circle,
+          rgba(200, 98, 42, 0.12) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+        animation: glowPulse 6s ease-in-out infinite;
+      }
+
+      @keyframes glowPulse {
+        0%,
+        100% {
+          opacity: 0.6;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1.15);
+        }
+      }
+
+      /* Floating lines decoration */
+      .hero__lines {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .hero__line {
+        position: absolute;
+        width: 1px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          var(--border),
+          transparent
+        );
+        animation: lineDrift linear infinite;
+        opacity: 0;
+      }
+      .hero__line:nth-child(1) {
+        left: 15%;
+        height: 40%;
+        animation-duration: 12s;
+        animation-delay: 0s;
+      }
+      .hero__line:nth-child(2) {
+        left: 30%;
+        height: 30%;
+        animation-duration: 16s;
+        animation-delay: 2s;
+      }
+      .hero__line:nth-child(3) {
+        left: 55%;
+        height: 50%;
+        animation-duration: 10s;
+        animation-delay: 1s;
+      }
+      .hero__line:nth-child(4) {
+        left: 72%;
+        height: 35%;
+        animation-duration: 14s;
+        animation-delay: 3s;
+      }
+      .hero__line:nth-child(5) {
+        left: 88%;
+        height: 45%;
+        animation-duration: 11s;
+        animation-delay: 0.5s;
+      }
+
+      @keyframes lineDrift {
+        0% {
+          top: -50%;
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          top: 150%;
+          opacity: 0;
+        }
+      }
+
+      /* Hero label */
+      .hero__label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.3rem 0.9rem;
+        border: 1px solid var(--border);
+        border-radius: 99px;
+        background: var(--surface);
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-2);
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.2s var(--ease, ease) forwards;
+      }
+      .hero__label-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+        animation: dotBlink 2s ease-in-out infinite;
+      }
+      @keyframes dotBlink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      /* Hero headline */
+      .hero__headline {
+        font-family: var(--font-display);
+        font-size: clamp(2.8rem, 7vw, 5.5rem);
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        color: var(--ink);
+        max-width: 800px;
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeUp 0.9s 0.4s ease forwards;
+      }
+      .hero__headline em {
+        font-style: italic;
+        color: var(--accent-lt);
+      }
+
+      /* Hero sub */
+      .hero__sub {
+        font-size: 1rem;
+        font-weight: 300;
+        color: var(--ink-2);
+        max-width: 480px;
+        line-height: 1.7;
+        margin-bottom: 2.5rem;
+        opacity: 0;
+        animation: fadeUp 0.9s 0.6s ease forwards;
+      }
+
+      /* CTA group */
+      .hero__actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        opacity: 0;
+        animation: fadeUp 0.9s 0.8s ease forwards;
+      }
+
+      .btn-hero {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.85rem 2rem;
+        border-radius: 3px;
+        font-family: var(--font-body);
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s,
+          background 0.2s;
+      }
+      .btn-hero--primary {
+        background: var(--accent);
+        color: #fff;
+        box-shadow: 0 4px 24px rgba(200, 98, 42, 0.35);
+      }
+      .btn-hero--primary:hover {
+        background: var(--accent-lt);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(200, 98, 42, 0.45);
+      }
+      .btn-hero--primary:active {
+        transform: translateY(0);
+      }
+
+      .btn-hero--ghost {
+        background: transparent;
+        color: var(--ink-2);
+        border: 1px solid var(--border);
+      }
+      .btn-hero--ghost:hover {
+        border-color: var(--ink-3);
+        color: var(--ink);
+        transform: translateY(-2px);
+      }
+
+      .btn-arrow {
+        display: inline-block;
+        transition: transform 0.2s;
+      }
+      .btn-hero--primary:hover .btn-arrow {
+        transform: translateX(3px);
+      }
+
+      /* Scroll hint */
+      .hero__scroll {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+        opacity: 0;
+        animation: fadeIn 1s 1.4s ease forwards;
+      }
+      .hero__scroll span {
+        font-size: 0.6rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+      }
+      .scroll-line {
+        width: 1px;
+        height: 40px;
+        background: linear-gradient(to bottom, var(--accent), transparent);
+        animation: scrollDrop 2s ease-in-out infinite;
+      }
+      @keyframes scrollDrop {
+        0% {
+          transform: scaleY(0);
+          transform-origin: top;
+          opacity: 1;
+        }
+        50% {
+          transform: scaleY(1);
+          transform-origin: top;
+          opacity: 1;
+        }
+        51% {
+          transform-origin: bottom;
+        }
+        100% {
+          transform: scaleY(0);
+          transform-origin: bottom;
+          opacity: 0;
+        }
+      }
+
+      /* ── Features section ───────────────────────────────────── */
+      .features {
+        padding: 6rem 2rem;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .section-label {
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+
+      .section-title {
+        font-family: var(--font-display);
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        margin-bottom: 4rem;
+        max-width: 520px;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        overflow: hidden;
+      }
+
+      .feature-card {
+        background: var(--bg-2);
+        padding: 2.5rem 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        transition: background 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(200, 98, 42, 0.05),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .feature-card:hover {
+        background: var(--surface);
+      }
+      .feature-card:hover::before {
+        opacity: 1;
+      }
+
+      .feature-card__icon {
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        background: var(--surface);
+        transition:
+          border-color 0.3s,
+          background 0.3s;
+      }
+      .feature-card:hover .feature-card__icon {
+        border-color: var(--accent-dim);
+        background: var(--accent-dim);
+      }
+
+      .feature-card__title {
+        font-family: var(--font-display);
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--ink);
+      }
+
+      .feature-card__desc {
+        font-size: 0.82rem;
+        color: var(--ink-2);
+        line-height: 1.65;
+      }
+
+      /* ── Preview mockup section ─────────────────────────────── */
+      .mockup-section {
+        padding: 4rem 2rem 7rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3rem;
+        position: relative;
+      }
+
+      .mockup-section .section-label,
+      .mockup-section .section-title {
+        text-align: center;
+      }
+      .mockup-section .section-title {
+        margin: 0 auto 0;
+        max-width: 600px;
+      }
+
+      /* Browser chrome mockup */
+      .browser-mockup {
+        width: min(860px, 92vw);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow:
+          0 32px 80px rgba(0, 0, 0, 0.6),
+          0 0 0 1px rgba(255, 255, 255, 0.04);
+        animation: floatUp 6s ease-in-out infinite;
+      }
+      @keyframes floatUp {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+
+      .browser-bar {
+        background: var(--surface);
+        padding: 0.7rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .browser-dots {
+        display: flex;
+        gap: 5px;
+      }
+      .browser-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+      .browser-dot:nth-child(1) {
+        background: #ff5f57;
+      }
+      .browser-dot:nth-child(2) {
+        background: #ffbd2e;
+      }
+      .browser-dot:nth-child(3) {
+        background: #28ca42;
+      }
+
+      .browser-url {
+        flex: 1;
+        background: var(--bg-2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.7rem;
+        color: var(--ink-3);
+        letter-spacing: 0.02em;
+      }
+
+      .browser-content {
+        background: #f5f3ef;
+        height: 420px;
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        overflow: hidden;
+      }
+
+      /* Fake form panel inside mockup */
+      .mock-form {
+        background: #fff;
+        border-right: 1px solid #ddd9d0;
+        padding: 1.2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      .mock-field {
+        height: 8px;
+        border-radius: 3px;
+        background: #e8e5e0;
+        animation: shimmer 2.5s ease-in-out infinite;
+      }
+      .mock-field--short {
+        width: 55%;
+      }
+      .mock-field--med {
+        width: 75%;
+      }
+      .mock-field--full {
+        width: 100%;
+      }
+      .mock-section-gap {
+        height: 14px;
+      }
+      .mock-label {
+        height: 5px;
+        width: 40%;
+        background: #c8622a;
+        border-radius: 2px;
+        opacity: 0.5;
+      }
+
+      @keyframes shimmer {
+        0%,
+        100% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      /* Fake CV preview inside mockup */
+      .mock-preview {
+        background: #edebe6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+      .mock-cv {
+        width: 100%;
+        max-width: 280px;
+        background: #fff;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      .mock-cv-header {
+        background: #1a1814;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .mock-cv-name {
+        height: 12px;
+        width: 70%;
+        background: #fff;
+        border-radius: 2px;
+        opacity: 0.9;
+      }
+      .mock-cv-title {
+        height: 7px;
+        width: 45%;
+        background: #c8622a;
+        border-radius: 2px;
+      }
+      .mock-cv-body {
+        display: grid;
+        grid-template-columns: 80px 1fr;
+      }
+      .mock-cv-sidebar {
+        background: #242018;
+        padding: 0.75rem 0.6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .mock-cv-main {
+        padding: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .mock-cv-line {
+        height: 5px;
+        border-radius: 2px;
+        background: #e0ddd8;
+      }
+      .mock-cv-line--dark {
+        background: rgba(255, 255, 255, 0.12);
+      }
+      .mock-cv-line--accent {
+        background: #c8622a;
+        opacity: 0.6;
+        height: 3px;
+        width: 50%;
+      }
+      .mock-cv-line--short {
+        width: 60%;
+      }
+      .mock-cv-line--med {
+        width: 80%;
+      }
+
+      /* ── Steps section ──────────────────────────────────────── */
+      .steps {
+        padding: 6rem 2rem;
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 60px 1fr;
+        gap: 1.5rem;
+        padding: 2.5rem 0;
+        border-bottom: 1px solid var(--border);
+        position: relative;
+      }
+      .step:last-child {
+        border-bottom: none;
+      }
+
+      .step__num {
+        font-family: var(--font-display);
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--accent-dim);
+        line-height: 1;
+        padding-top: 0.2rem;
+        transition: color 0.3s;
+      }
+      .step:hover .step__num {
+        color: var(--accent);
+      }
+
+      .step__content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .step__title {
+        font-family: var(--font-display);
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--ink);
+      }
+
+      .step__desc {
+        font-size: 0.85rem;
+        color: var(--ink-2);
+        line-height: 1.7;
+        max-width: 480px;
+      }
+
+      /* ── Final CTA ──────────────────────────────────────────── */
+      .final-cta {
+        padding: 8rem 2rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .final-cta::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(200, 98, 42, 0.08) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .final-cta__headline {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+        color: var(--ink);
+        max-width: 560px;
+      }
+      .final-cta__headline em {
+        font-style: italic;
+        color: var(--accent-lt);
+      }
+
+      .final-cta__sub {
+        font-size: 0.9rem;
+        color: var(--ink-2);
+        max-width: 380px;
+        line-height: 1.7;
+      }
+
+      /* ── Footer ─────────────────────────────────────────────── */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 2rem 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      footer span {
+        font-size: 0.75rem;
+        color: var(--ink-3);
+        letter-spacing: 0.04em;
+      }
+      .footer__brand {
+        font-family: var(--font-display);
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--ink-2);
+      }
+      .footer__brand span {
+        color: var(--accent);
+      }
+
+      /* ── Animations ─────────────────────────────────────────── */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Scroll reveal */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-delay-1 {
+        transition-delay: 0.1s;
+      }
+      .reveal-delay-2 {
+        transition-delay: 0.2s;
+      }
+      .reveal-delay-3 {
+        transition-delay: 0.3s;
+      }
+      .reveal-delay-4 {
+        transition-delay: 0.4s;
+      }
+      .reveal-delay-5 {
+        transition-delay: 0.5s;
+      }
+
+      /* ── Responsive ─────────────────────────────────────────── */
+      @media (max-width: 768px) {
+        nav {
+          padding: 1rem 1.5rem;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .browser-content {
+          grid-template-columns: 1fr;
+        }
+        .mock-form {
+          display: none;
+        }
+        .mock-preview {
+          height: 300px;
+        }
+
+        .step {
+          grid-template-columns: 40px 1fr;
+        }
+
+        footer {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+    </style>
   </head>
   <body>
-    <!-- ── Top bar ─────────────────────────────────────────── -->
-    <header class="topbar">
-      <div class="topbar__brand">
-        <span class="topbar__logo">CV</span>
-        <span class="topbar__name">Maker</span>
+    <!-- ── Nav ──────────────────────────────────────────────── -->
+    <nav id="nav">
+      <a href="/" class="nav__brand"><span>CV</span> Maker</a>
+      <a href="builder.html" class="nav__cta">Start Building →</a>
+    </nav>
+
+    <!-- ── Hero ─────────────────────────────────────────────── -->
+    <section class="hero">
+      <div class="hero__lines">
+        <div class="hero__line"></div>
+        <div class="hero__line"></div>
+        <div class="hero__line"></div>
+        <div class="hero__line"></div>
+        <div class="hero__line"></div>
       </div>
-      <div class="topbar__actions">
-        <button class="btn btn--ghost" id="btn-preview-toggle">Preview</button>
-        <button class="btn btn--primary" id="btn-download">Download PDF</button>
+
+      <div class="hero__label">
+        <span class="hero__label-dot"></span>
+        Free · No sign-up · Instant PDF
       </div>
-    </header>
 
-    <!-- ── Main layout ─────────────────────────────────────── -->
-    <div class="workspace">
-      <!-- ══ FORM PANEL ══════════════════════════════════════ -->
-      <aside class="panel panel--form" id="form-panel">
-        <!-- Template picker -->
-        <div class="form-section">
-          <div class="form-section__label">Template</div>
-          <div class="template-picker" id="template-picker">
-            <button class="tpl-btn active" data-tpl="cv001">
-              <span class="tpl-btn__num">01</span>
-              <span class="tpl-btn__name">Editorial</span>
-            </button>
-            <!-- More templates appear here as you add cv002.html etc. -->
-          </div>
+      <h1 class="hero__headline">
+        A CV that makes<br />them <em>stop scrolling</em>
+      </h1>
+
+      <p class="hero__sub">
+        Fill in your details, watch your CV come alive in real-time, and
+        download a pixel-perfect PDF in seconds.
+      </p>
+
+      <div class="hero__actions">
+        <a href="builder.html" class="btn-hero btn-hero--primary">
+          Start Building My CV <span class="btn-arrow">→</span>
+        </a>
+        <a href="#features" class="btn-hero btn-hero--ghost">
+          See how it works
+        </a>
+      </div>
+
+      <div class="hero__scroll">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ── Features ─────────────────────────────────────────── -->
+    <section class="features" id="features">
+      <p class="section-label reveal">Why CV Maker</p>
+      <h2 class="section-title reveal reveal-delay-1">
+        Everything you need,<br />nothing you don't.
+      </h2>
+
+      <div class="features-grid">
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="feature-card__icon">⚡</div>
+          <div class="feature-card__title">Live Preview</div>
+          <p class="feature-card__desc">
+            See every keystroke reflected instantly in a true A4 preview — no
+            save, no refresh.
+          </p>
         </div>
-
-        <!-- ── Personal info ──────────────────────────────── -->
-        <div class="form-section">
-          <div class="form-section__label">Personal Info</div>
-
-          <div class="field-row">
-            <div class="field">
-              <label for="f-firstName">First Name</label>
-              <input
-                id="f-firstName"
-                type="text"
-                data-token="firstName"
-                placeholder="Ada"
-              />
-            </div>
-            <div class="field">
-              <label for="f-lastName">Last Name</label>
-              <input
-                id="f-lastName"
-                type="text"
-                data-token="lastName"
-                placeholder="Lovelace"
-              />
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="f-jobTitle">Job Title</label>
-            <input
-              id="f-jobTitle"
-              type="text"
-              data-token="jobTitle"
-              placeholder="Software Engineer"
-            />
-          </div>
-
-          <div class="field-row">
-            <div class="field">
-              <label for="f-email">Email</label>
-              <input
-                id="f-email"
-                type="email"
-                data-token="email"
-                placeholder="ada@example.com"
-              />
-            </div>
-            <div class="field">
-              <label for="f-phone">Phone</label>
-              <input
-                id="f-phone"
-                type="text"
-                data-token="phone"
-                placeholder="+1 555 000 0000"
-              />
-            </div>
-          </div>
-
-          <div class="field-row">
-            <div class="field">
-              <label for="f-location">Location</label>
-              <input
-                id="f-location"
-                type="text"
-                data-token="location"
-                placeholder="London, UK"
-              />
-            </div>
-            <div class="field">
-              <label for="f-linkedin">LinkedIn</label>
-              <input
-                id="f-linkedin"
-                type="text"
-                data-token="linkedin"
-                placeholder="linkedin.com/in/ada"
-              />
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="f-website">Website</label>
-            <input
-              id="f-website"
-              type="text"
-              data-token="website"
-              placeholder="ada.dev"
-            />
-          </div>
+        <div class="feature-card reveal reveal-delay-2">
+          <div class="feature-card__icon">🎨</div>
+          <div class="feature-card__title">Editorial Templates</div>
+          <p class="feature-card__desc">
+            Professionally designed templates crafted by typographers, not
+            algorithms.
+          </p>
         </div>
-
-        <!-- ── Summary ────────────────────────────────────── -->
-        <div class="form-section">
-          <div class="form-section__label">Profile Summary</div>
-          <div class="field">
-            <textarea
-              id="f-summary"
-              data-token="summary"
-              rows="4"
-              placeholder="A brief paragraph about you…"
-            ></textarea>
-          </div>
+        <div class="feature-card reveal reveal-delay-3">
+          <div class="feature-card__icon">📄</div>
+          <div class="feature-card__title">Perfect PDF Export</div>
+          <p class="feature-card__desc">
+            Download a pixel-perfect, print-ready PDF that looks exactly like
+            the preview.
+          </p>
         </div>
-
-        <!-- ── Experience ─────────────────────────────────── -->
-        <div class="form-section" id="section-experience">
-          <div class="form-section__header">
-            <div class="form-section__label">Experience</div>
-            <button class="btn-add" data-add="experience">+ Add</button>
-          </div>
-          <div id="experience-entries"></div>
+        <div class="feature-card reveal reveal-delay-2">
+          <div class="feature-card__icon">🔒</div>
+          <div class="feature-card__title">100% Private</div>
+          <p class="feature-card__desc">
+            Your data never leaves your browser. No accounts, no servers, no
+            tracking.
+          </p>
         </div>
-
-        <!-- ── Education ──────────────────────────────────── -->
-        <div class="form-section" id="section-education">
-          <div class="form-section__header">
-            <div class="form-section__label">Education</div>
-            <button class="btn-add" data-add="education">+ Add</button>
-          </div>
-          <div id="education-entries"></div>
+        <div class="feature-card reveal reveal-delay-3">
+          <div class="feature-card__icon">✦</div>
+          <div class="feature-card__title">Smart Sections</div>
+          <p class="feature-card__desc">
+            Add unlimited experience, education, certifications and language
+            entries with one click.
+          </p>
         </div>
-
-        <!-- ── Skills ─────────────────────────────────────── -->
-        <div class="form-section">
-          <div class="form-section__label">Skills</div>
-          <div class="field">
-            <label for="f-skillsTechnical"
-              >Technical <span class="hint">comma-separated</span></label
-            >
-            <input
-              id="f-skillsTechnical"
-              type="text"
-              data-token="skillsTechnical"
-              placeholder="Python, TypeScript, SQL"
-            />
-          </div>
-          <div class="field">
-            <label for="f-skillsTools"
-              >Tools <span class="hint">comma-separated</span></label
-            >
-            <input
-              id="f-skillsTools"
-              type="text"
-              data-token="skillsTools"
-              placeholder="Git, Docker, Figma"
-            />
-          </div>
-        </div>
-
-        <!-- ── Languages ──────────────────────────────────── -->
-        <div class="form-section" id="section-languages">
-          <div class="form-section__header">
-            <div class="form-section__label">Languages</div>
-            <button class="btn-add" data-add="language">+ Add</button>
-          </div>
-          <div id="language-entries"></div>
-        </div>
-
-        <!-- ── Interests ──────────────────────────────────── -->
-        <div class="form-section">
-          <div class="form-section__label">
-            Interests <span class="hint">comma-separated</span>
-          </div>
-          <div class="field">
-            <input
-              id="f-interests"
-              type="text"
-              data-token="interests"
-              placeholder="Open source, Piano, Rock climbing"
-            />
-          </div>
-        </div>
-
-        <!-- ── Certifications ─────────────────────────────── -->
-        <div class="form-section" id="section-certifications">
-          <div class="form-section__header">
-            <div class="form-section__label">Certifications</div>
-            <button class="btn-add" data-add="certification">+ Add</button>
-          </div>
-          <div id="certification-entries"></div>
-        </div>
-      </aside>
-      <!-- /.panel--form -->
-
-      <!-- ══ PREVIEW PANEL ═══════════════════════════════════ -->
-      <main class="panel panel--preview" id="preview-panel">
-        <div class="preview-scale-wrapper">
-          <iframe id="cv-preview" title="CV Preview" src="about:blank"></iframe>
-        </div>
-      </main>
-    </div>
-    <!-- /.workspace -->
-
-    <!-- ── Dynamic entry templates (hidden) ────────────────── -->
-
-    <!-- Experience entry -->
-    <template id="tpl-experience">
-      <div class="dyn-entry" data-type="experience">
-        <div class="dyn-entry__header">
-          <span class="dyn-entry__title">Experience</span>
-          <button class="dyn-entry__remove" title="Remove">✕</button>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>Role</label>
-            <input type="text" name="role" placeholder="Senior Engineer" />
-          </div>
-          <div class="field">
-            <label>Company</label>
-            <input type="text" name="company" placeholder="Acme Corp" />
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>Location</label>
-            <input type="text" name="location" placeholder="London, UK" />
-          </div>
-          <div class="field field--half">
-            <label>Start</label>
-            <input type="text" name="startDate" placeholder="Jan 2021" />
-          </div>
-          <div class="field field--half">
-            <label>End</label>
-            <input type="text" name="endDate" placeholder="Present" />
-          </div>
-        </div>
-        <div class="field">
-          <label>Bullet points <span class="hint">one per line</span></label>
-          <textarea
-            name="bullets"
-            rows="3"
-            placeholder="Led a team of 5 engineers…"
-          ></textarea>
+        <div class="feature-card reveal reveal-delay-4">
+          <div class="feature-card__icon">📱</div>
+          <div class="feature-card__title">Works Everywhere</div>
+          <p class="feature-card__desc">
+            Fully responsive — fill in your CV from your phone and download on
+            desktop.
+          </p>
         </div>
       </div>
-    </template>
+    </section>
 
-    <!-- Education entry -->
-    <template id="tpl-education">
-      <div class="dyn-entry" data-type="education">
-        <div class="dyn-entry__header">
-          <span class="dyn-entry__title">Education</span>
-          <button class="dyn-entry__remove" title="Remove">✕</button>
+    <!-- ── Mockup ────────────────────────────────────────────── -->
+    <section class="mockup-section">
+      <p class="section-label reveal">The Builder</p>
+      <h2 class="section-title reveal reveal-delay-1">
+        Your CV, live on the right as you type on the left.
+      </h2>
+
+      <div class="browser-mockup reveal reveal-delay-2">
+        <div class="browser-bar">
+          <div class="browser-dots">
+            <div class="browser-dot"></div>
+            <div class="browser-dot"></div>
+            <div class="browser-dot"></div>
+          </div>
+          <div class="browser-url">cv-maker / builder.html</div>
         </div>
-        <div class="field-row">
-          <div class="field">
-            <label>Degree</label>
-            <input
-              type="text"
-              name="degree"
-              placeholder="BSc Computer Science"
-            />
+        <div class="browser-content">
+          <!-- Fake form -->
+          <div class="mock-form">
+            <div class="mock-label"></div>
+            <div class="mock-field mock-field--full"></div>
+            <div class="mock-field mock-field--med"></div>
+            <div class="mock-section-gap"></div>
+            <div class="mock-label"></div>
+            <div class="mock-field mock-field--full"></div>
+            <div class="mock-field mock-field--short"></div>
+            <div class="mock-field mock-field--med"></div>
+            <div class="mock-section-gap"></div>
+            <div class="mock-label"></div>
+            <div class="mock-field mock-field--full"></div>
+            <div class="mock-field mock-field--full"></div>
+            <div class="mock-field mock-field--short"></div>
           </div>
-          <div class="field">
-            <label>School</label>
-            <input type="text" name="school" placeholder="MIT" />
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field field--half">
-            <label>Year</label>
-            <input type="text" name="year" placeholder="2018" />
-          </div>
-          <div class="field">
-            <label>Detail</label>
-            <input
-              type="text"
-              name="detail"
-              placeholder="First Class Honours"
-            />
+          <!-- Fake CV preview -->
+          <div class="mock-preview">
+            <div class="mock-cv">
+              <div class="mock-cv-header">
+                <div class="mock-cv-name"></div>
+                <div class="mock-cv-title"></div>
+              </div>
+              <div class="mock-cv-body">
+                <div class="mock-cv-sidebar">
+                  <div class="mock-cv-line mock-cv-line--accent"></div>
+                  <div class="mock-cv-line mock-cv-line--dark"></div>
+                  <div
+                    class="mock-cv-line mock-cv-line--dark mock-cv-line--short"
+                  ></div>
+                  <div class="mock-cv-line mock-cv-line--dark"></div>
+                  <div
+                    class="mock-cv-line mock-cv-line--dark mock-cv-line--short"
+                  ></div>
+                </div>
+                <div class="mock-cv-main">
+                  <div class="mock-cv-line mock-cv-line--med"></div>
+                  <div class="mock-cv-line"></div>
+                  <div class="mock-cv-line mock-cv-line--short"></div>
+                  <div class="mock-cv-line"></div>
+                  <div class="mock-cv-line mock-cv-line--med"></div>
+                  <div class="mock-cv-line mock-cv-line--short"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </template>
+    </section>
 
-    <!-- Language entry -->
-    <template id="tpl-language">
-      <div class="dyn-entry" data-type="language">
-        <div class="dyn-entry__header">
-          <span class="dyn-entry__title">Language</span>
-          <button class="dyn-entry__remove" title="Remove">✕</button>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>Language</label>
-            <input type="text" name="name" placeholder="French" />
-          </div>
-          <div class="field field--half">
-            <label>Level (1–5)</label>
-            <input type="number" name="level" min="1" max="5" placeholder="4" />
-          </div>
+    <!-- ── Steps ─────────────────────────────────────────────── -->
+    <section class="steps" id="how">
+      <div class="step reveal">
+        <div class="step__num">01</div>
+        <div class="step__content">
+          <div class="step__title">Pick a template</div>
+          <p class="step__desc">
+            Choose from our collection of editorial-grade CV templates, each
+            designed for a different personality and industry.
+          </p>
         </div>
       </div>
-    </template>
-
-    <!-- Certification entry -->
-    <template id="tpl-certification">
-      <div class="dyn-entry" data-type="certification">
-        <div class="dyn-entry__header">
-          <span class="dyn-entry__title">Certification</span>
-          <button class="dyn-entry__remove" title="Remove">✕</button>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>Name</label>
-            <input
-              type="text"
-              name="name"
-              placeholder="AWS Solutions Architect"
-            />
-          </div>
-          <div class="field field--half">
-            <label>Year</label>
-            <input type="text" name="year" placeholder="2023" />
-          </div>
+      <div class="step reveal reveal-delay-1">
+        <div class="step__num">02</div>
+        <div class="step__content">
+          <div class="step__title">Fill in your details</div>
+          <p class="step__desc">
+            Type your experience, education, skills and more. The live preview
+            updates instantly with every keystroke.
+          </p>
         </div>
       </div>
-    </template>
+      <div class="step reveal reveal-delay-2">
+        <div class="step__num">03</div>
+        <div class="step__content">
+          <div class="step__title">Download your PDF</div>
+          <p class="step__desc">
+            Hit Download PDF and get a pixel-perfect, print-ready file named
+            after you — ready to send.
+          </p>
+        </div>
+      </div>
+    </section>
 
-    <!-- ── Scripts ─────────────────────────────────────────── -->
-    <script src="lib/html2pdf.bundle.min.js"></script>
-    <script src="js/script.js"></script>
-    <script src="js/preview.js"></script>
-    <script src="js/download.js"></script>
+    <!-- ── Final CTA ─────────────────────────────────────────── -->
+    <section class="final-cta">
+      <h2 class="final-cta__headline reveal">
+        Your next opportunity<br />starts with a <em>great CV</em>
+      </h2>
+      <p class="final-cta__sub reveal reveal-delay-1">
+        It takes less than 5 minutes. No account needed. Just you and your
+        story.
+      </p>
+      <a
+        href="builder.html"
+        class="btn-hero btn-hero--primary reveal reveal-delay-2"
+      >
+        Build My CV Now <span class="btn-arrow">→</span>
+      </a>
+    </section>
+
+    <!-- ── Footer ────────────────────────────────────────────── -->
+    <footer>
+      <div class="footer__brand"><span>CV</span> Maker</div>
+      <span>Free forever · No sign-up · No data stored</span>
+      <span>Built with care ✦</span>
+    </footer>
+
+    <script>
+      // Nav scroll effect
+      const nav = document.getElementById("nav");
+      window.addEventListener("scroll", () => {
+        nav.classList.toggle("scrolled", window.scrollY > 40);
+      });
+
+      // Scroll reveal
+      const reveals = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+
+      reveals.forEach((el) => observer.observe(el));
+    </script>
   </body>
 </html>
