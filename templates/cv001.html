@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV – {{firstName}} {{lastName}}</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/templates.css" />
+    <style>
+      /* ── cv001 · Editorial · Two-column ── */
+      :root {
+        --cv-accent: #c8622a;
+        --cv-accent-dim: #f2e4d8;
+        --sidebar-w: 210px;
+        --sidebar-bg: #1a1814;
+        --sidebar-ink: #f5f3ef;
+        --sidebar-muted: #8c887f;
+      }
+
+      body {
+        display: grid;
+        grid-template-columns: var(--sidebar-w) 1fr;
+        grid-template-rows: auto 1fr;
+        min-height: var(--cv-h);
+      }
+
+      /* ════════════════════════════════════
+       HEADER  (full-width top band)
+    ════════════════════════════════════ */
+      .cv-header {
+        grid-column: 1 / -1;
+        background: var(--sidebar-bg);
+        color: var(--sidebar-ink);
+        padding: var(--cv-sp-8) var(--cv-sp-8) var(--cv-sp-6);
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: var(--cv-sp-6);
+      }
+
+      .cv-header__identity {
+        flex: 1;
+      }
+
+      .cv-header__name {
+        font-family: var(--cv-font-display);
+        font-size: var(--cv-text-3xl);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+        color: #fff;
+      }
+
+      .cv-header__title {
+        margin-top: var(--cv-sp-2);
+        font-size: var(--cv-text-md);
+        font-weight: 300;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--cv-accent);
+      }
+
+      .cv-header__contacts {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 4px;
+      }
+
+      .cv-header__contacts span {
+        font-size: var(--cv-text-xs);
+        color: #aaa49c;
+        letter-spacing: 0.04em;
+      }
+
+      /* ════════════════════════════════════
+       SIDEBAR  (left column)
+    ════════════════════════════════════ */
+      .cv-sidebar {
+        background: #242018;
+        color: var(--sidebar-ink);
+        padding: var(--cv-sp-6) var(--cv-sp-5);
+        display: flex;
+        flex-direction: column;
+        gap: var(--cv-sp-6);
+      }
+
+      .cv-sidebar .cv-section-title {
+        color: var(--cv-accent);
+        font-size: 0.58rem;
+        margin-bottom: var(--cv-sp-2);
+      }
+
+      /* Skills */
+      .cv-sidebar .cv-tags {
+        gap: 4px;
+      }
+      .cv-sidebar .cv-tag {
+        background: rgba(255, 255, 255, 0.08);
+        color: #d4cfc8;
+        font-size: 0.6rem;
+        padding: 2px 6px;
+      }
+
+      /* Languages */
+      .sidebar-lang-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--cv-sp-2);
+      }
+      .sidebar-lang-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--cv-sp-2);
+      }
+      .sidebar-lang-item span {
+        font-size: var(--cv-text-xs);
+        color: #d4cfc8;
+      }
+      .cv-sidebar .cv-lang-dot {
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .cv-sidebar .cv-lang-dot.on {
+        background: var(--cv-accent);
+      }
+
+      /* Interests */
+      .sidebar-interests {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .sidebar-interests span {
+        font-size: var(--cv-text-xs);
+        color: #aaa49c;
+        padding-left: var(--cv-sp-3);
+        position: relative;
+      }
+      .sidebar-interests span::before {
+        content: "·";
+        position: absolute;
+        left: 0;
+        color: var(--cv-accent);
+      }
+
+      /* Certifications */
+      .sidebar-cert-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--cv-sp-2);
+      }
+      .sidebar-cert-item__name {
+        font-size: var(--cv-text-xs);
+        color: #d4cfc8;
+        line-height: 1.4;
+      }
+      .sidebar-cert-item__year {
+        font-size: 0.58rem;
+        color: var(--cv-accent);
+        letter-spacing: 0.06em;
+      }
+
+      /* ════════════════════════════════════
+       MAIN  (right column)
+    ════════════════════════════════════ */
+      .cv-main {
+        padding: var(--cv-sp-6) var(--cv-sp-8);
+        display: flex;
+        flex-direction: column;
+        gap: var(--cv-sp-5);
+      }
+
+      /* Section wrapper */
+      .cv-section {
+        display: flex;
+        flex-direction: column;
+        gap: var(--cv-sp-3);
+      }
+
+      .cv-section__head {
+        display: flex;
+        align-items: center;
+        gap: var(--cv-sp-3);
+        margin-bottom: var(--cv-sp-1);
+      }
+      .cv-section__head .cv-section-title {
+        white-space: nowrap;
+      }
+      .cv-section__head hr {
+        flex: 1;
+        height: 1px;
+        border: none;
+        background: #e0ddd8;
+      }
+
+      /* Summary */
+      .cv-summary {
+        font-size: var(--cv-text-sm);
+        color: var(--cv-ink-2);
+        line-height: 1.65;
+      }
+
+      /* Experience entries */
+      .cv-exp-entry {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .cv-exp-entry__top {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--cv-sp-2);
+      }
+
+      .cv-exp-entry__role {
+        font-size: var(--cv-text-base);
+        font-weight: 600;
+        color: var(--cv-ink);
+      }
+
+      .cv-exp-entry__meta {
+        font-size: var(--cv-text-xs);
+        color: var(--cv-ink-3);
+        white-space: nowrap;
+        letter-spacing: 0.04em;
+      }
+
+      .cv-exp-entry__sub {
+        font-size: var(--cv-text-sm);
+        color: var(--cv-ink-2);
+      }
+
+      .cv-exp-entry__sub .company {
+        font-weight: 500;
+      }
+      .cv-exp-entry__sub .sep {
+        margin: 0 4px;
+        color: var(--cv-ink-3);
+      }
+
+      .cv-exp-entry .cv-bullet-list {
+        margin-top: 4px;
+      }
+
+      /* Education entries */
+      .cv-edu-entry {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--cv-sp-2);
+      }
+
+      .cv-edu-entry__left {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .cv-edu-entry__degree {
+        font-size: var(--cv-text-base);
+        font-weight: 600;
+        color: var(--cv-ink);
+      }
+
+      .cv-edu-entry__school {
+        font-size: var(--cv-text-sm);
+        color: var(--cv-ink-2);
+      }
+
+      .cv-edu-entry__right {
+        text-align: right;
+        flex-shrink: 0;
+      }
+      .cv-edu-entry__year {
+        font-size: var(--cv-text-xs);
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: var(--cv-accent);
+      }
+      .cv-edu-entry__detail {
+        font-size: var(--cv-text-xs);
+        color: var(--cv-ink-3);
+      }
+
+      /* Accent bar at very bottom of page */
+      .cv-footer-bar {
+        grid-column: 1 / -1;
+        height: 4px;
+        background: var(--cv-accent);
+        margin-top: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ══ HEADER ══════════════════════════════════════════════ -->
+    <header class="cv-header">
+      <div class="cv-header__identity">
+        <div class="cv-header__name">{{firstName}} {{lastName}}</div>
+        <div class="cv-header__title">{{jobTitle}}</div>
+      </div>
+      <div class="cv-header__contacts">
+        {{#email}}<span>{{email}}</span>{{/email}}
+        {{#phone}}<span>{{phone}}</span>{{/phone}}
+        {{#location}}<span>{{location}}</span>{{/location}}
+        {{#linkedin}}<span>{{linkedin}}</span>{{/linkedin}}
+        {{#website}}<span>{{website}}</span>{{/website}}
+      </div>
+    </header>
+
+    <!-- ══ SIDEBAR ═════════════════════════════════════════════ -->
+    <aside class="cv-sidebar">
+      {{#skillsTechnical}}
+      <div class="cv-sidebar-section">
+        <div class="cv-section-title">Technical</div>
+        <div class="cv-tags">
+          {{#skillsTechnical}}<span class="cv-tag">{{.}}</span
+          >{{/skillsTechnical}}
+        </div>
+      </div>
+      {{/skillsTechnical}} {{#skillsTools}}
+      <div class="cv-sidebar-section">
+        <div class="cv-section-title">Tools</div>
+        <div class="cv-tags">
+          {{#skillsTools}}<span class="cv-tag">{{.}}</span>{{/skillsTools}}
+        </div>
+      </div>
+      {{/skillsTools}} {{#languages}}
+      <div class="cv-sidebar-section">
+        <div class="cv-section-title">Languages</div>
+        <div class="sidebar-lang-list">
+          {{#languages}}
+          <div class="sidebar-lang-item">
+            <span>{{name}}</span>
+            <div class="cv-lang-dots">
+              <div class="cv-lang-dot {{l1}}"></div>
+              <div class="cv-lang-dot {{l2}}"></div>
+              <div class="cv-lang-dot {{l3}}"></div>
+              <div class="cv-lang-dot {{l4}}"></div>
+              <div class="cv-lang-dot {{l5}}"></div>
+            </div>
+          </div>
+          {{/languages}}
+        </div>
+      </div>
+      {{/languages}} {{#interests}}
+      <div class="cv-sidebar-section">
+        <div class="cv-section-title">Interests</div>
+        <div class="sidebar-interests">
+          {{#interests}}<span>{{.}}</span>{{/interests}}
+        </div>
+      </div>
+      {{/interests}} {{#certifications}}
+      <div class="cv-sidebar-section">
+        <div class="cv-section-title">Certifications</div>
+        <div class="sidebar-cert-list">
+          {{#certifications}}
+          <div class="sidebar-cert-item">
+            <div class="sidebar-cert-item__name">{{name}}</div>
+            <div class="sidebar-cert-item__year">{{year}}</div>
+          </div>
+          {{/certifications}}
+        </div>
+      </div>
+      {{/certifications}}
+    </aside>
+
+    <!-- ══ MAIN ════════════════════════════════════════════════ -->
+    <main class="cv-main">
+      <!-- Summary -->
+      {{#summary}}
+      <section class="cv-section">
+        <div class="cv-section__head">
+          <span class="cv-section-title">Profile</span>
+          <hr />
+        </div>
+        <p class="cv-summary">{{summary}}</p>
+      </section>
+      {{/summary}}
+
+      <!-- Experience -->
+      {{#experience}}
+      <section class="cv-section">
+        <div class="cv-section__head">
+          <span class="cv-section-title">Experience</span>
+          <hr />
+        </div>
+        {{#experience}}
+        <div class="cv-exp-entry">
+          <div class="cv-exp-entry__top">
+            <span class="cv-exp-entry__role">{{role}}</span>
+            <span class="cv-exp-entry__meta"
+              >{{startDate}}{{#endDate}} – {{endDate}}{{/endDate}}</span
+            >
+          </div>
+          <div class="cv-exp-entry__sub">
+            <span class="company">{{company}}</span>
+            {{#location}}<span class="sep">·</span
+            ><span>{{location}}</span>{{/location}}
+          </div>
+          {{#bullets}}
+          <ul class="cv-bullet-list">
+            {{#bullets}}
+            <li>{{.}}</li>
+            {{/bullets}}
+          </ul>
+          {{/bullets}}
+        </div>
+        {{/experience}}
+      </section>
+      {{/experience}}
+
+      <!-- Education -->
+      {{#education}}
+      <section class="cv-section">
+        <div class="cv-section__head">
+          <span class="cv-section-title">Education</span>
+          <hr />
+        </div>
+        {{#education}}
+        <div class="cv-edu-entry">
+          <div class="cv-edu-entry__left">
+            <span class="cv-edu-entry__degree">{{degree}}</span>
+            <span class="cv-edu-entry__school">{{school}}</span>
+          </div>
+          <div class="cv-edu-entry__right">
+            <div class="cv-edu-entry__year">{{year}}</div>
+            <div class="cv-edu-entry__detail">{{detail}}</div>
+          </div>
+        </div>
+        {{/education}}
+      </section>
+      {{/education}}
+    </main>
+
+    <!-- ══ FOOTER BAR ══════════════════════════════════════════ -->
+    <div class="cv-footer-bar"></div>
+  </body>
+</html>
