@@ -42,9 +42,40 @@
         </div>
 
         <!-- ── Personal info ──────────────────────────────── -->
+
         <div class="form-section">
           <div class="form-section__label">Personal Info</div>
 
+          <!-- ── Photo upload ───────────────────────────────────── -->
+          <div class="photo-upload-row">
+            <div class="photo-upload-area" id="photo-upload-area">
+              <img
+                id="photo-preview"
+                src=""
+                alt="Preview"
+                style="display: none"
+              />
+              <div class="photo-upload-placeholder" id="photo-placeholder">
+                <span class="photo-upload-icon">📷</span>
+                <span class="photo-upload-hint">Add Photo</span>
+              </div>
+              <input
+                id="f-photo"
+                type="file"
+                accept="image/*"
+                class="photo-upload-input"
+              />
+            </div>
+            <button
+              class="photo-remove-btn"
+              id="photo-remove"
+              style="display: none"
+            >
+              ✕ Remove
+            </button>
+          </div>
+
+          <!-- rest of personal info fields below... -->
           <div class="field-row">
             <div class="field">
               <label for="f-firstName">First Name</label>
