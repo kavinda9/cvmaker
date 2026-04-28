@@ -1,3 +1,69 @@
+/* Hero section: headline left, logo right */
+
+/* Hero section: headline left, logo right */
+.hero-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 0 1rem;
+}
+.hero-content {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: left;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.hero-content .hero__label,
+.hero-content .hero__headline,
+.hero-content .hero__sub,
+.hero-content .hero__actions {
+  text-align: left;
+  align-self: flex-start;
+}
+.hero-logo-wrap {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+.hero__logo {
+  width: 200px;
+  height: auto;
+  margin-bottom: 0;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.1s ease forwards;
+  /* If your GIF has a dark bg that clashes, try: */
+  /* mix-blend-mode: lighten; */
+}
+@media (max-width: 900px) {
+  .hero-inner {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    text-align: center;
+  }
+  .hero-content {
+    align-items: center;
+    text-align: center;
+  }
+  .hero-content .hero__label,
+  .hero-content .hero__headline,
+  .hero-content .hero__sub,
+  .hero-content .hero__actions {
+    text-align: center;
+    align-self: center;
+  }
+  .hero-logo-wrap {
+    justify-content: center;
+    width: 100%;
+  }
+}
 /* ═══════════════════════════════════════════════════════════
    style.css  –  CV Maker · Main Layout & Design Tokens
    Aesthetic: Editorial · Refined · Typographic
