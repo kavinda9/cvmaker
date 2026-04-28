@@ -1,21 +1,15 @@
 // ═══════════════════════════════════════════════════════════
 //  script.js  –  CV Maker core logic
-//  Responsibilities:
-//    1. Manage dynamic entries (experience, education, etc.)
-//    2. Collect all form data into a structured object
-//    3. Render the template by replacing {{tokens}}
-//    4. Debounce live updates → calls preview.js updatePreview()
 // ═══════════════════════════════════════════════════════════
 
 "use strict";
 
-// ── Config ──────────────────────────────────────────────────
 const TEMPLATES_DIR = "templates/";
 const DEBOUNCE_MS = 300;
 
-// ── State ───────────────────────────────────────────────────
-let currentTemplate = "cv001"; // active template filename (no ext)
-let templateHTML = ""; // raw HTML string of the loaded template
+let currentTemplate = "cv001";
+let templateHTML = "";
+let photoDataURL = ""; // base64 photo
 
 // ── Boot ────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
@@ -24,8 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
   bindDynamicAddButtons();
   bindTemplatePicker();
   bindPreviewToggle();
+  bindPhotoUpload();
 
-  // Seed one entry per repeating section for better UX
   addEntry("experience");
   addEntry("education");
   addEntry("language");
@@ -54,18 +48,17 @@ async function loadTemplate(name) {
 function collectData() {
   const data = {};
 
-  // ── Scalar fields (data-token attribute) ─────────────────
   document.querySelectorAll("[data-token]").forEach((el) => {
-    const key = el.dataset.token;
-    data[key] = el.value.trim();
+    data[el.dataset.token] = el.value.trim();
   });
 
-  // ── Skills → arrays ──────────────────────────────────────
   data.skillsTechnical = splitComma(data.skillsTechnical);
   data.skillsTools = splitComma(data.skillsTools);
   data.interests = splitComma(data.interests);
 
-  // ── Dynamic: Experience ───────────────────────────────────
+  // Photo
+  data.photo = photoDataURL || "";
+
   data.experience = collectEntries("experience", (entry) => ({
     role: val(entry, "role"),
     company: val(entry, "company"),
@@ -78,7 +71,6 @@ function collectData() {
       .filter(Boolean),
   }));
 
-  // ── Dynamic: Education ────────────────────────────────────
   data.education = collectEntries("education", (entry) => ({
     degree: val(entry, "degree"),
     school: val(entry, "school"),
@@ -86,13 +78,11 @@ function collectData() {
     detail: val(entry, "detail"),
   }));
 
-  // ── Dynamic: Languages ────────────────────────────────────
   data.languages = collectEntries("language", (entry) => {
     const level = Math.min(5, Math.max(1, parseInt(val(entry, "level")) || 3));
     return {
       name: val(entry, "name"),
       level,
-      // Pre-build dot classes for the template (l1…l5)
       l1: level >= 1 ? "on" : "",
       l2: level >= 2 ? "on" : "",
       l3: level >= 3 ? "on" : "",
@@ -101,7 +91,6 @@ function collectData() {
     };
   });
 
-  // ── Dynamic: Certifications ───────────────────────────────
   data.certifications = collectEntries("certification", (entry) => ({
     name: val(entry, "name"),
     year: val(entry, "year"),
@@ -110,7 +99,6 @@ function collectData() {
   return data;
 }
 
-// ── Helpers ──────────────────────────────────────────────────
 function val(parent, name) {
   const el = parent.querySelector(`[name="${name}"]`);
   return el ? el.value.trim() : "";
@@ -132,56 +120,85 @@ function collectEntries(type, mapper) {
 }
 
 // ═══════════════════════════════════════════════════════════
-//  3. Token replacement  (Mustache-style, no dependency)
+//  3. Token replacement
+//     Supports:
+//       {{key}}            – scalar
+//       {{#key}}...{{/key}} – array loop OR scalar conditional
+//       {{#arr}}{{#nested}}...{{/nested}}{{/arr}} – nested arrays
+//       {{.}}              – current item in array
 // ═══════════════════════════════════════════════════════════
 
 function renderTemplate(html, data) {
   let out = html;
 
-  // ── Array blocks  {{#key}} ... {{/key}} ──────────────────
+  // ── Block tags: arrays AND scalar conditionals ───────────
   out = out.replace(
     /\{\{#(\w+)\}\}([\s\S]*?)\{\{\/\1\}\}/g,
     (_, key, inner) => {
-      const items = data[key];
-      if (!Array.isArray(items) || items.length === 0) return "";
+      const val = data[key];
 
-      return items
-        .map((item) => {
-          let block = inner;
+      // Array: repeat block per item
+      if (Array.isArray(val)) {
+        if (val.length === 0) return "";
+        return val.map((item) => renderBlock(inner, item, data)).join("");
+      }
 
-          // Nested array blocks inside an item (e.g. bullets)
-          block = block.replace(
-            /\{\{#(\w+)\}\}([\s\S]*?)\{\{\/\1\}\}/g,
-            (__, k2, inner2) => {
-              const sub = item[k2];
-              if (!Array.isArray(sub) || sub.length === 0) return "";
-              return sub
-                .map((s) => inner2.replace(/\{\{\.\}\}/g, escapeHtml(s)))
-                .join("");
-            },
-          );
+      // Scalar conditional: render block once if truthy, skip if falsy
+      if (val) {
+        // Replace {{key}} inside with the scalar value
+        return inner.replace(/\{\{(\w+)\}\}/g, (__, k) => {
+          const v = data[k];
+          if (v === undefined || v === null) return "";
+          if (Array.isArray(v)) return v.map(escapeHtml).join(", ");
+          return escapeHtml(String(v));
+        });
+      }
 
-          // Scalar tokens inside item  {{role}}, {{company}} …
-          block = block.replace(/\{\{(\w+)\}\}/g, (__, k) => {
-            const v = item[k];
-            return v !== undefined ? escapeHtml(String(v)) : "";
-          });
-
-          return block;
-        })
-        .join("");
+      return "";
     },
   );
 
-  // ── Scalar tokens  {{key}} ───────────────────────────────
+  // ── Remaining scalar tokens ──────────────────────────────
   out = out.replace(/\{\{(\w+)\}\}/g, (_, key) => {
     const v = data[key];
     if (v === undefined || v === null) return "";
     if (Array.isArray(v)) return v.map(escapeHtml).join(", ");
+    // Don't escape photo (it's a data URL used in src="")
+    if (key === "photo") return String(v);
     return escapeHtml(String(v));
   });
 
   return out;
+}
+
+function renderBlock(inner, item, rootData) {
+  let block = inner;
+
+  // Nested array blocks inside item (e.g. {{#bullets}}...{{/bullets}})
+  block = block.replace(
+    /\{\{#(\w+)\}\}([\s\S]*?)\{\{\/\1\}\}/g,
+    (__, k2, inner2) => {
+      const sub = item[k2];
+      if (!Array.isArray(sub) || sub.length === 0) return "";
+      return sub
+        .map((s) => inner2.replace(/\{\{\.\}\}/g, escapeHtml(s)))
+        .join("");
+    },
+  );
+
+  // Scalar tokens from item
+  block = block.replace(/\{\{(\w+)\}\}/g, (__, k) => {
+    const v =
+      item[k] !== undefined
+        ? item[k]
+        : rootData[k] !== undefined
+          ? rootData[k]
+          : "";
+    if (Array.isArray(v)) return v.map(escapeHtml).join(", ");
+    return escapeHtml(String(v));
+  });
+
+  return block;
 }
 
 function escapeHtml(str) {
@@ -193,7 +210,7 @@ function escapeHtml(str) {
 }
 
 // ═══════════════════════════════════════════════════════════
-//  4. Scheduled update  (debounced)
+//  4. Scheduled update (debounced)
 // ═══════════════════════════════════════════════════════════
 
 let _debounceTimer = null;
@@ -203,7 +220,7 @@ function scheduleUpdate() {
   _debounceTimer = setTimeout(() => {
     const data = collectData();
     const rendered = renderTemplate(templateHTML, data);
-    updatePreview(rendered); // defined in preview.js
+    updatePreview(rendered);
   }, DEBOUNCE_MS);
 }
 
@@ -219,21 +236,17 @@ function addEntry(type) {
   const clone = tpl.content.cloneNode(true);
   const entry = clone.querySelector(".dyn-entry");
 
-  // Update title with entry number
   const count = container.querySelectorAll(".dyn-entry").length + 1;
   const titleEl = entry.querySelector(".dyn-entry__title");
   if (titleEl) titleEl.textContent = `${capitalize(type)} ${count}`;
 
-  // Remove button
   entry.querySelector(".dyn-entry__remove").addEventListener("click", () => {
     entry.remove();
     renumberEntries(type);
     scheduleUpdate();
   });
 
-  // Live update on any input change
   entry.addEventListener("input", scheduleUpdate);
-
   container.appendChild(entry);
 }
 
@@ -251,7 +264,47 @@ function capitalize(str) {
 }
 
 // ═══════════════════════════════════════════════════════════
-//  6. Event bindings
+//  6. Photo upload
+// ═══════════════════════════════════════════════════════════
+
+function bindPhotoUpload() {
+  const input = document.getElementById("f-photo");
+  const preview = document.getElementById("photo-preview");
+  const removeBtn = document.getElementById("photo-remove");
+
+  if (!input) return;
+
+  input.addEventListener("change", () => {
+    const file = input.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      photoDataURL = e.target.result;
+      if (preview) {
+        preview.src = photoDataURL;
+        preview.style.display = "block";
+      }
+      if (removeBtn) removeBtn.style.display = "inline-flex";
+      scheduleUpdate();
+    };
+    reader.readAsDataURL(file);
+  });
+
+  removeBtn?.addEventListener("click", () => {
+    photoDataURL = "";
+    input.value = "";
+    if (preview) {
+      preview.src = "";
+      preview.style.display = "none";
+    }
+    removeBtn.style.display = "none";
+    scheduleUpdate();
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+//  7. Event bindings
 // ═══════════════════════════════════════════════════════════
 
 function bindStaticInputs() {
@@ -273,12 +326,10 @@ function bindTemplatePicker() {
   document.getElementById("template-picker")?.addEventListener("click", (e) => {
     const btn = e.target.closest(".tpl-btn");
     if (!btn) return;
-
     document
       .querySelectorAll(".tpl-btn")
       .forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
-
     currentTemplate = btn.dataset.tpl;
     loadTemplate(currentTemplate);
   });
@@ -292,7 +343,7 @@ function bindPreviewToggle() {
     });
 }
 
-// ── Expose for other modules ─────────────────────────────────
+// ── Expose ───────────────────────────────────────────────────
 window.CVMaker = {
   collectData,
   renderTemplate,
