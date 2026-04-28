@@ -1,25 +1,13 @@
-// ═══════════════════════════════════════════════════════════
-//  preview.js  –  CV Maker · Live Preview
-//  Responsibilities:
-//    1. Write rendered HTML into the iframe
-//    2. Scale the A4 wrapper to fit the preview panel
-//    3. Expose updatePreview() called by script.js
-// ═══════════════════════════════════════════════════════════
-
+// js/preview.js – Improved Live Preview
 "use strict";
 
-// ── Elements ────────────────────────────────────────────────
 const iframe = document.getElementById("cv-preview");
 const scaleWrapper = document.querySelector(".preview-scale-wrapper");
-const previewPanel = document.querySelector(".panel--preview");
 
-// ── Constants ───────────────────────────────────────────────
-const CV_WIDTH = 794; // A4 at 96 dpi (px)
-const PAD = 64; // breathing room around the page (px)
+const CV_WIDTH = 794;
+const PAD = 64;
 
-// ═══════════════════════════════════════════════════════════
-//  1. Write HTML into iframe
-// ═══════════════════════════════════════════════════════════
+let isFirstLoad = true;
 
 function updatePreview(renderedHTML) {
   if (!iframe) return;
@@ -31,40 +19,42 @@ function updatePreview(renderedHTML) {
   doc.write(renderedHTML);
   doc.close();
 
-  // Re-apply scale after content loads (iframe height may change)
-  iframe.addEventListener("load", fitScale, { once: true });
-  fitScale();
+  // Wait for content to load before scaling
+  if (isFirstLoad) {
+    iframe.onload = () => {
+      fitScale();
+      isFirstLoad = false;
+    };
+  } else {
+    // Small delay for dynamic content
+    setTimeout(fitScale, 50);
+  }
 }
 
-// ═══════════════════════════════════════════════════════════
-//  2. Scale the wrapper to fit the panel
-// ═══════════════════════════════════════════════════════════
-
 function fitScale() {
-  if (!previewPanel || !scaleWrapper) return;
+  if (!scaleWrapper || !iframe) return;
 
-  const panelW = previewPanel.clientWidth;
+  const panelW = document.querySelector(".panel--preview").clientWidth;
   const available = panelW - PAD * 2;
-  const scale = Math.min(1, available / CV_WIDTH);
+  const scale = Math.max(0.6, Math.min(1, available / CV_WIDTH)); // prevent too small
 
-  // Set CSS variable used by the wrapper's transform in style.css
   scaleWrapper.style.setProperty("--preview-scale", scale);
 
-  // Collapse the negative margin so the panel scrolls naturally
   const naturalH = scaleWrapper.offsetHeight;
   const scaledH = naturalH * scale;
   scaleWrapper.style.marginBottom = `${scaledH - naturalH + PAD}px`;
 }
 
-// ── Re-scale on window resize ────────────────────────────────
-const _resizeObserver = new ResizeObserver(fitScale);
-if (previewPanel) _resizeObserver.observe(previewPanel);
+// Re-scale on resize
+const resizeObserver = new ResizeObserver(() => {
+  setTimeout(fitScale, 100);
+});
+resizeObserver.observe(document.querySelector(".panel--preview"));
 
-// ── Also re-scale when preview-only mode toggles ────────────
+// Also re-scale when toggling preview-only mode
 document.getElementById("btn-preview-toggle")?.addEventListener("click", () => {
-  // Wait for CSS transition to finish before measuring
-  setTimeout(fitScale, 250);
+  setTimeout(fitScale, 300);
 });
 
-// ── Expose ──────────────────────────────────────────────────
+// Expose globally
 window.updatePreview = updatePreview;
