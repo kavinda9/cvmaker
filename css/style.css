@@ -300,6 +300,7 @@ body {
   justify-content: center;
   overflow: auto;
   padding: var(--sp-8);
+  border-left: 2px solid #c8622a; /* Debug: visible border for preview panel */
 
   /* Dot-grid atmosphere */
   background-image: radial-gradient(

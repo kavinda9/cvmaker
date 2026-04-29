@@ -12,6 +12,14 @@ let isFirstLoad = true;
 function updatePreview(renderedHTML) {
   if (!iframe) return;
 
+  // Fallback: if renderedHTML is empty, show a message
+  if (!renderedHTML || !renderedHTML.trim()) {
+    renderedHTML = `<body style="padding:40px;font-family:sans-serif;color:#666;">
+      <h2>Nothing to preview</h2>
+      <p>The template is empty or not loaded yet.</p>
+    </body>`;
+  }
+
   const doc = iframe.contentDocument || iframe.contentWindow?.document;
   if (!doc) return;
 

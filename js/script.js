@@ -32,22 +32,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadTemplate(name) {
   try {
-    const res = await fetch(`${TEMPLATES_DIR}${name}.html`);
-    if (!res.ok) throw new Error(`Template not found: ${name}`);
+    const url = `${TEMPLATES_DIR}${name}.html`;
+    const res = await fetch(url);
+    if (!res.ok) {
+      console.error(
+        `[CV Maker] loadTemplate fetch failed: ${res.status} ${res.statusText} for ${url}`,
+      );
+      throw new Error(`Template not found: ${name}`);
+    }
 
     templateHTML = await res.text();
 
-    // Important: Force initial render after template loads
+    if (!templateHTML.trim()) {
+      console.warn(`[CV Maker] Loaded template is empty: ${url}`);
+      updatePreview(
+        '<body style="padding:40px;font-family:sans-serif;color:#666;"><h2>Template is empty</h2><p>The template file exists but is empty.</p></body>',
+      );
+      return;
+    }
+
+    // Force initial render after template loads
     setTimeout(() => {
       scheduleUpdate();
     }, 100);
-
   } catch (err) {
     console.error("[CV Maker] loadTemplate failed:", err);
     // Fallback message
     const fallbackHTML = `<body style="padding:40px;font-family:sans-serif;color:#666;">
       <h2>Failed to load template \"${name}\"</h2>
-      <p>Please check that <strong>templates/${name}.html</strong> exists.</p>
+      <p>Please check that <strong>templates/${name}.html</strong> exists and is accessible.</p>
     </body>`;
     updatePreview(fallbackHTML);
   }
@@ -231,7 +244,12 @@ function scheduleUpdate() {
   clearTimeout(_debounceTimer);
   _debounceTimer = setTimeout(() => {
     const data = collectData();
-    const rendered = renderTemplate(templateHTML, data);
+    let rendered = "";
+    if (templateHTML && templateHTML.trim()) {
+      rendered = renderTemplate(templateHTML, data);
+    } else {
+      rendered = `<body style=\"padding:40px;font-family:sans-serif;color:#666;\"><h2>Nothing to preview</h2><p>The template is empty or not loaded yet.</p></body>`;
+    }
     updatePreview(rendered);
   }, DEBOUNCE_MS);
 }
