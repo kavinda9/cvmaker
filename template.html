@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Choose Template — CV Maker</title>
+    <style>
+      @font-face {
+        font-family: "Brand";
+        src: url("assets/fonts/font1.ttf") format("truetype");
+        font-display: swap;
+      }
+
+      :root {
+        --bg: #111111;
+        --bg-2: #181818;
+        --border: #2a2a2a;
+        --border-light: #3a3a3a;
+        --ink: #f0ede8;
+        --ink-2: #999690;
+        --ink-3: #555250;
+        --accent: #c94a1f;
+        --accent-lt: #e06040;
+        --font-brand: "Brand", Georgia, serif;
+        --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        height: 100%;
+      }
+
+      body {
+        font-family: var(--font-body);
+        background: var(--bg);
+        color: var(--ink);
+        height: 100dvh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Grain */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+        opacity: 0.04;
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      /* ── NAV ─────────────────────────────────────────────────── */
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 3rem;
+        border-bottom: 1px solid var(--border);
+        background: rgba(17, 17, 17, 0.95);
+        backdrop-filter: blur(12px);
+        flex-shrink: 0;
+        z-index: 100;
+      }
+
+      .nav__logo img {
+        height: 52px;
+        width: auto;
+        object-fit: contain;
+      }
+
+      .nav__back {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--ink-3);
+        text-decoration: none;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+      .nav__back:hover {
+        color: var(--ink);
+      }
+      .nav__back svg {
+        transition: transform 0.2s;
+      }
+      .nav__back:hover svg {
+        transform: translateX(-3px);
+      }
+
+      /* ── STAGE ───────────────────────────────────────────────── */
+      .stage {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 72px 1fr 72px;
+        grid-template-rows: 1fr auto;
+        align-items: center;
+        gap: 0;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Blurred background image — atmosphere */
+      .stage__bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        filter: blur(60px) brightness(0.15);
+        transform: scale(1.1);
+        transition: background-image 0.6s ease;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      /* ── NAV ARROWS ─────────────────────────────────────────── */
+      .arrow-btn {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 1px solid var(--border-light);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--ink-2);
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          color 0.2s,
+          transform 0.2s;
+        margin: auto;
+        backdrop-filter: blur(8px);
+      }
+      .arrow-btn:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+        transform: scale(1.08);
+      }
+      .arrow-btn:active {
+        transform: scale(0.96);
+      }
+      .arrow-btn svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* ── CARD TRACK ─────────────────────────────────────────── */
+      .track-wrap {
+        position: relative;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        overflow: hidden;
+        padding: 2rem 1rem;
+      }
+
+      /* The 3-card carousel: prev (left), active (center), next (right) */
+      .card-carousel {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .tpl-card {
+        position: absolute;
+        cursor: pointer;
+        transition:
+          transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+          opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+          filter 0.55s ease,
+          box-shadow 0.55s ease;
+        transform-origin: center center;
+        border-radius: 3px;
+        overflow: hidden;
+        will-change: transform, opacity;
+      }
+
+      /* A4 ratio: 1:√2 ≈ 1:1.4142 */
+      .tpl-card img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+        user-select: none;
+        -webkit-user-drag: none;
+        pointer-events: none;
+      }
+
+      /* Active card */
+      .tpl-card.is-active {
+        z-index: 3;
+        transform: translateX(0) scale(1) rotateY(0deg);
+        opacity: 1;
+        filter: brightness(1);
+        box-shadow:
+          0 40px 80px rgba(0, 0, 0, 0.7),
+          0 0 0 1px rgba(255, 255, 255, 0.06),
+          0 0 60px rgba(201, 74, 31, 0.15);
+      }
+      .tpl-card.is-active:hover {
+        transform: translateX(0) scale(1.018);
+        box-shadow:
+          0 50px 100px rgba(0, 0, 0, 0.8),
+          0 0 0 1px rgba(201, 74, 31, 0.3),
+          0 0 80px rgba(201, 74, 31, 0.25);
+      }
+
+      /* Previous card (left) */
+      .tpl-card.is-prev {
+        z-index: 2;
+        transform: translateX(-52%) scale(0.8) rotateY(8deg);
+        opacity: 0.35;
+        filter: brightness(0.5);
+        pointer-events: none;
+      }
+
+      /* Next card (right) */
+      .tpl-card.is-next {
+        z-index: 2;
+        transform: translateX(52%) scale(0.8) rotateY(-8deg);
+        opacity: 0.35;
+        filter: brightness(0.5);
+        pointer-events: none;
+      }
+
+      /* Hidden cards */
+      .tpl-card.is-hidden {
+        z-index: 1;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateX(0) scale(0.7);
+      }
+
+      /* Slide-in animations */
+      .tpl-card.anim-enter-right {
+        animation: enterFromRight 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .tpl-card.anim-enter-left {
+        animation: enterFromLeft 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .tpl-card.anim-exit-right {
+        animation: exitToRight 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .tpl-card.anim-exit-left {
+        animation: exitToLeft 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+
+      @keyframes enterFromRight {
+        from {
+          transform: translateX(80%) scale(0.75) rotateY(-10deg);
+          opacity: 0;
+          filter: brightness(0.4);
+        }
+        to {
+          transform: translateX(0) scale(1) rotateY(0deg);
+          opacity: 1;
+          filter: brightness(1);
+        }
+      }
+      @keyframes enterFromLeft {
+        from {
+          transform: translateX(-80%) scale(0.75) rotateY(10deg);
+          opacity: 0;
+          filter: brightness(0.4);
+        }
+        to {
+          transform: translateX(0) scale(1) rotateY(0deg);
+          opacity: 1;
+          filter: brightness(1);
+        }
+      }
+      @keyframes exitToRight {
+        from {
+          transform: translateX(0) scale(1);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(80%) scale(0.75);
+          opacity: 0;
+        }
+      }
+      @keyframes exitToLeft {
+        from {
+          transform: translateX(0) scale(1);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(-80%) scale(0.75);
+          opacity: 0;
+        }
+      }
+
+      /* ── BOTTOM BAR ─────────────────────────────────────────── */
+      .bottom-bar {
+        position: relative;
+        z-index: 10;
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.25rem 2rem 1.75rem;
+        background: linear-gradient(
+          to top,
+          rgba(17, 17, 17, 0.98) 60%,
+          transparent
+        );
+      }
+
+      /* Dots */
+      .dots {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--border-light);
+        transition:
+          background 0.3s,
+          transform 0.3s,
+          width 0.3s;
+        cursor: pointer;
+      }
+      .dot.active {
+        background: var(--accent);
+        width: 20px;
+        border-radius: 3px;
+        transform: none;
+      }
+
+      /* Template label */
+      .tpl-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.2rem;
+      }
+      .tpl-label__num {
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 600;
+      }
+      .tpl-label__name {
+        font-family: var(--font-brand);
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--ink);
+        letter-spacing: -0.01em;
+        transition: opacity 0.3s;
+      }
+
+      /* Use template button */
+      .use-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.75rem 2.5rem;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 2px;
+        font-family: var(--font-body);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          box-shadow 0.2s,
+          gap 0.2s;
+        box-shadow: 0 4px 20px rgba(201, 74, 31, 0.35);
+      }
+      .use-btn:hover {
+        background: var(--accent-lt);
+        box-shadow: 0 8px 32px rgba(201, 74, 31, 0.5);
+        gap: 0.85rem;
+      }
+
+      /* Click hint on active card */
+      .click-hint {
+        font-size: 0.6rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+      }
+
+      /* ── KEYBOARD HINT ───────────────────────────────────────── */
+      .key-hint {
+        position: fixed;
+        bottom: 1.25rem;
+        right: 1.5rem;
+        font-size: 0.58rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .key {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        border: 1px solid var(--border-light);
+        border-radius: 3px;
+        font-size: 0.6rem;
+        color: var(--ink-3);
+      }
+
+      /* ── MOBILE ─────────────────────────────────────────────── */
+      @media (max-width: 600px) {
+        nav {
+          padding: 0.5rem 1.25rem;
+        }
+        .nav__logo img {
+          height: 38px;
+        }
+
+        .stage {
+          grid-template-columns: 48px 1fr 48px;
+        }
+
+        .arrow-btn {
+          width: 38px;
+          height: 38px;
+        }
+        .arrow-btn svg {
+          width: 16px;
+          height: 16px;
+        }
+
+        .tpl-card.is-prev {
+          transform: translateX(-55%) scale(0.75) rotateY(6deg);
+        }
+        .tpl-card.is-next {
+          transform: translateX(55%) scale(0.75) rotateY(-6deg);
+        }
+
+        .bottom-bar {
+          padding: 1rem 1rem 1.5rem;
+          gap: 0.75rem;
+        }
+        .tpl-label__name {
+          font-size: 1rem;
+        }
+        .use-btn {
+          padding: 0.65rem 1.75rem;
+          font-size: 0.65rem;
+        }
+        .key-hint {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <a
+        href="#"
+        onclick="
+          history.back();
+          return false;
+        "
+        class="nav__back"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          width="14"
+          height="14"
+        >
+          <path d="M19 12H5M12 5l-7 7 7 7" />
+        </svg>
+        Back
+      </a>
+      <a href="index.html" class="nav__logo">
+        <img src="assets/images/logo.png" alt="CV Maker" />
+      </a>
+      <div style="width: 60px"></div>
+      <!-- spacer -->
+    </nav>
+
+    <!-- STAGE -->
+    <div class="stage">
+      <!-- Blurred atmosphere bg -->
+      <div class="stage__bg" id="stage-bg"></div>
+
+      <!-- Left arrow -->
+      <button class="arrow-btn" id="btn-prev" aria-label="Previous template">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </button>
+
+      <!-- Card carousel -->
+      <div class="track-wrap">
+        <div class="card-carousel" id="carousel"></div>
+      </div>
+
+      <!-- Right arrow -->
+      <button class="arrow-btn" id="btn-next" aria-label="Next template">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M9 18l6-6-6-6" />
+        </svg>
+      </button>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar">
+        <div class="dots" id="dots"></div>
+        <div class="tpl-label">
+          <span class="tpl-label__num" id="lbl-num">Template 01</span>
+          <span class="tpl-label__name" id="lbl-name">Editorial</span>
+        </div>
+        <button class="use-btn" id="use-btn">Use This Template →</button>
+        <span class="click-hint">or click the template to select</span>
+      </div>
+    </div>
+
+    <!-- Keyboard hint -->
+    <div class="key-hint">
+      <span class="key">←</span>
+      <span class="key">→</span>
+      navigate
+    </div>
+
+    <script>
+      // ── Template data ─────────────────────────────────────────
+      const templates = [
+        {
+          id: "cv001",
+          name: "Editorial",
+          num: "01",
+          img: "assets/images/cv001.png",
+        },
+        {
+          id: "cv002",
+          name: "Minimal",
+          num: "02",
+          img: "assets/images/cv002.png",
+        },
+        {
+          id: "cv003",
+          name: "Executive",
+          num: "03",
+          img: "assets/images/cv003.png",
+        },
+      ];
+
+      let current = 0;
+      let animating = false;
+
+      // ── Elements ──────────────────────────────────────────────
+      const carousel = document.getElementById("carousel");
+      const dotsEl = document.getElementById("dots");
+      const lblNum = document.getElementById("lbl-num");
+      const lblName = document.getElementById("lbl-name");
+      const useBtn = document.getElementById("use-btn");
+      const stageBg = document.getElementById("stage-bg");
+      const btnPrev = document.getElementById("btn-prev");
+      const btnNext = document.getElementById("btn-next");
+
+      // ── Build cards ───────────────────────────────────────────
+      const cards = templates.map((tpl, i) => {
+        const div = document.createElement("div");
+        div.className = "tpl-card";
+        div.dataset.index = i;
+
+        // Size the card as A4 ratio
+        const img = document.createElement("img");
+        img.src = tpl.img;
+        img.alt = tpl.name;
+        img.loading = "eager";
+        div.appendChild(img);
+
+        // Click → select and go to builder
+        div.addEventListener("click", () => {
+          if (animating) return;
+          if (parseInt(div.dataset.index) !== current) return;
+          goToBuilder();
+        });
+
+        carousel.appendChild(div);
+        return div;
+      });
+
+      // ── Build dots ────────────────────────────────────────────
+      templates.forEach((_, i) => {
+        const d = document.createElement("div");
+        d.className = "dot" + (i === 0 ? " active" : "");
+        d.addEventListener("click", () => goTo(i, i > current ? 1 : -1));
+        dotsEl.appendChild(d);
+      });
+      const dotEls = dotsEl.querySelectorAll(".dot");
+
+      // ── Compute card dimensions based on viewport ─────────────
+      function getCardSize() {
+        const stageH = carousel.parentElement.clientHeight - 20;
+        const stageW = carousel.parentElement.clientWidth - 20;
+        const h = Math.min(stageH * 0.88, 700);
+        const w = Math.min(h / 1.4142, stageW * 0.55, 460);
+        return { w: Math.round(w), h: Math.round(w * 1.4142) };
+      }
+
+      function applyCardSizes() {
+        const { w, h } = getCardSize();
+        cards.forEach((c) => {
+          c.style.width = w + "px";
+          c.style.height = h + "px";
+        });
+      }
+
+      // ── Render state ──────────────────────────────────────────
+      function render(skipAnim) {
+        const n = templates.length;
+        const prev = (current - 1 + n) % n;
+        const next = (current + 1) % n;
+
+        cards.forEach((card, i) => {
+          card.classList.remove("is-active", "is-prev", "is-next", "is-hidden");
+          if (i === current) card.classList.add("is-active");
+          else if (i === prev) card.classList.add("is-prev");
+          else if (i === next) card.classList.add("is-next");
+          else card.classList.add("is-hidden");
+        });
+
+        // Update labels
+        lblNum.textContent = "Template " + templates[current].num;
+        lblName.textContent = templates[current].name;
+
+        // Update dots
+        dotEls.forEach((d, i) => d.classList.toggle("active", i === current));
+
+        // Update bg
+        stageBg.style.backgroundImage = `url('${templates[current].img}')`;
+      }
+
+      // ── Navigate ──────────────────────────────────────────────
+      function goTo(index, dir) {
+        if (animating || index === current) return;
+        animating = true;
+
+        const oldCard = cards[current];
+        const newCard = cards[index];
+
+        // Animate out old
+        oldCard.classList.remove(
+          "anim-enter-right",
+          "anim-enter-left",
+          "anim-exit-right",
+          "anim-exit-left",
+        );
+        oldCard.classList.add(dir > 0 ? "anim-exit-left" : "anim-exit-right");
+
+        // Prepare new card at off-screen position
+        newCard.classList.remove(
+          "is-hidden",
+          "is-prev",
+          "is-next",
+          "is-active",
+        );
+        newCard.classList.remove(
+          "anim-enter-right",
+          "anim-enter-left",
+          "anim-exit-right",
+          "anim-exit-left",
+        );
+        newCard.classList.add(dir > 0 ? "anim-enter-right" : "anim-enter-left");
+
+        current = index;
+        render(true);
+
+        setTimeout(() => {
+          oldCard.classList.remove("anim-exit-left", "anim-exit-right");
+          newCard.classList.remove("anim-enter-right", "anim-enter-left");
+          animating = false;
+        }, 580);
+      }
+
+      function goPrev() {
+        goTo((current - 1 + templates.length) % templates.length, -1);
+      }
+      function goNext() {
+        goTo((current + 1) % templates.length, 1);
+      }
+
+      // ── Go to builder ─────────────────────────────────────────
+      function goToBuilder() {
+        localStorage.setItem("selectedTemplate", templates[current].id);
+        window.location.href = "builder.html";
+      }
+
+      // ── Bind controls ─────────────────────────────────────────
+      btnPrev.addEventListener("click", goPrev);
+      btnNext.addEventListener("click", goNext);
+      useBtn.addEventListener("click", goToBuilder);
+
+      // Keyboard
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") goPrev();
+        if (e.key === "ArrowRight") goNext();
+        if (e.key === "Enter") goToBuilder();
+      });
+
+      // Touch / swipe
+      let touchStartX = 0;
+      document.addEventListener(
+        "touchstart",
+        (e) => {
+          touchStartX = e.touches[0].clientX;
+        },
+        { passive: true },
+      );
+      document.addEventListener(
+        "touchend",
+        (e) => {
+          const dx = e.changedTouches[0].clientX - touchStartX;
+          if (Math.abs(dx) > 50) dx < 0 ? goNext() : goPrev();
+        },
+        { passive: true },
+      );
+
+      // Resize
+      window.addEventListener("resize", applyCardSizes);
+
+      // ── Init ──────────────────────────────────────────────────
+      applyCardSizes();
+      render();
+    </script>
+  </body>
+</html>
