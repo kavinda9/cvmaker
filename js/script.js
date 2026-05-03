@@ -7,7 +7,7 @@
 const TEMPLATES_DIR = "templates/";
 const DEBOUNCE_MS = 300;
 
-let currentTemplate = "cv001";
+let currentTemplate = localStorage.getItem("selectedTemplate") || "cv001";
 let templateHTML = "";
 let photoDataURL = ""; // base64 photo
 
