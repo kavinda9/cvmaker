@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CV</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        width: 794px;
+        min-height: 1123px;
+        background: #fff;
+        font-family: "Nunito", system-ui, sans-serif;
+        font-size: 12px;
+        color: #1a1814;
+        line-height: 1.55;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      body {
+        display: grid;
+        grid-template-columns: 230px 1fr;
+        min-height: 1123px;
+      }
+
+      .sidebar {
+        background: #2b2b3b;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 2rem;
+        min-height: 1123px;
+      }
+      .sidebar__top {
+        width: 100%;
+        background: #f5c518;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.8rem 0 0 0;
+        position: relative;
+        min-height: 170px;
+      }
+      .sidebar__photo-wrap {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 4px solid #f5c518;
+        background: #3a3a50;
+        overflow: hidden;
+        position: relative;
+        z-index: 2;
+        margin-bottom: -30px;
+        flex-shrink: 0;
+      }
+      .sidebar__photo-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        display: block;
+      }
+      .sidebar__arch {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        background: #2b2b3b;
+        border-radius: 50% 50% 0 0/100% 100% 0 0;
+        z-index: 1;
+      }
+      .sidebar__name-block {
+        margin-top: 40px;
+        padding: 0 1.25rem;
+        text-align: center;
+        width: 100%;
+      }
+      .sidebar__name {
+        font-size: 1.45rem;
+        font-weight: 800;
+        color: #f5c518;
+        letter-spacing: -0.01em;
+        line-height: 1.1;
+      }
+      .sidebar__title {
+        font-size: 0.72rem;
+        font-weight: 400;
+        color: #b0aec0;
+        margin-top: 0.3rem;
+        letter-spacing: 0.04em;
+      }
+
+      .sb-section {
+        width: 100%;
+        padding: 1.2rem 1.25rem 0;
+      }
+      .sb-section__head {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.6rem;
+      }
+      .sb-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: #f5c518;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        flex-shrink: 0;
+      }
+      .sb-section__title {
+        font-size: 0.78rem;
+        font-weight: 800;
+        color: #f5c518;
+        letter-spacing: 0.04em;
+        text-transform: capitalize;
+      }
+      .sb-rule {
+        width: 100%;
+        height: 1.5px;
+        background: #f5c518;
+        margin-bottom: 0.75rem;
+        border-radius: 1px;
+      }
+
+      .contact-item {
+        margin-bottom: 0.65rem;
+      }
+      .contact-item__label {
+        font-size: 0.6rem;
+        font-weight: 700;
+        color: #f5c518;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        line-height: 1;
+      }
+      .contact-item__value {
+        font-size: 0.68rem;
+        color: #d4d0e8;
+        word-break: break-all;
+        line-height: 1.4;
+      }
+
+      .skill-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.55rem;
+        gap: 0.5rem;
+      }
+      .skill-row__name {
+        font-size: 0.68rem;
+        color: #d4d0e8;
+        white-space: nowrap;
+        min-width: 60px;
+      }
+      .skill-bar-track {
+        flex: 1;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .skill-bar-fill {
+        height: 100%;
+        background: #f5c518;
+        border-radius: 99px;
+      }
+
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      .skill-tag {
+        display: inline-block;
+        padding: 2px 7px;
+        border-radius: 3px;
+        background: rgba(245, 197, 24, 0.12);
+        border: 1px solid rgba(245, 197, 24, 0.25);
+        color: #d4d0e8;
+        font-size: 0.6rem;
+        font-weight: 600;
+      }
+
+      .interest-item {
+        font-size: 0.68rem;
+        color: #d4d0e8;
+        padding: 0.2rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .interest-item::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #f5c518;
+        flex-shrink: 0;
+      }
+
+      .lang-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.45rem;
+      }
+      .lang-row__name {
+        font-size: 0.68rem;
+        color: #d4d0e8;
+      }
+      .lang-dots {
+        display: flex;
+        gap: 3px;
+      }
+      .lang-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .lang-dot.on {
+        background: #f5c518;
+      }
+
+      .cert-item {
+        margin-bottom: 0.55rem;
+      }
+      .cert-item__name {
+        font-size: 0.68rem;
+        color: #d4d0e8;
+        line-height: 1.4;
+        font-weight: 600;
+      }
+      .cert-item__year {
+        font-size: 0.6rem;
+        color: #f5c518;
+        letter-spacing: 0.06em;
+      }
+
+      .main {
+        background: #ffffff;
+        padding: 1.75rem 1.75rem 2rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.4rem;
+      }
+      .sec-head {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 0.7rem;
+      }
+      .sec-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #f5c518;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        flex-shrink: 0;
+      }
+      .sec-title {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #2b2b3b;
+        letter-spacing: -0.01em;
+      }
+      .sec-rule {
+        flex: 1;
+        height: 1.5px;
+        background: #e0ddd8;
+        border-radius: 1px;
+      }
+      .profile-text {
+        font-size: 0.75rem;
+        color: #4a4740;
+        line-height: 1.7;
+        text-align: justify;
+      }
+
+      .exp-entry {
+        display: flex;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+      .exp-entry:last-child {
+        margin-bottom: 0;
+      }
+      .exp-dot-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-shrink: 0;
+        margin-top: 3px;
+      }
+      .exp-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #f5c518;
+        flex-shrink: 0;
+      }
+      .exp-line {
+        width: 2px;
+        flex: 1;
+        background: #e8e5e0;
+        margin-top: 3px;
+        min-height: 16px;
+      }
+      .exp-body {
+        flex: 1;
+      }
+      .exp-role {
+        font-size: 0.8rem;
+        font-weight: 800;
+        color: #2b2b3b;
+        line-height: 1.2;
+      }
+      .exp-meta {
+        font-size: 0.66rem;
+        color: #7a7870;
+        margin-top: 1px;
+        line-height: 1.4;
+      }
+      .exp-bullets {
+        list-style: none;
+        margin-top: 0.35rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .exp-bullets li {
+        position: relative;
+        padding-left: 1rem;
+        font-size: 0.7rem;
+        color: #4a4740;
+        line-height: 1.6;
+      }
+      .exp-bullets li::before {
+        content: "–";
+        position: absolute;
+        left: 0;
+        color: #f5c518;
+        font-weight: 700;
+      }
+
+      .edu-entry {
+        margin-bottom: 0.85rem;
+      }
+      .edu-entry:last-child {
+        margin-bottom: 0;
+      }
+      .edu-degree {
+        font-size: 0.8rem;
+        font-weight: 800;
+        color: #2b2b3b;
+      }
+      .edu-meta {
+        font-size: 0.68rem;
+        color: #7a7870;
+        margin-top: 1px;
+      }
+      .edu-detail {
+        font-size: 0.66rem;
+        color: #9a9590;
+        margin-top: 1px;
+      }
+
+      .portfolio-entry {
+        margin-bottom: 0.75rem;
+      }
+      .portfolio-entry:last-child {
+        margin-bottom: 0;
+      }
+      .portfolio-title {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #2b2b3b;
+      }
+      .portfolio-desc {
+        font-size: 0.7rem;
+        color: #4a4740;
+        font-style: italic;
+        line-height: 1.6;
+        text-align: justify;
+      }
+
+      @media print {
+        html,
+        body {
+          width: 210mm;
+          min-height: 297mm;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar__top">
+        <div class="sidebar__photo-wrap">
+          {{#photo}}<img src="{{photo}}" alt="Profile photo" />{{/photo}}
+        </div>
+        <div class="sidebar__arch"></div>
+      </div>
+
+      <!-- Name & Title — falls back to Nina Lane if builder is empty -->
+      <div class="sidebar__name-block">
+        <div class="sidebar__name">{{firstName}} {{lastName}}</div>
+        <div class="sidebar__title">{{jobTitle}}</div>
+      </div>
+
+      <!-- Contact -->
+      <div class="sb-section">
+        <div class="sb-section__head">
+          <div class="sb-icon">📞</div>
+          <span class="sb-section__title">Contact</span>
+        </div>
+        <div class="sb-rule"></div>
+
+        <div class="contact-item">
+          <div class="contact-item__label">Email</div>
+          <div class="contact-item__value">{{email}}</div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item__label">Phone</div>
+          <div class="contact-item__value">{{phone}}</div>
+        </div>
+        {{#website}}
+        <div class="contact-item">
+          <div class="contact-item__label">Website</div>
+          <div class="contact-item__value">{{website}}</div>
+        </div>
+        {{/website}} {{#linkedin}}
+        <div class="contact-item">
+          <div class="contact-item__label">LinkedIn</div>
+          <div class="contact-item__value">{{linkedin}}</div>
+        </div>
+        {{/linkedin}} {{#location}}
+        <div class="contact-item">
+          <div class="contact-item__label">Location</div>
+          <div class="contact-item__value">{{location}}</div>
+        </div>
+        {{/location}}
+      </div>
+
+      <!-- Skills — skill bars from skillsTechnical array -->
+      {{#skillsTechnical}}
+      <div class="sb-section">
+        <div class="sb-section__head">
+          <div class="sb-icon">💡</div>
+          <span class="sb-section__title">Skills</span>
+        </div>
+        <div class="sb-rule"></div>
+        <div class="skill-tags">
+          {{#skillsTechnical}}<span class="skill-tag">{{.}}</span
+          >{{/skillsTechnical}}
+        </div>
+      </div>
+      {{/skillsTechnical}}
+
+      <!-- Tools -->
+      {{#skillsTools}}
+      <div class="sb-section">
+        <div class="sb-section__head">
+          <div class="sb-icon">🔧</div>
+          <span class="sb-section__title">Tools</span>
+        </div>
+        <div class="sb-rule"></div>
+        <div class="skill-tags">
+          {{#skillsTools}}<span class="skill-tag">{{.}}</span>{{/skillsTools}}
+        </div>
+      </div>
+      {{/skillsTools}}
+
+      <!-- Languages -->
+      {{#languages}}
+      <div class="sb-section">
+        <div class="sb-section__head">
+          <div class="sb-icon">🌐</div>
+          <span class="sb-section__title">Languages</span>
+        </div>
+        <div class="sb-rule"></div>
+        {{#languages}}
+        <div class="lang-row">
+          <span class="lang-row__name">{{name}}</span>
+          <div class="lang-dots">
+            <div class="lang-dot {{l1}}"></div>
+            <div class="lang-dot {{l2}}"></div>
+            <div class="lang-dot {{l3}}"></div>
+            <div class="lang-dot {{l4}}"></div>
+            <div class="lang-dot {{l5}}"></div>
+          </div>
+        </div>
+        {{/languages}}
+      </div>
+      {{/languages}}
+
+      <!-- Interests -->
+      {{#interests}}
+      <div class="sb-section">
+        <div class="sb-section__head">
+          <div class="sb-icon">❤️</div>
+          <span class="sb-section__title">Interests</span>
+        </div>
+        <div class="sb-rule"></div>
+        {{#interests}}
+        <div class="interest-item">{{.}}</div>
+        {{/interests}}
+      </div>
+      {{/interests}}
+
+      <!-- Certifications -->
+      {{#certifications}}
+      <div class="sb-section">
+        <div class="sb-section__head">
+          <div class="sb-icon">🏆</div>
+          <span class="sb-section__title">Certifications</span>
+        </div>
+        <div class="sb-rule"></div>
+        {{#certifications}}
+        <div class="cert-item">
+          <div class="cert-item__name">{{name}}</div>
+          <div class="cert-item__year">{{year}}</div>
+        </div>
+        {{/certifications}}
+      </div>
+      {{/certifications}}
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <!-- Profile -->
+      <section>
+        <div class="sec-head">
+          <div class="sec-icon">👤</div>
+          <span class="sec-title">Profile</span>
+          <div class="sec-rule"></div>
+        </div>
+        <p class="profile-text">{{summary}}</p>
+      </section>
+
+      <!-- Experience -->
+      {{#experience}}
+      <section>
+        <div class="sec-head">
+          <div class="sec-icon">💼</div>
+          <span class="sec-title">Experience</span>
+          <div class="sec-rule"></div>
+        </div>
+        {{#experience}}
+        <div class="exp-entry">
+          <div class="exp-dot-col">
+            <div class="exp-dot"></div>
+            <div class="exp-line"></div>
+          </div>
+          <div class="exp-body">
+            <div class="exp-role">{{role}}</div>
+            <div class="exp-meta">
+              {{company}}{{#location}} | {{location}}{{/location}}<br />
+              {{startDate}}{{#endDate}} – {{endDate}}{{/endDate}}
+            </div>
+            {{#bullets}}
+            <ul class="exp-bullets">
+              {{#bullets}}
+              <li>{{.}}</li>
+              {{/bullets}}
+            </ul>
+            {{/bullets}}
+          </div>
+        </div>
+        {{/experience}}
+      </section>
+      {{/experience}}
+
+      <!-- Education -->
+      {{#education}}
+      <section>
+        <div class="sec-head">
+          <div class="sec-icon">🎓</div>
+          <span class="sec-title">Education</span>
+          <div class="sec-rule"></div>
+        </div>
+        {{#education}}
+        <div class="edu-entry">
+          <div class="edu-degree">{{degree}}</div>
+          <div class="edu-meta">
+            {{school}}{{#location}} | {{location}}{{/location}}
+          </div>
+          <div class="edu-detail">
+            {{year}}{{#detail}} · {{detail}}{{/detail}}
+          </div>
+        </div>
+        {{/education}}
+      </section>
+      {{/education}}
+    </main>
+  </body>
+</html>

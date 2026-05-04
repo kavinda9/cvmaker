@@ -1809,9 +1809,11 @@
           scheduleUpdate();
         } catch (e) {
           console.error("[CV Maker] loadTemplate failed:", e);
-          updateIframe(
-            `<body style="padding:40px;font-family:sans-serif;color:#666"><h2>Template not found</h2><p>Make sure <strong>templates/${name}.html</strong> exists.</p></body>`,
-          );
+          const errHTML =
+            "<body style='padding:40px;font-family:sans-serif;color:#666'><h2>Template not found</h2><p>Make sure <strong>templates/" +
+            name +
+            ".html<\/strong> exists.<\/p><\/body>";
+          updateIframe(errHTML);
         }
       }
 
@@ -1961,9 +1963,12 @@
 
       function injectCustomStyles(html) {
         const font = FONTS[currentFont];
+        const styleTag = "<" + "style>";
+        const closeStyle = "<" + "/style>";
+        const closeHead = "<" + "/head>";
         const style = `
       <link rel="stylesheet" href="${font.url}" />
-      <style>
+      ${styleTag}
         :root {
           --cv-accent: ${accentColor} !important;
           --cv-accent-dim: ${accentColor}22 !important;
@@ -1974,9 +1979,9 @@
         .cv-header__name, .cv-section-title, [class*="display"], h1, h2, h3 {
           font-family: ${font.display} !important;
         }
-      </style>
+      ${closeStyle}
     `;
-        return html.replace("</head>", style + "</head>");
+        return html.replace(closeHead, style + closeHead);
       }
 
       function updateIframe(html) {
