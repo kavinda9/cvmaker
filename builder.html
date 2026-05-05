@@ -1497,39 +1497,25 @@
             </div>
           </div>
           <div class="cbar-group">
-            <span class="cbar-label">Font</span>
+            <span class="cbar-label">Header Font</span>
             <div class="font-select-wrap">
-              <select class="font-select" id="font-select">
-                <option
-                  value="playfair"
-                  style="font-family: &quot;Playfair Display&quot;, serif"
-                >
-                  Playfair Display
-                </option>
-                <option
-                  value="lato"
-                  style="font-family: &quot;Lato&quot;, sans-serif"
-                >
-                  Lato
-                </option>
-                <option
-                  value="merriweather"
-                  style="font-family: &quot;Merriweather&quot;, serif"
-                >
-                  Merriweather
-                </option>
-                <option
-                  value="raleway"
-                  style="font-family: &quot;Raleway&quot;, sans-serif"
-                >
-                  Raleway
-                </option>
-                <option
-                  value="source"
-                  style="font-family: &quot;Source Sans 3&quot;, sans-serif"
-                >
-                  Source Sans 3
-                </option>
+              <select class="font-select" id="header-font-select">
+                <option value="playfair">Playfair Display</option>
+                <option value="lato">Lato</option>
+                <option value="merriweather">Merriweather</option>
+                <option value="raleway">Raleway</option>
+                <option value="source">Source Sans 3</option>
+              </select>
+            </div>
+          </div>
+          <div class="cbar-group">
+            <span class="cbar-label">Body Font</span>
+            <div class="font-select-wrap">
+              <select class="font-select" id="body-font-select">
+                <option value="dmSans">DM Sans</option>
+                <option value="lato">Lato</option>
+                <option value="raleway">Raleway</option>
+                <option value="source">Source Sans 3</option>
               </select>
             </div>
           </div>
@@ -1739,28 +1725,27 @@
       const FONTS = {
         playfair: {
           display: "'Playfair Display', Georgia, serif",
-          body: "'DM Sans', system-ui, sans-serif",
-          url: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap",
-        },
-        lato: {
-          display: "'Lato', sans-serif",
-          body: "'Lato', sans-serif",
-          url: "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",
+          url: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap",
         },
         merriweather: {
           display: "'Merriweather', Georgia, serif",
-          body: "'Lato', sans-serif",
-          url: "https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lato:wght@300;400&display=swap",
+          url: "https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap",
+        },
+        lato: {
+          display: "'Lato', sans-serif",
+          url: "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",
         },
         raleway: {
           display: "'Raleway', sans-serif",
-          body: "'Raleway', sans-serif",
           url: "https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&display=swap",
         },
         source: {
           display: "'Source Sans 3', sans-serif",
-          body: "'Source Sans 3', sans-serif",
           url: "https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap",
+        },
+        dmSans: {
+          display: "'DM Sans', system-ui, sans-serif",
+          url: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap",
         },
       };
 
@@ -1769,7 +1754,8 @@
       let templateHTML = "";
       let photoDataURL = "";
       let accentColor = "#c94a1f";
-      let currentFont = "playfair";
+      let currentHeaderFont = "playfair";
+      let currentBodyFont = "dmSans";
       let debounceTimer = null;
 
       // ── Elements ──────────────────────────────────────────────
@@ -1781,6 +1767,85 @@
       // ══════════════════════════════════════════════════════════
       //  BOOT
       // ══════════════════════════════════════════════════════════
+      // Default data for Nina
+      const DEFAULT_DATA = {
+        firstName: "Nina",
+        lastName: "Lane",
+        jobTitle: "Product Designer",
+        email: "nina.lane@email.com",
+        phone: "+1 555 123 4567",
+        location: "San Francisco, CA",
+        linkedin: "linkedin.com/in/ninalane",
+        website: "ninalane.com",
+        summary:
+          "Creative and detail-oriented Product Designer with 7+ years of experience crafting user-centric digital experiences. Passionate about design systems, accessibility, and cross-functional collaboration.",
+        skillsTechnical: [
+          "Figma",
+          "Sketch",
+          "Adobe XD",
+          "HTML",
+          "CSS",
+          "JavaScript",
+        ],
+        skillsTools: ["Jira", "Notion", "Slack"],
+        interests: ["Travel", "Photography", "Yoga"],
+        photo: "",
+        experience: [
+          {
+            role: "Lead Product Designer",
+            company: "Acme Inc.",
+            location: "Remote",
+            startDate: "2022",
+            endDate: "Present",
+            bullets: [
+              "Led design for Acme's flagship SaaS platform.",
+              "Mentored 3 junior designers.",
+              "Collaborated with PMs and engineers to ship 10+ features.",
+            ],
+          },
+          {
+            role: "Product Designer",
+            company: "Beta Studio",
+            location: "San Francisco, CA",
+            startDate: "2019",
+            endDate: "2022",
+            bullets: [
+              "Redesigned mobile app, increasing NPS by 25%.",
+              "Ran user research and usability tests.",
+            ],
+          },
+        ],
+        education: [
+          {
+            degree: "BFA Graphic Design",
+            school: "ArtCenter College of Design",
+            year: "2017",
+            detail: "Graduated with Honors",
+          },
+        ],
+        languages: [
+          {
+            name: "English",
+            level: 5,
+            l1: "on",
+            l2: "on",
+            l3: "on",
+            l4: "on",
+            l5: "on",
+          },
+          {
+            name: "Spanish",
+            level: 3,
+            l1: "on",
+            l2: "on",
+            l3: "on",
+            l4: "",
+            l5: "",
+          },
+        ],
+        certifications: [{ name: "UX Certified (NN/g)", year: "2021" }],
+      };
+
       document.addEventListener("DOMContentLoaded", () => {
         loadTemplate(currentTemplate);
         bindAccordions();
@@ -1788,7 +1853,7 @@
         bindDynamicAddButtons();
         bindPhotoUpload();
         bindColorPicker();
-        bindFontSelect();
+        bindFontSelects();
         bindChangeTplButton();
         initModal();
         bindDownload();
@@ -1796,6 +1861,7 @@
         addEntry("education");
         fitScale();
         window.addEventListener("resize", fitScale);
+        scheduleUpdate();
       });
 
       // ══════════════════════════════════════════════════════════
@@ -1821,50 +1887,75 @@
       //  DATA COLLECTION
       // ══════════════════════════════════════════════════════════
       function collectData() {
-        const data = {};
+        // Start with a deep copy of DEFAULT_DATA
+        const data = JSON.parse(JSON.stringify(DEFAULT_DATA));
         document.querySelectorAll("[data-token]").forEach((el) => {
-          data[el.dataset.token] = el.value.trim();
+          const v = el.value.trim();
+          if (v) data[el.dataset.token] = v;
         });
-        data.skillsTechnical = splitComma(data.skillsTechnical);
-        data.skillsTools = splitComma(data.skillsTools);
-        data.interests = splitComma(data.interests);
-        data.photo = photoDataURL || "";
-        data.experience = collectEntries("experience", (e) => ({
-          role: val(e, "role"),
-          company: val(e, "company"),
-          location: val(e, "location"),
-          startDate: val(e, "startDate"),
-          endDate: val(e, "endDate"),
-          bullets: val(e, "bullets")
-            .split("\n")
-            .map((s) => s.trim())
-            .filter(Boolean),
-        }));
-        data.education = collectEntries("education", (e) => ({
-          degree: val(e, "degree"),
-          school: val(e, "school"),
-          year: val(e, "year"),
-          detail: val(e, "detail"),
-        }));
-        data.languages = collectEntries("language", (e) => {
-          const level = Math.min(
-            5,
-            Math.max(1, parseInt(val(e, "level")) || 3),
-          );
-          return {
-            name: val(e, "name"),
-            level,
-            l1: level >= 1 ? "on" : "",
-            l2: level >= 2 ? "on" : "",
-            l3: level >= 3 ? "on" : "",
-            l4: level >= 4 ? "on" : "",
-            l5: level >= 5 ? "on" : "",
-          };
+        // Overwrite arrays if user input exists
+        const arrFields = [
+          { key: "skillsTechnical", id: "f-skillsTechnical" },
+          { key: "skillsTools", id: "f-skillsTools" },
+          { key: "interests", id: "f-interests" },
+        ];
+        arrFields.forEach(({ key, id }) => {
+          const el = document.getElementById(id);
+          if (el && el.value.trim()) data[key] = splitComma(el.value);
         });
-        data.certifications = collectEntries("certification", (e) => ({
-          name: val(e, "name"),
-          year: val(e, "year"),
-        }));
+        data.photo = photoDataURL || data.photo;
+        // Dynamic entries
+        const dyns = [
+          { key: "experience", type: "experience" },
+          { key: "education", type: "education" },
+          { key: "languages", type: "language" },
+          { key: "certifications", type: "certification" },
+        ];
+        dyns.forEach(({ key, type }) => {
+          const entries = collectEntries(type, (e) => {
+            if (type === "experience") {
+              return {
+                role: val(e, "role"),
+                company: val(e, "company"),
+                location: val(e, "location"),
+                startDate: val(e, "startDate"),
+                endDate: val(e, "endDate"),
+                bullets: val(e, "bullets")
+                  .split("\n")
+                  .map((s) => s.trim())
+                  .filter(Boolean),
+              };
+            } else if (type === "education") {
+              return {
+                degree: val(e, "degree"),
+                school: val(e, "school"),
+                year: val(e, "year"),
+                detail: val(e, "detail"),
+              };
+            } else if (type === "language") {
+              const level = Math.min(
+                5,
+                Math.max(1, parseInt(val(e, "level")) || 3),
+              );
+              return {
+                name: val(e, "name"),
+                level,
+                l1: level >= 1 ? "on" : "",
+                l2: level >= 2 ? "on" : "",
+                l3: level >= 3 ? "on" : "",
+                l4: level >= 4 ? "on" : "",
+                l5: level >= 5 ? "on" : "",
+              };
+            } else if (type === "certification") {
+              return {
+                name: val(e, "name"),
+                year: val(e, "year"),
+              };
+            }
+            return {};
+          });
+          if (entries.length) data[key] = entries;
+        });
         return data;
       }
 
@@ -1962,22 +2053,22 @@
       }
 
       function injectCustomStyles(html) {
-        const font = FONTS[currentFont];
+        // Header and body font URLs
+        const headerFont = FONTS[currentHeaderFont] || FONTS.playfair;
+        const bodyFont = FONTS[currentBodyFont] || FONTS.dmSans;
         const styleTag = "<" + "style>";
         const closeStyle = "<" + "/style>";
         const closeHead = "<" + "/head>";
         const style = `
-      <link rel="stylesheet" href="${font.url}" />
+      <link rel="stylesheet" href="${headerFont.url}" />
+      <link rel="stylesheet" href="${bodyFont.url}" />
       ${styleTag}
         :root {
-          --cv-accent: ${accentColor} !important;
-          --cv-accent-dim: ${accentColor}22 !important;
-          --cv-font-display: ${font.display} !important;
-          --cv-font-body: ${font.body} !important;
+          --accent-color: ${accentColor} !important;
         }
-        body, html { font-family: ${font.body} !important; }
-        .cv-header__name, .cv-section-title, [class*="display"], h1, h2, h3 {
-          font-family: ${font.display} !important;
+        body, html { font-family: ${bodyFont.display} !important; }
+        .sidebar__name, .sb-section__title, .sec-title, h1, h2, h3 {
+          font-family: ${headerFont.display} !important;
         }
       ${closeStyle}
     `;
@@ -2134,29 +2225,42 @@
       // ══════════════════════════════════════════════════════════
       //  FONT SELECT
       // ══════════════════════════════════════════════════════════
-      function bindFontSelect() {
-        const sel = document.getElementById("font-select");
-        if (!sel) return;
+      function bindFontSelects() {
+        const headerSel = document.getElementById("header-font-select");
+        const bodySel = document.getElementById("body-font-select");
+        if (!headerSel || !bodySel) return;
 
-        // Set font-family on each option so user sees it styled
-        sel.querySelectorAll("option").forEach((opt) => {
+        headerSel.querySelectorAll("option").forEach((opt) => {
+          const f = FONTS[opt.value];
+          if (f) opt.style.fontFamily = f.display;
+        });
+        bodySel.querySelectorAll("option").forEach((opt) => {
           const f = FONTS[opt.value];
           if (f) opt.style.fontFamily = f.display;
         });
 
-        // Update select's own font to match selection
-        const applySelectFont = () => {
-          const f = FONTS[sel.value];
-          if (f) sel.style.fontFamily = f.display;
+        const applyHeaderFont = () => {
+          const f = FONTS[headerSel.value];
+          if (f) headerSel.style.fontFamily = f.display;
+        };
+        const applyBodyFont = () => {
+          const f = FONTS[bodySel.value];
+          if (f) bodySel.style.fontFamily = f.display;
         };
 
-        sel.addEventListener("change", () => {
-          currentFont = sel.value;
-          applySelectFont();
+        headerSel.addEventListener("change", () => {
+          currentHeaderFont = headerSel.value;
+          applyHeaderFont();
+          scheduleUpdate();
+        });
+        bodySel.addEventListener("change", () => {
+          currentBodyFont = bodySel.value;
+          applyBodyFont();
           scheduleUpdate();
         });
 
-        applySelectFont();
+        applyHeaderFont();
+        applyBodyFont();
       }
 
       // ══════════════════════════════════════════════════════════
