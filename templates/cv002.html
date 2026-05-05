@@ -21,6 +21,8 @@
       html,
       body {
         width: 794px;
+        height: 1123px;
+        max-height: 1123px;
         min-height: 1123px;
         background: #fff;
         font-family: "Nunito", system-ui, sans-serif;
@@ -29,11 +31,15 @@
         line-height: 1.55;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+        overflow: hidden !important;
       }
       body {
         display: grid;
         grid-template-columns: 230px 1fr;
+        height: 1123px;
+        max-height: 1123px;
         min-height: 1123px;
+        overflow: hidden !important;
       }
 
       .sidebar {
