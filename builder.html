@@ -150,6 +150,24 @@
         color: var(--accent);
       }
 
+      @media (max-width: 768px) {
+        .btn-toggle-preview {
+          display: inline-flex;
+        }
+        .workspace {
+          grid-template-columns: 1fr;
+        }
+        .panel--preview {
+          display: none;
+        }
+        .workspace.show-preview .panel--form {
+          display: none;
+        }
+        .workspace.show-preview .panel--preview {
+          display: flex;
+        }
+      }
+
       .btn-download {
         display: inline-flex;
         align-items: center;
@@ -1862,6 +1880,13 @@
         fitScale();
         window.addEventListener("resize", fitScale);
         scheduleUpdate();
+        document
+          .getElementById("btn-toggle-preview")
+          ?.addEventListener("click", () => {
+            document
+              .querySelector(".workspace")
+              .classList.toggle("show-preview");
+          });
       });
 
       // ══════════════════════════════════════════════════════════
