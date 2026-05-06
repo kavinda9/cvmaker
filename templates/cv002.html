@@ -1,559 +1,582 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nina Lane - Resume</title>
-<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nina Lane - Resume</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-  :root {
-    /* A4 = 210mm x 297mm. We use cm units for precision.
+      :root {
+        /* A4 = 210mm x 297mm. We use cm units for precision.
        User coordinate system: origin = bottom-left, x = horizontal, y = vertical
        CSS origin = top-left, so:  css-top = (30 - user_from_bottom) cm
        Full width = 21cm, left panel = 8.2cm, right panel = 12.8cm (starts at 8.2cm) */
-    --yellow: #F5C518;
-    --dark: #1E2330;
-    --dark2: #252A3A;
-    --white: #FFFFFF;
-    --light-gray: #E0E0E0;
-    --text-body: #333333;
-    --accent: #F5C518;
-  }
+        --yellow: #f5c518;
+        --dark: #1e2330;
+        --dark2: #252a3a;
+        --white: #ffffff;
+        --light-gray: #e0e0e0;
+        --text-body: #333333;
+        --accent: #f5c518;
+      }
 
-  html, body {
-    width: 21cm;
-    height: 30cm;
-    margin: 0 auto;
-    font-family: 'Open Sans', sans-serif;
-    background: #f0f0f0;
-  }
+      html,
+      body {
+        width: 21cm;
+        height: 30cm;
+        margin: 0 auto;
+        font-family: "Open Sans", sans-serif;
+        background: #f0f0f0;
+      }
 
-  .page {
-    width: 21cm;
-    height: 30cm;
-    position: relative;
-    overflow: hidden;
-    background: #fff;
-    display: flex;
-  }
+      .page {
+        width: 21cm;
+        height: 30cm;
+        position: relative;
+        overflow: hidden;
+        background: #fff;
+        display: flex;
+      }
 
-  /* ─────────────────────────────────────────
+      /* ─────────────────────────────────────────
      LEFT PANEL  width = 8.2cm
   ───────────────────────────────────────── */
-  .left {
-    width: 8.2cm;
-    height: 30cm;
-    background: var(--dark);
-    position: relative;
-    flex-shrink: 0;
-    z-index: 1;
-  }
+      .left {
+        width: 8.2cm;
+        height: 30cm;
+        background: var(--dark);
+        position: relative;
+        flex-shrink: 0;
+        z-index: 1;
+      }
 
-  /* Yellow top cap — ends exactly at circle center: y=25.5 from bottom → top=4.5cm */
-  .left-top-cap {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: calc(30cm - 25.5cm);   /* = 4.5cm */
-    background: var(--yellow);
-    z-index: 0;
-  }
+      /* Yellow top cap — ends exactly at circle center: y=25.5 from bottom → top=4.5cm */
+      .left-top-cap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(30cm - 25.5cm); /* = 4.5cm */
+        background: var(--yellow);
+        z-index: 0;
+      }
 
-  /* Profile photo circle
+      /* Profile photo circle
      center at (3.8, 25.5) from bottom-left of full page
      In left panel coords: cx = 3.8cm, cy = 30 - 25.5 = 4.5cm from top
      r = 2.6cm → diameter = 5.2cm */
-  .profile-photo {
-    position: absolute;
-    left: calc(3.8cm - 2.6cm);   /* cx - r */
-    top: calc(30cm - 25.5cm - 2.6cm); /* (30 - y) - r = 4.5cm - 2.6cm = 1.9cm */
-    width: 5.2cm;
-    height: 5.2cm;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 4px solid var(--dark);
-    z-index: 2;
-    background: #888;
-  }
-  .profile-photo img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-  }
-  .profile-photo-placeholder {
-    width: 100%; height: 100%;
-    background: linear-gradient(135deg, #9ab, #678);
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 0.9cm; font-weight: 700;
-  }
+      .profile-photo {
+        position: absolute;
+        left: calc(3.8cm - 2.6cm); /* cx - r */
+        top: calc(
+          30cm - 25.5cm - 2.6cm
+        ); /* (30 - y) - r = 4.5cm - 2.6cm = 1.9cm */
+        width: 5.2cm;
+        height: 5.2cm;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 4px solid var(--dark);
+        z-index: 2;
+        background: #888;
+      }
+      .profile-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .profile-photo-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #9ab, #678);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 0.9cm;
+        font-weight: 700;
+      }
 
-  /* Name line: 21.2cm from bottom → top = 30 - 21.2 = 8.8cm */
-  .name-block {
-    position: absolute;
-    top: calc(30cm - 21.2cm);   /* 8.8cm */
-    left: 0;
-    width: 100%;
-    padding: 0 0.5cm;
-    z-index: 2;
-  }
-  .name-block h1 {
-    font-family: 'Raleway', sans-serif;
-    font-size: 0.62cm;
-    font-weight: 800;
-    color: var(--yellow);
-    line-height: 1.2;
-    letter-spacing: 0.5px;
-  }
-  .name-block .title {
-    font-size: 0.32cm;
-    color: #aaa;
-    margin-top: 0.1cm;
-    font-weight: 400;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
+      /* Name line: 21.2cm from bottom → top = 30 - 21.2 = 8.8cm */
+      .name-block {
+        position: absolute;
+        top: calc(30cm - 21.2cm); /* 8.8cm */
+        left: 0;
+        width: 100%;
+        padding: 0 0.5cm;
+        z-index: 2;
+      }
+      .name-block h1 {
+        font-family: "Raleway", sans-serif;
+        font-size: 0.62cm;
+        font-weight: 800;
+        color: var(--yellow);
+        line-height: 1.2;
+        letter-spacing: 0.5px;
+      }
+      .name-block .title {
+        font-size: 0.32cm;
+        color: #aaa;
+        margin-top: 0.1cm;
+        font-weight: 400;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
 
-  /* Contact section: 17.7cm from bottom → top = 30 - 17.7 = 12.3cm */
-  .contact-section {
-    position: absolute;
-    top: calc(30cm - 17.7cm);   /* 12.3cm */
-    left: 0;
-    width: 100%;
-    padding: 0 0.45cm;
-    z-index: 2;
-  }
+      /* Contact section: 17.7cm from bottom → top = 30 - 17.7 = 12.3cm */
+      .contact-section {
+        position: absolute;
+        top: calc(30cm - 17.7cm); /* 12.3cm */
+        left: 0;
+        width: 100%;
+        padding: 0 0.45cm;
+        z-index: 2;
+      }
 
-  /* Skills section: 10.2cm from bottom → top = 30 - 10.2 = 19.8cm */
-  .skills-section {
-    position: absolute;
-    top: calc(30cm - 10.2cm);   /* 19.8cm */
-    left: 0;
-    width: 100%;
-    padding: 0 0.45cm;
-    z-index: 2;
-  }
+      /* Skills section: 10.2cm from bottom → top = 30 - 10.2 = 19.8cm */
+      .skills-section {
+        position: absolute;
+        top: calc(30cm - 10.2cm); /* 19.8cm */
+        left: 0;
+        width: 100%;
+        padding: 0 0.45cm;
+        z-index: 2;
+      }
 
-  /* Interests section: 4.6cm from bottom → top = 30 - 4.6 = 25.4cm */
-  .interests-section {
-    position: absolute;
-    top: calc(30cm - 4.6cm);    /* 25.4cm */
-    left: 0;
-    width: 100%;
-    padding: 0 0.45cm;
-    z-index: 2;
-  }
+      /* Interests section: 4.6cm from bottom → top = 30 - 4.6 = 25.4cm */
+      .interests-section {
+        position: absolute;
+        top: calc(30cm - 4.6cm); /* 25.4cm */
+        left: 0;
+        width: 100%;
+        padding: 0 0.45cm;
+        z-index: 2;
+      }
 
-  /* Shared section heading style (left panel) */
-  .section-heading-left {
-    display: flex;
-    align-items: center;
-    gap: 0.2cm;
-    margin-bottom: 0.2cm;
-  }
-  .section-heading-left .icon-circle {
-    width: 0.55cm; height: 0.55cm;
-    border-radius: 50%;
-    background: var(--yellow);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .section-heading-left .icon-circle svg {
-    width: 0.32cm; height: 0.32cm;
-    fill: var(--dark);
-  }
-  .section-heading-left h2 {
-    font-family: 'Raleway', sans-serif;
-    font-size: 0.42cm;
-    font-weight: 700;
-    color: var(--yellow);
-    letter-spacing: 0.5px;
-  }
-  .section-divider-left {
-    width: 100%;
-    height: 1px;
-    background: #444;
-    margin-bottom: 0.22cm;
-  }
+      /* Shared section heading style (left panel) */
+      .section-heading-left {
+        display: flex;
+        align-items: center;
+        gap: 0.2cm;
+        margin-bottom: 0.2cm;
+      }
+      .section-heading-left .icon-circle {
+        width: 0.55cm;
+        height: 0.55cm;
+        border-radius: 50%;
+        background: var(--yellow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .section-heading-left .icon-circle svg {
+        width: 0.32cm;
+        height: 0.32cm;
+        fill: var(--dark);
+      }
+      .section-heading-left h2 {
+        font-family: "Raleway", sans-serif;
+        font-size: 0.42cm;
+        font-weight: 700;
+        color: var(--yellow);
+        letter-spacing: 0.5px;
+      }
+      .section-divider-left {
+        width: 100%;
+        height: 1px;
+        background: #444;
+        margin-bottom: 0.22cm;
+      }
 
-  /* Contact items */
-  .contact-label {
-    font-size: 0.26cm;
-    color: var(--yellow);
-    font-weight: 600;
-    margin-bottom: 0.04cm;
-    margin-top: 0.14cm;
-  }
-  .contact-value {
-    font-size: 0.28cm;
-    color: #ccc;
-  }
+      /* Contact items */
+      .contact-label {
+        font-size: 0.26cm;
+        color: var(--yellow);
+        font-weight: 600;
+        margin-bottom: 0.04cm;
+        margin-top: 0.14cm;
+      }
+      .contact-value {
+        font-size: 0.28cm;
+        color: #ccc;
+      }
 
-  /* Skill bars */
-  .skill-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.18cm;
-  }
-  .skill-name {
-    font-size: 0.29cm;
-    color: #ddd;
-    width: 2.2cm;
-  }
-  .skill-bar-bg {
-    width: 3cm;
-    height: 0.12cm;
-    background: #444;
-    border-radius: 2px;
-    overflow: visible;
-  }
-  .skill-bar-fill {
-    height: 0.12cm;
-    background: var(--yellow);
-    border-radius: 2px;
-  }
+      /* Skill bars */
+      .skill-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.18cm;
+      }
+      .skill-name {
+        font-size: 0.29cm;
+        color: #ddd;
+        width: 2.2cm;
+      }
+      .skill-bar-bg {
+        width: 3cm;
+        height: 0.12cm;
+        background: #444;
+        border-radius: 2px;
+        overflow: visible;
+      }
+      .skill-bar-fill {
+        height: 0.12cm;
+        background: var(--yellow);
+        border-radius: 2px;
+      }
 
-  /* Interests */
-  .interest-item {
-    font-size: 0.28cm;
-    color: #ccc;
-    margin-bottom: 0.12cm;
-  }
+      /* Interests */
+      .interest-item {
+        font-size: 0.28cm;
+        color: #ccc;
+        margin-bottom: 0.12cm;
+      }
 
-  /* ─────────────────────────────────────────
+      /* ─────────────────────────────────────────
      RIGHT PANEL  width = 12.8cm
   ───────────────────────────────────────── */
-  .right {
-    width: 12.8cm;
-    height: 30cm;
-    background: #fff;
-    position: relative;
-    padding: 0.5cm 0.6cm;
-  }
+      .right {
+        width: 12.8cm;
+        height: 30cm;
+        background: #fff;
+        position: relative;
+        padding: 0.5cm 0.6cm;
+      }
 
-  /* Right panel sections anchored from bottom of PAGE.
+      /* Right panel sections anchored from bottom of PAGE.
      CSS top = 30cm - user_from_bottom */
 
-  /* Profile: 27.6cm from bottom → top = 2.4cm */
-  .r-profile {
-    position: absolute;
-    top: calc(30cm - 27.6cm);   /* 2.4cm */
-    left: 0.6cm;
-    right: 0.5cm;
-  }
+      /* Profile: 27.6cm from bottom → top = 2.4cm */
+      .r-profile {
+        position: absolute;
+        top: calc(30cm - 27.6cm); /* 2.4cm */
+        left: 0.6cm;
+        right: 0.5cm;
+      }
 
-  /* Experience: 21.2cm from bottom → top = 8.8cm */
-  .r-experience {
-    position: absolute;
-    top: calc(30cm - 21.2cm);   /* 8.8cm */
-    left: 0.6cm;
-    right: 0.5cm;
-  }
+      /* Experience: 21.2cm from bottom → top = 8.8cm */
+      .r-experience {
+        position: absolute;
+        top: calc(30cm - 21.2cm); /* 8.8cm */
+        left: 0.6cm;
+        right: 0.5cm;
+      }
 
-  /* Education: 10.8cm from bottom → top = 19.2cm */
-  .r-education {
-    position: absolute;
-    top: calc(30cm - 10.8cm);   /* 19.2cm */
-    left: 0.6cm;
-    right: 0.5cm;
-  }
+      /* Education: 10.8cm from bottom → top = 19.2cm */
+      .r-education {
+        position: absolute;
+        top: calc(30cm - 10.8cm); /* 19.2cm */
+        left: 0.6cm;
+        right: 0.5cm;
+      }
 
-  /* Portfolio: 6.5cm from bottom → top = 23.5cm */
-  .r-portfolio {
-    position: absolute;
-    top: calc(30cm - 6.5cm);    /* 23.5cm */
-    left: 0.6cm;
-    right: 0.5cm;
-  }
+      /* Portfolio: 6.5cm from bottom → top = 23.5cm */
+      .r-portfolio {
+        position: absolute;
+        top: calc(30cm - 6.5cm); /* 23.5cm */
+        left: 0.6cm;
+        right: 0.5cm;
+      }
 
-  /* Right section headings */
-  .section-heading-right {
-    display: flex;
-    align-items: center;
-    gap: 0.22cm;
-    margin-bottom: 0.15cm;
-  }
-  .section-heading-right .icon-circle {
-    width: 0.6cm; height: 0.6cm;
-    border-radius: 50%;
-    background: var(--yellow);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .section-heading-right .icon-circle svg {
-    width: 0.35cm; height: 0.35cm;
-    fill: var(--dark);
-  }
-  .section-heading-right h2 {
-    font-family: 'Raleway', sans-serif;
-    font-size: 0.52cm;
-    font-weight: 700;
-    color: var(--dark);
-    letter-spacing: 0.3px;
-  }
-  .section-divider-right {
-    width: 100%;
-    height: 1.5px;
-    background: var(--light-gray);
-    margin-bottom: 0.22cm;
-  }
+      /* Right section headings */
+      .section-heading-right {
+        display: flex;
+        align-items: center;
+        gap: 0.22cm;
+        margin-bottom: 0.15cm;
+      }
+      .section-heading-right .icon-circle {
+        width: 0.6cm;
+        height: 0.6cm;
+        border-radius: 50%;
+        background: var(--yellow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .section-heading-right .icon-circle svg {
+        width: 0.35cm;
+        height: 0.35cm;
+        fill: var(--dark);
+      }
+      .section-heading-right h2 {
+        font-family: "Raleway", sans-serif;
+        font-size: 0.52cm;
+        font-weight: 700;
+        color: var(--dark);
+        letter-spacing: 0.3px;
+      }
+      .section-divider-right {
+        width: 100%;
+        height: 1.5px;
+        background: var(--light-gray);
+        margin-bottom: 0.22cm;
+      }
 
-  /* Profile text */
-  .profile-text {
-    font-size: 0.29cm;
-    color: #555;
-    line-height: 1.6;
-    text-align: justify;
-  }
+      /* Profile text */
+      .profile-text {
+        font-size: 0.29cm;
+        color: #555;
+        line-height: 1.6;
+        text-align: justify;
+      }
 
-  /* Experience items */
-  .exp-item {
-    display: flex;
-    gap: 0.22cm;
-    margin-bottom: 0.25cm;
-  }
-  .exp-dot {
-    margin-top: 0.1cm;
-    width: 0.25cm; height: 0.25cm;
-    border-radius: 50%;
-    background: var(--yellow);
-    flex-shrink: 0;
-  }
-  
-  .exp-title {
-    font-family: 'Raleway', sans-serif;
-    font-size: 0.32cm;
-    font-weight: 700;
-    color: var(--dark);
-  }
-  .exp-meta {
-    font-size: 0.26cm;
-    color: #777;
-    margin: 0.04cm 0;
-  }
-  .exp-desc {
-    font-size: 0.27cm;
-    color: #555;
-    line-height: 1.5;
-    text-align: justify;
-  }
+      /* Experience items */
+      .exp-item {
+        display: flex;
+        gap: 0.22cm;
+        margin-bottom: 0.25cm;
+      }
+      .exp-dot {
+        margin-top: 0.1cm;
+        width: 0.25cm;
+        height: 0.25cm;
+        border-radius: 50%;
+        background: var(--yellow);
+        flex-shrink: 0;
+      }
 
-  /* Education */
-  .edu-title {
-    font-family: 'Raleway', sans-serif;
-    font-size: 0.33cm;
-    font-weight: 700;
-    color: var(--dark);
-  }
-  .edu-meta {
-    font-size: 0.27cm;
-    color: #777;
-    margin-top: 0.05cm;
-  }
+      .exp-title {
+        font-family: "Raleway", sans-serif;
+        font-size: 0.32cm;
+        font-weight: 700;
+        color: var(--dark);
+      }
+      .exp-meta {
+        font-size: 0.26cm;
+        color: #777;
+        margin: 0.04cm 0;
+      }
+      .exp-desc {
+        font-size: 0.27cm;
+        color: #555;
+        line-height: 1.5;
+        text-align: justify;
+      }
 
-  /* Portfolio */
-  .portfolio-item {
-    font-size: 0.27cm;
-    color: #555;
-    margin-bottom: 0.14cm;
-    line-height: 1.5;
-  }
-  .portfolio-item strong {
-    color: var(--dark);
-    font-weight: 700;
-  }
-  .portfolio-item em {
-    font-style: italic;
-    color: #666;
-  }
-</style>
-</head>
-<body>
-<div class="page">
+      /* Education */
+      .edu-title {
+        font-family: "Raleway", sans-serif;
+        font-size: 0.33cm;
+        font-weight: 700;
+        color: var(--dark);
+      }
+      .edu-meta {
+        font-size: 0.27cm;
+        color: #777;
+        margin-top: 0.05cm;
+      }
 
-  <!-- ══════════════════════════════════
+      /* Portfolio */
+      .portfolio-item {
+        font-size: 0.27cm;
+        color: #555;
+        margin-bottom: 0.14cm;
+        line-height: 1.5;
+      }
+      .portfolio-item strong {
+        color: var(--dark);
+        font-weight: 700;
+      }
+      .portfolio-item em {
+        font-style: italic;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- ══════════════════════════════════
        LEFT PANEL
   ══════════════════════════════════ -->
-  <div class="left">
-    <div class="left-top-cap"></div>
+      <div class="left">
+        <div class="left-top-cap"></div>
 
-    <!-- Profile Photo -->
-    <div class="profile-photo">
-      <div class="profile-photo-placeholder">NL</div>
-    </div>
-
-    <!-- Name Block: top = 8.8cm -->
-    <div class="name-block">
-      <h1>Nina Lane</h1>
-      <div class="title">Graphic Designer</div>
-    </div>
-
-    <!-- Contact Section: top = 12.3cm -->
-    <div class="contact-section">
-      <div class="section-heading-left">
-        <div class="icon-circle">
-          <!-- phone icon -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+        <!-- Profile Photo -->
+        <div class="profile-photo">
+          {{#photo}}
+          <img src="{{photo}}" alt="Profile Photo" />
+          {{/photo}} {{^photo}}
+          <div class="profile-photo-placeholder">
+            {{firstName.0}}{{lastName.0}}
+          </div>
+          {{/photo}}
         </div>
-        <h2>Contact</h2>
-      </div>
-      <div class="section-divider-left"></div>
-      <div class="contact-label">Email</div>
-      <div class="contact-value">nina.lane@email.com</div>
-      <div class="contact-label">Phone</div>
-      <div class="contact-value">+1 234 567-8900</div>
-      <div class="contact-label">Website</div>
-      <div class="contact-value">ninalane.com</div>
-    </div>
 
-    <!-- Skills Section: top = 19.8cm -->
-    <div class="skills-section">
-      <div class="section-heading-left">
-        <div class="icon-circle">
-          <!-- bulb icon -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.2-1.2 4.2-3 5.4V17a1 1 0 0 1-1 1H10a1 1 0 0 1-1-1v-2.6A6 6 0 0 1 12 3z"/></svg>
+        <!-- Name Block: top = 8.8cm -->
+        <div class="name-block">
+          <h1>{{firstName}} {{lastName}}</h1>
+          <div class="title">{{jobTitle}}</div>
         </div>
-        <h2>Skills</h2>
-      </div>
-      <div class="section-divider-left"></div>
-      <div class="skill-item">
-        <span class="skill-name">Photoshop</span>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:85%"></div></div>
-      </div>
-      <div class="skill-item">
-        <span class="skill-name">Illustrator</span>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:80%"></div></div>
-      </div>
-      <div class="skill-item">
-        <span class="skill-name">Web Design</span>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:70%"></div></div>
-      </div>
-    </div>
 
-    <!-- Interests Section: top = 25.4cm -->
-    <div class="interests-section">
-      <div class="section-heading-left">
-        <div class="icon-circle">
-          <!-- heart icon -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <!-- Contact Section: top = 12.3cm -->
+        <div class="contact-section">
+          <div class="section-heading-left">
+            <div class="icon-circle">
+              <!-- phone icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"
+                />
+              </svg>
+            </div>
+            <h2>Contact</h2>
+          </div>
+          <div class="section-divider-left"></div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">{{email}}</div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">{{phone}}</div>
+          <div class="contact-label">Website</div>
+          <div class="contact-value">{{website}}</div>
         </div>
-        <h2>Interests</h2>
-      </div>
-      <div class="section-divider-left"></div>
-      <div class="interest-item">Minimalist Art</div>
-      <div class="interest-item">Urban Photography</div>
-      <div class="interest-item">Art Installations</div>
-    </div>
-  </div>
 
-  <!-- ══════════════════════════════════
+        <!-- Skills Section: top = 19.8cm -->
+        <div class="skills-section">
+          <div class="section-heading-left">
+            <div class="icon-circle">
+              <!-- bulb icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.2-1.2 4.2-3 5.4V17a1 1 0 0 1-1 1H10a1 1 0 0 1-1-1v-2.6A6 6 0 0 1 12 3z"
+                />
+              </svg>
+            </div>
+            <h2>Skills</h2>
+          </div>
+          <div class="section-divider-left"></div>
+          {{#skillsTechnical}}
+          <div class="skill-item">
+            <span class="skill-name">{{.}}</span>
+            <div class="skill-bar-bg">
+              <div class="skill-bar-fill" style="width: 85%"></div>
+            </div>
+          </div>
+          {{/skillsTechnical}}
+        </div>
+
+        <!-- Interests Section: top = 25.4cm -->
+        <div class="interests-section">
+          <div class="section-heading-left">
+            <div class="icon-circle">
+              <!-- heart icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                />
+              </svg>
+            </div>
+            <h2>Interests</h2>
+          </div>
+          <div class="section-divider-left"></div>
+          {{#interests}}
+          <div class="interest-item">{{.}}</div>
+          {{/interests}}
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════
        RIGHT PANEL
   ══════════════════════════════════ -->
-  <div class="right">
-
-    <!-- Profile: top = 2.4cm -->
-    <div class="r-profile">
-      <div class="section-heading-right">
-        <div class="icon-circle">
-          <!-- user icon -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+      <div class="right">
+        <!-- Profile: top = 2.4cm -->
+        <div class="r-profile">
+          <div class="section-heading-right">
+            <div class="icon-circle">
+              <!-- user icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"
+                />
+              </svg>
+            </div>
+            <h2>Profile</h2>
+          </div>
+          <div class="section-divider-right"></div>
+          <p class="profile-text">{{summary}}</p>
         </div>
-        <h2>Profile</h2>
+
+        <!-- Experience: top = 8.8cm -->
+        <div class="r-experience">
+          <div class="section-heading-right">
+            <div class="icon-circle">
+              <!-- briefcase icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+              </svg>
+            </div>
+            <h2>Experience</h2>
+          </div>
+          <div class="section-divider-right"></div>
+          {{#experience}}
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div class="exp-content">
+              <div class="exp-title">{{role}}</div>
+              <div class="exp-meta">
+                {{company}} | {{location}}<br />{{startDate}} – {{endDate}}
+              </div>
+              {{#bullets}}
+              <div class="exp-desc">{{.}}</div>
+              {{/bullets}}
+            </div>
+          </div>
+          {{/experience}}
+        </div>
+
+        <!-- Education: top = 19.2cm -->
+        <div class="r-education">
+          <div class="section-heading-right">
+            <div class="icon-circle">
+              <!-- graduation cap icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z" />
+                <path d="M6 12v5c3.33 1.67 6.67 1.67 10 0v-5" />
+              </svg>
+            </div>
+            <h2>Education</h2>
+          </div>
+          <div class="section-divider-right"></div>
+          {{#education}}
+          <div class="edu-title">{{degree}}</div>
+          <div class="edu-meta">{{school}}<br />Graduated: {{year}}</div>
+          <div class="edu-meta">{{detail}}</div>
+          {{/education}}
+        </div>
+
+        <!-- Portfolio: top = 23.5cm -->
+        <div class="r-portfolio">
+          <div class="section-heading-right">
+            <div class="icon-circle">
+              <!-- clipboard icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
+                />
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+              </svg>
+            </div>
+            <h2>Portfolio</h2>
+          </div>
+          <div class="section-divider-right"></div>
+          <!-- Portfolio section left for user customization if needed -->
+          <!-- Add tokens here if you want dynamic portfolio items -->
+        </div>
       </div>
-      <div class="section-divider-right"></div>
-      <p class="profile-text">
-        Creative graphic designer with 5+ years' experience in impactful print and digital visuals.
-        Skilled in brand identity, social media, and packaging design, with Adobe Creative Suite
-        and Figma expertise. Focused on delivering fresh, aesthetic solutions.
-      </p>
+      <!-- end right -->
     </div>
-
-    <!-- Experience: top = 8.8cm -->
-    <div class="r-experience">
-      <div class="section-heading-right">
-        <div class="icon-circle">
-          <!-- briefcase icon -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
-        </div>
-        <h2>Experience</h2>
-      </div>
-      <div class="section-divider-right"></div>
-
-      <div class="exp-item">
-        <div class="exp-dot"></div>
-        <div class="exp-content">
-          <div class="exp-title">Senior Graphic Designer</div>
-          <div class="exp-meta">Brightline Agency | New York, NY<br>June 2020 – Present</div>
-          <div class="exp-desc">Boosted engagement by 30% through brand campaigns and created identity packages for social media and print.</div>
-        </div>
-      </div>
-
-      <div class="exp-item">
-        <div class="exp-dot"></div>
-        <div class="exp-content">
-          <div class="exp-title">Graphic Designer</div>
-          <div class="exp-meta">Blue Horizon Media | Brooklyn, NY<br>March 2017 – May 2020</div>
-          <div class="exp-desc">Boosted retention by 25% and developed eco-friendly packaging while mentoring designers.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Education: top = 19.2cm -->
-    <div class="r-education">
-      <div class="section-heading-right">
-        <div class="icon-circle">
-          <!-- graduation cap icon -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3.33 1.67 6.67 1.67 10 0v-5"/></svg>
-        </div>
-        <h2>Education</h2>
-      </div>
-      <div class="section-divider-right"></div>
-      <div class="edu-title">Bachelor of Fine Arts in Graphic Design</div>
-      <div class="edu-meta">Parsons School of Design | New York, NY<br>Graduated: 2017</div>
-    </div>
-
-    <!-- Portfolio: top = 23.5cm -->
-    <div class="r-portfolio">
-      <div class="section-heading-right">
-        <div class="icon-circle">
-          <!-- clipboard icon -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
-        </div>
-        <h2>Portfolio</h2>
-      </div>
-      <div class="section-divider-right"></div>
-      <div class="portfolio-item">
-        <strong>Social Media Campaign</strong> for Eco Wave Brand:
-        <em>Transformed their social media presence with cohesive visuals and engaging graphics.</em>
-      </div>
-      <div class="portfolio-item">
-        <strong>Event Branding</strong> for the annual NYC Art Expo:
-        <em>Developed event branding from logo to banners, enhancing attendee experience.</em>
-      </div>
-    </div>
-
-  </div><!-- end right -->
-</div><!-- end page -->
-</body>
+    <!-- end page -->
+  </body>
 </html>
-          <!-- All unnecessary template code and Mustache blocks have been removed. Only static, visible content remains. -->
-          <div class="sb-icon">🔧</div>
-          <span class="sb-section__title">Tools</span>
-        </div>
-        <div class="sb-rule"></div>
-        <div class="skill-tags">
-          {{#skillsTools}}<span class="skill-tag">{{.}}</span>{{/skillsTools}}
-        </div>
-      </div>
-      {{/skillsTools}}
-
-      <!-- Languages -->
-      {{#languages}}
-      <div class="sb-section">
-        <div class="sb-section__head">
-          <div class="sb-icon">🌐</div>
-          <span class="sb-section__title">Languages</span>
-        </div>
-
-        <div class="sb-rule"></div>
