@@ -2,492 +2,583 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>CV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nina Lane - Resume</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap"
       rel="stylesheet"
     />
     <style>
-      /* ── Reset & Base ───────────────────────────────────────── */
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
+      * {
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        /* A4 = 210mm x 297mm. We use cm units for precision.
+       User coordinate system: origin = bottom-left, x = horizontal, y = vertical
+       CSS origin = top-left, so:  css-top = (30 - user_from_bottom) cm
+       Full width = 21cm, left panel = 8.2cm, right panel = 12.8cm (starts at 8.2cm) */
+        --yellow: #f5c518;
+        --dark: #1e2330;
+        --dark2: #252a3a;
+        --white: #ffffff;
+        --light-gray: #e0e0e0;
+        --text-body: #333333;
+        --accent: #f5c518;
       }
 
       html,
       body {
-        width: 794px;
-        min-height: 1123px;
+        width: 21cm;
+        height: 30cm;
+        max-height: 30cm;
+        overflow: hidden;
+        margin: 0;
+        font-family: "Open Sans", sans-serif;
+        background: #f0f0f0;
+      }
+
+      .page {
+        width: 21cm;
+        height: 30cm;
+        position: relative;
+        overflow: hidden;
         background: #fff;
-        font-family: "DM Sans", system-ui, sans-serif;
-        font-size: 12.5px;
-        color: #1a1814;
-        line-height: 1.55;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-
-      body {
-        display: grid;
-        grid-template-columns: 210px 1fr;
-        grid-template-rows: auto 1fr auto;
-      }
-
-      /* ── HEADER ─────────────────────────────────────────────── */
-      .cv-header {
-        grid-column: 1 / -1;
-        background: #1a1814;
-        color: #f5f3ef;
-        padding: 2rem 2rem 1.5rem;
         display: flex;
-        align-items: center;
-        gap: 1.5rem;
       }
 
-      .cv-header__photo {
-        width: 72px;
-        height: 72px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid #c8622a;
+      /* ─────────────────────────────────────────
+     LEFT PANEL  width = 8.2cm
+  ───────────────────────────────────────── */
+      .left {
+        width: 8.2cm;
+        height: 30cm;
+        background: var(--dark);
+        position: relative;
         flex-shrink: 0;
-        display: block;
+        z-index: 1;
       }
 
-      .cv-header__identity {
-        flex: 1;
-      }
-
-      .cv-header__name {
-        font-family: "Playfair Display", Georgia, serif;
-        font-size: 2.25rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        line-height: 1.05;
-        color: #fff;
-      }
-
-      .cv-header__title {
-        margin-top: 0.35rem;
-        font-size: 0.8rem;
-        font-weight: 300;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: #c8622a;
-      }
-
-      .cv-header__contacts {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 3px;
-      }
-      .cv-header__contacts span {
-        font-size: 0.68rem;
-        color: #aaa49c;
-        letter-spacing: 0.03em;
-      }
-
-      /* ── SIDEBAR ─────────────────────────────────────────────── */
-      .cv-sidebar {
-        background: #242018;
-        color: #f5f3ef;
-        padding: 1.5rem 1.2rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1.4rem;
-      }
-
-      .cv-sidebar-section {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .cv-section-title {
-        font-family: "Playfair Display", Georgia, serif;
-        font-size: 0.58rem;
-        font-weight: 700;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: #c8622a;
-        margin-bottom: 0.15rem;
-      }
-
-      .cv-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 3px;
-      }
-      .cv-tag {
-        display: inline-block;
-        padding: 2px 6px;
-        border-radius: 2px;
-        background: rgba(255, 255, 255, 0.08);
-        color: #d4cfc8;
-        font-size: 0.6rem;
-        font-weight: 500;
-      }
-
-      .sidebar-lang-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.4rem;
-      }
-      .sidebar-lang-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.5rem;
-      }
-      .sidebar-lang-item span {
-        font-size: 0.68rem;
-        color: #d4cfc8;
-      }
-      .cv-lang-dots {
-        display: flex;
-        gap: 3px;
-        align-items: center;
-      }
-      .cv-lang-dot {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.15);
-      }
-      .cv-lang-dot.on {
-        background: #c8622a;
-      }
-
-      .sidebar-interests {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-      }
-      .sidebar-interests span {
-        font-size: 0.68rem;
-        color: #aaa49c;
-        padding-left: 0.75rem;
-        position: relative;
-      }
-      .sidebar-interests span::before {
-        content: "·";
+      /* Yellow top cap — ends exactly at circle center: y=25.5 from bottom → top=4.5cm */
+      .left-top-cap {
         position: absolute;
+        top: 0;
         left: 0;
-        color: #c8622a;
+        width: 100%;
+        height: calc(30cm - 25.5cm); /* = 4.5cm */
+        background: var(--yellow);
+        z-index: 0;
       }
 
-      .sidebar-cert-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
+      /* Profile photo circle
+     center at (3.8, 25.5) from bottom-left of full page
+     In left panel coords: cx = 3.8cm, cy = 30 - 25.5 = 4.5cm from top
+     r = 2.6cm → diameter = 5.2cm */
+      .profile-photo {
+        position: absolute;
+        left: calc(3.8cm - 2.6cm); /* cx - r */
+        top: calc(
+          30cm - 25.5cm - 2.6cm
+        ); /* (30 - y) - r = 4.5cm - 2.6cm = 1.9cm */
+        width: 5.2cm;
+        height: 5.2cm;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 4px solid var(--dark);
+        z-index: 2;
+        background: #888;
       }
-      .sidebar-cert-item__name {
-        font-size: 0.68rem;
-        color: #d4cfc8;
-        line-height: 1.4;
+      .profile-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
-      .sidebar-cert-item__year {
-        font-size: 0.58rem;
-        color: #c8622a;
-        letter-spacing: 0.06em;
-      }
-
-      /* ── MAIN ────────────────────────────────────────────────── */
-      .cv-main {
-        padding: 1.5rem 2rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1.25rem;
-      }
-
-      .cv-section {
-        display: flex;
-        flex-direction: column;
-        gap: 0.6rem;
-      }
-
-      .cv-section__head {
+      .profile-photo-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #9ab, #678);
         display: flex;
         align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 0.1rem;
+        justify-content: center;
+        color: #fff;
+        font-size: 0.9cm;
+        font-weight: 700;
       }
-      .cv-section__head .cv-section-title {
-        color: #8c887f;
-        white-space: nowrap;
+
+      /* Name line: 21.2cm from bottom → top = 30 - 21.2 = 8.8cm */
+      .name-block {
+        position: absolute;
+        top: calc(30cm - 21.2cm); /* 8.8cm */
+        left: 0;
+        width: 100%;
+        padding: 0 0.5cm;
+        z-index: 2;
       }
-      .cv-section__head hr {
-        flex: 1;
+      .name-block h1 {
+        font-family: "Raleway", sans-serif;
+        font-size: 0.62cm;
+        font-weight: 800;
+        color: var(--yellow);
+        line-height: 1.2;
+        letter-spacing: 0.5px;
+      }
+      .name-block .title {
+        font-size: 0.32cm;
+        color: #aaa;
+        margin-top: 0.1cm;
+        font-weight: 400;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      /* Contact section: 17.7cm from bottom → top = 30 - 17.7 = 12.3cm */
+      .contact-section {
+        position: absolute;
+        top: calc(30cm - 17.7cm); /* 12.3cm */
+        left: 0;
+        width: 100%;
+        padding: 0 0.45cm;
+        z-index: 2;
+      }
+
+      /* Skills section: 10.2cm from bottom → top = 30 - 10.2 = 19.8cm */
+      .skills-section {
+        position: absolute;
+        top: calc(30cm - 10.2cm); /* 19.8cm */
+        left: 0;
+        width: 100%;
+        padding: 0 0.45cm;
+        z-index: 2;
+      }
+
+      /* Interests section: 4.6cm from bottom → top = 30 - 4.6 = 25.4cm */
+      .interests-section {
+        position: absolute;
+        top: calc(30cm - 4.6cm); /* 25.4cm */
+        left: 0;
+        width: 100%;
+        padding: 0 0.45cm;
+        z-index: 2;
+      }
+
+      /* Shared section heading style (left panel) */
+      .section-heading-left {
+        display: flex;
+        align-items: center;
+        gap: 0.2cm;
+        margin-bottom: 0.2cm;
+      }
+      .section-heading-left .icon-circle {
+        width: 0.55cm;
+        height: 0.55cm;
+        border-radius: 50%;
+        background: var(--yellow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .section-heading-left .icon-circle svg {
+        width: 0.32cm;
+        height: 0.32cm;
+        fill: var(--dark);
+      }
+      .section-heading-left h2 {
+        font-family: "Raleway", sans-serif;
+        font-size: 0.42cm;
+        font-weight: 700;
+        color: var(--yellow);
+        letter-spacing: 0.5px;
+      }
+      .section-divider-left {
+        width: 100%;
         height: 1px;
-        border: none;
-        background: #e0ddd8;
+        background: #444;
+        margin-bottom: 0.22cm;
       }
 
-      .cv-summary {
-        font-size: 0.78rem;
-        color: #4a4740;
-        line-height: 1.65;
-      }
-
-      .cv-exp-entry {
-        display: flex;
-        flex-direction: column;
-        gap: 3px;
-      }
-      .cv-exp-entry + .cv-exp-entry {
-        margin-top: 0.6rem;
-      }
-
-      .cv-exp-entry__top {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 0.5rem;
-      }
-      .cv-exp-entry__role {
-        font-size: 0.82rem;
+      /* Contact items */
+      .contact-label {
+        font-size: 0.26cm;
+        color: var(--yellow);
         font-weight: 600;
-        color: #1a1814;
+        margin-bottom: 0.04cm;
+        margin-top: 0.14cm;
       }
-      .cv-exp-entry__meta {
-        font-size: 0.63rem;
-        color: #8c887f;
-        white-space: nowrap;
-        letter-spacing: 0.04em;
-      }
-      .cv-exp-entry__sub {
-        font-size: 0.72rem;
-        color: #4a4740;
-      }
-      .cv-exp-entry__sub .company {
-        font-weight: 500;
-      }
-      .cv-exp-entry__sub .sep {
-        margin: 0 3px;
-        color: #8c887f;
+      .contact-value {
+        font-size: 0.28cm;
+        color: #ccc;
       }
 
-      .cv-bullet-list {
-        list-style: none;
-        padding: 0;
-        margin-top: 3px;
+      /* Skill bars */
+      .skill-item {
         display: flex;
-        flex-direction: column;
-        gap: 2px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.18cm;
       }
-      .cv-bullet-list li {
+      .skill-name {
+        font-size: 0.29cm;
+        color: #ddd;
+        width: 2.2cm;
+      }
+      .skill-bar-bg {
+        width: 3cm;
+        height: 0.12cm;
+        background: #444;
+        border-radius: 2px;
+        overflow: visible;
+      }
+      .skill-bar-fill {
+        height: 0.12cm;
+        background: var(--yellow);
+        border-radius: 2px;
+      }
+
+      /* Interests */
+      .interest-item {
+        font-size: 0.28cm;
+        color: #ccc;
+        margin-bottom: 0.12cm;
+      }
+
+      /* ─────────────────────────────────────────
+     RIGHT PANEL  width = 12.8cm
+  ───────────────────────────────────────── */
+      .right {
+        width: 12.8cm;
+        height: 30cm;
+        background: #fff;
         position: relative;
-        padding-left: 1rem;
-        font-size: 0.72rem;
-        color: #4a4740;
+        padding: 0.5cm 0.6cm;
+      }
+
+      /* Right panel sections anchored from bottom of PAGE.
+     CSS top = 30cm - user_from_bottom */
+
+      /* Profile: 27.6cm from bottom → top = 2.4cm */
+      .r-profile {
+        position: absolute;
+        top: calc(30cm - 27.6cm); /* 2.4cm */
+        left: 0.6cm;
+        right: 0.5cm;
+      }
+
+      /* Experience: 21.2cm from bottom → top = 8.8cm */
+      .r-experience {
+        position: absolute;
+        top: calc(30cm - 21.2cm); /* 8.8cm */
+        left: 0.6cm;
+        right: 0.5cm;
+      }
+
+      /* Education: 10.8cm from bottom → top = 19.2cm */
+      .r-education {
+        position: absolute;
+        top: calc(30cm - 10.8cm); /* 19.2cm */
+        left: 0.6cm;
+        right: 0.5cm;
+      }
+
+      /* Portfolio: 6.5cm from bottom → top = 23.5cm */
+      .r-portfolio {
+        position: absolute;
+        top: calc(30cm - 6.5cm); /* 23.5cm */
+        left: 0.6cm;
+        right: 0.5cm;
+      }
+
+      /* Right section headings */
+      .section-heading-right {
+        display: flex;
+        align-items: center;
+        gap: 0.22cm;
+        margin-bottom: 0.15cm;
+      }
+      .section-heading-right .icon-circle {
+        width: 0.6cm;
+        height: 0.6cm;
+        border-radius: 50%;
+        background: var(--yellow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .section-heading-right .icon-circle svg {
+        width: 0.35cm;
+        height: 0.35cm;
+        fill: var(--dark);
+      }
+      .section-heading-right h2 {
+        font-family: "Raleway", sans-serif;
+        font-size: 0.52cm;
+        font-weight: 700;
+        color: var(--dark);
+        letter-spacing: 0.3px;
+      }
+      .section-divider-right {
+        width: 100%;
+        height: 1.5px;
+        background: var(--light-gray);
+        margin-bottom: 0.22cm;
+      }
+
+      /* Profile text */
+      .profile-text {
+        font-size: 0.29cm;
+        color: #555;
+        line-height: 1.6;
+        text-align: justify;
+      }
+
+      /* Experience items */
+      .exp-item {
+        display: flex;
+        gap: 0.22cm;
+        margin-bottom: 0.25cm;
+      }
+      .exp-dot {
+        margin-top: 0.1cm;
+        width: 0.25cm;
+        height: 0.25cm;
+        border-radius: 50%;
+        background: var(--yellow);
+        flex-shrink: 0;
+      }
+
+      .exp-title {
+        font-family: "Raleway", sans-serif;
+        font-size: 0.32cm;
+        font-weight: 700;
+        color: var(--dark);
+      }
+      .exp-meta {
+        font-size: 0.26cm;
+        color: #777;
+        margin: 0.04cm 0;
+      }
+      .exp-desc {
+        font-size: 0.27cm;
+        color: #555;
+        line-height: 1.5;
+        text-align: justify;
+      }
+
+      /* Education */
+      .edu-title {
+        font-family: "Raleway", sans-serif;
+        font-size: 0.33cm;
+        font-weight: 700;
+        color: var(--dark);
+      }
+      .edu-meta {
+        font-size: 0.27cm;
+        color: #777;
+        margin-top: 0.05cm;
+      }
+
+      /* Portfolio */
+      .portfolio-item {
+        font-size: 0.27cm;
+        color: #555;
+        margin-bottom: 0.14cm;
         line-height: 1.5;
       }
-      .cv-bullet-list li::before {
-        content: "–";
-        position: absolute;
-        left: 0;
-        color: #c8622a;
+      .portfolio-item strong {
+        color: var(--dark);
         font-weight: 700;
       }
-
-      .cv-edu-entry {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 0.5rem;
-      }
-      .cv-edu-entry + .cv-edu-entry {
-        margin-top: 0.4rem;
-      }
-      .cv-edu-entry__left {
-        display: flex;
-        flex-direction: column;
-        gap: 1px;
-      }
-      .cv-edu-entry__degree {
-        font-size: 0.82rem;
-        font-weight: 600;
-        color: #1a1814;
-      }
-      .cv-edu-entry__school {
-        font-size: 0.72rem;
-        color: #4a4740;
-      }
-      .cv-edu-entry__right {
-        text-align: right;
-        flex-shrink: 0;
-      }
-      .cv-edu-entry__year {
-        font-size: 0.68rem;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        color: #c8622a;
-      }
-      .cv-edu-entry__detail {
-        font-size: 0.63rem;
-        color: #8c887f;
-      }
-
-      .cv-footer-bar {
-        grid-column: 1 / -1;
-        height: 4px;
-        background: #c8622a;
-      }
-
-      @media print {
-        html,
-        body {
-          width: 210mm;
-          min-height: 297mm;
-        }
+      .portfolio-item em {
+        font-style: italic;
+        color: #666;
       }
     </style>
   </head>
   <body>
-    <!-- HEADER -->
-    <header class="cv-header">
-      {{#photo}}<img
-        class="cv-header__photo"
-        src="{{photo}}"
-        alt="Profile"
-      />{{/photo}}
-      <div class="cv-header__identity">
-        <div class="cv-header__name">{{firstName}} {{lastName}}</div>
-        {{#jobTitle}}
-        <div class="cv-header__title">{{jobTitle}}</div>
-        {{/jobTitle}}
-      </div>
-      <div class="cv-header__contacts">
-        {{#email}}<span>{{email}}</span>{{/email}}
-        {{#phone}}<span>{{phone}}</span>{{/phone}}
-        {{#location}}<span>{{location}}</span>{{/location}}
-        {{#linkedin}}<span>{{linkedin}}</span>{{/linkedin}}
-        {{#website}}<span>{{website}}</span>{{/website}}
-      </div>
-    </header>
+    <div class="page">
+      <!-- ══════════════════════════════════
+       LEFT PANEL
+  ══════════════════════════════════ -->
+      <div class="left">
+        <div class="left-top-cap"></div>
 
-    <!-- SIDEBAR -->
-    <aside class="cv-sidebar">
-      {{#skillsTechnical}}
-      <div class="cv-sidebar-section">
-        <div class="cv-section-title">Technical</div>
-        <div class="cv-tags">
-          {{#skillsTechnical}}<span class="cv-tag">{{.}}</span
-          >{{/skillsTechnical}}
+        <!-- Profile Photo -->
+        <div class="profile-photo">
+          {{#photo}}
+          <img src="{{photo}}" alt="Profile Photo" />
+          {{/photo}} {{^photo}}
+          <div class="profile-photo-placeholder">
+            {{firstName.0}}{{lastName.0}}
+          </div>
+          {{/photo}}
         </div>
-      </div>
-      {{/skillsTechnical}} {{#skillsTools}}
-      <div class="cv-sidebar-section">
-        <div class="cv-section-title">Tools</div>
-        <div class="cv-tags">
-          {{#skillsTools}}<span class="cv-tag">{{.}}</span>{{/skillsTools}}
+
+        <!-- Name Block: top = 8.8cm -->
+        <div class="name-block">
+          <h1>{{firstName}} {{lastName}}</h1>
+          <div class="title">{{jobTitle}}</div>
         </div>
-      </div>
-      {{/skillsTools}} {{#languages}}
-      <div class="cv-sidebar-section">
-        <div class="cv-section-title">Languages</div>
-        <div class="sidebar-lang-list">
-          {{#languages}}
-          <div class="sidebar-lang-item">
-            <span>{{name}}</span>
-            <div class="cv-lang-dots">
-              <div class="cv-lang-dot {{l1}}"></div>
-              <div class="cv-lang-dot {{l2}}"></div>
-              <div class="cv-lang-dot {{l3}}"></div>
-              <div class="cv-lang-dot {{l4}}"></div>
-              <div class="cv-lang-dot {{l5}}"></div>
+
+        <!-- Contact Section: top = 12.3cm -->
+        <div class="contact-section">
+          <div class="section-heading-left">
+            <div class="icon-circle">
+              <!-- phone icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"
+                />
+              </svg>
+            </div>
+            <h2>Contact</h2>
+          </div>
+          <div class="section-divider-left"></div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">{{email}}</div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">{{phone}}</div>
+          <div class="contact-label">Website</div>
+          <div class="contact-value">{{website}}</div>
+        </div>
+
+        <!-- Skills Section: top = 19.8cm -->
+        <div class="skills-section">
+          <div class="section-heading-left">
+            <div class="icon-circle">
+              <!-- bulb icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.2-1.2 4.2-3 5.4V17a1 1 0 0 1-1 1H10a1 1 0 0 1-1-1v-2.6A6 6 0 0 1 12 3z"
+                />
+              </svg>
+            </div>
+            <h2>Skills</h2>
+          </div>
+          <div class="section-divider-left"></div>
+          {{#skillsTechnical}}
+          <div class="skill-item">
+            <span class="skill-name">{{.}}</span>
+            <div class="skill-bar-bg">
+              <div class="skill-bar-fill" style="width: 85%"></div>
             </div>
           </div>
-          {{/languages}}
+          {{/skillsTechnical}}
         </div>
-      </div>
-      {{/languages}} {{#interests}}
-      <div class="cv-sidebar-section">
-        <div class="cv-section-title">Interests</div>
-        <div class="sidebar-interests">
-          {{#interests}}<span>{{.}}</span>{{/interests}}
-        </div>
-      </div>
-      {{/interests}} {{#certifications}}
-      <div class="cv-sidebar-section">
-        <div class="cv-section-title">Certifications</div>
-        <div class="sidebar-cert-list">
-          {{#certifications}}
-          <div class="sidebar-cert-item">
-            <div class="sidebar-cert-item__name">{{name}}</div>
-            <div class="sidebar-cert-item__year">{{year}}</div>
-          </div>
-          {{/certifications}}
-        </div>
-      </div>
-      {{/certifications}}
-    </aside>
 
-    <!-- MAIN -->
-    <main class="cv-main">
-      {{#summary}}
-      <section class="cv-section">
-        <div class="cv-section__head">
-          <span class="cv-section-title">Profile</span>
-          <hr />
-        </div>
-        <p class="cv-summary">{{summary}}</p>
-      </section>
-      {{/summary}} {{#experience}}
-      <section class="cv-section">
-        <div class="cv-section__head">
-          <span class="cv-section-title">Experience</span>
-          <hr />
-        </div>
-        {{#experience}}
-        <div class="cv-exp-entry">
-          <div class="cv-exp-entry__top">
-            <span class="cv-exp-entry__role">{{role}}</span>
-            <span class="cv-exp-entry__meta"
-              >{{startDate}}{{#endDate}} – {{endDate}}{{/endDate}}</span
-            >
+        <!-- Interests Section: top = 25.4cm -->
+        <div class="interests-section">
+          <div class="section-heading-left">
+            <div class="icon-circle">
+              <!-- heart icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                />
+              </svg>
+            </div>
+            <h2>Interests</h2>
           </div>
-          <div class="cv-exp-entry__sub">
-            <span class="company">{{company}}</span>
-            {{#location}}<span class="sep">·</span
-            ><span>{{location}}</span>{{/location}}
-          </div>
-          {{#bullets}}
-          <ul class="cv-bullet-list">
-            {{#bullets}}
-            <li>{{.}}</li>
-            {{/bullets}}
-          </ul>
-          {{/bullets}}
+          <div class="section-divider-left"></div>
+          {{#interests}}
+          <div class="interest-item">{{.}}</div>
+          {{/interests}}
         </div>
-        {{/experience}}
-      </section>
-      {{/experience}} {{#education}}
-      <section class="cv-section">
-        <div class="cv-section__head">
-          <span class="cv-section-title">Education</span>
-          <hr />
-        </div>
-        {{#education}}
-        <div class="cv-edu-entry">
-          <div class="cv-edu-entry__left">
-            <span class="cv-edu-entry__degree">{{degree}}</span>
-            <span class="cv-edu-entry__school">{{school}}</span>
-          </div>
-          <div class="cv-edu-entry__right">
-            <div class="cv-edu-entry__year">{{year}}</div>
-            <div class="cv-edu-entry__detail">{{detail}}</div>
-          </div>
-        </div>
-        {{/education}}
-      </section>
-      {{/education}}
-    </main>
+      </div>
 
-    <div class="cv-footer-bar"></div>
+      <!-- ══════════════════════════════════
+       RIGHT PANEL
+  ══════════════════════════════════ -->
+      <div class="right">
+        <!-- Profile: top = 2.4cm -->
+        <div class="r-profile">
+          <div class="section-heading-right">
+            <div class="icon-circle">
+              <!-- user icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"
+                />
+              </svg>
+            </div>
+            <h2>Profile</h2>
+          </div>
+          <div class="section-divider-right"></div>
+          <p class="profile-text">{{summary}}</p>
+        </div>
+
+        <!-- Experience: top = 8.8cm -->
+        <div class="r-experience">
+          <div class="section-heading-right">
+            <div class="icon-circle">
+              <!-- briefcase icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+              </svg>
+            </div>
+            <h2>Experience</h2>
+          </div>
+          <div class="section-divider-right"></div>
+          {{#experience}}
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div class="exp-content">
+              <div class="exp-title">{{role}}</div>
+              <div class="exp-meta">
+                {{company}} | {{location}}<br />{{startDate}} – {{endDate}}
+              </div>
+              {{#bullets}}
+              <div class="exp-desc">{{.}}</div>
+              {{/bullets}}
+            </div>
+          </div>
+          {{/experience}}
+        </div>
+
+        <!-- Education: top = 19.2cm -->
+        <div class="r-education">
+          <div class="section-heading-right">
+            <div class="icon-circle">
+              <!-- graduation cap icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z" />
+                <path d="M6 12v5c3.33 1.67 6.67 1.67 10 0v-5" />
+              </svg>
+            </div>
+            <h2>Education</h2>
+          </div>
+          <div class="section-divider-right"></div>
+          {{#education}}
+          <div class="edu-title">{{degree}}</div>
+          <div class="edu-meta">{{school}}<br />Graduated: {{year}}</div>
+          <div class="edu-meta">{{detail}}</div>
+          {{/education}}
+        </div>
+
+        <!-- Portfolio: top = 23.5cm -->
+        <div class="r-portfolio">
+          <div class="section-heading-right">
+            <div class="icon-circle">
+              <!-- clipboard icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
+                />
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+              </svg>
+            </div>
+            <h2>Portfolio</h2>
+          </div>
+          <div class="section-divider-right"></div>
+          <!-- Portfolio section left for user customization if needed -->
+          <!-- Add tokens here if you want dynamic portfolio items -->
+        </div>
+      </div>
+      <!-- end right -->
+    </div>
+    <!-- end page -->
   </body>
 </html>

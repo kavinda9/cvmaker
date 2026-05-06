@@ -2548,7 +2548,7 @@
             const clone = document.createElement("div");
             clone.innerHTML = iDoc.querySelector("body").innerHTML;
             clone.style.cssText =
-              "width:794px;min-height:1123px;background:#fff;";
+              "width:794px;height:1123px;max-height:1123px;overflow:hidden;background:#fff;";
 
             const wrapper = document.createElement("div");
             wrapper.style.cssText =
