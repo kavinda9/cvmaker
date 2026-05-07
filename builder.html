@@ -1898,6 +1898,27 @@
           if (!res.ok) throw new Error(`${res.status}`);
           templateHTML = await res.text();
           scheduleUpdate();
+          // Read default accent from loaded template
+          const tempIframe = document.createElement("iframe");
+          tempIframe.style.display = "none";
+          document.body.appendChild(tempIframe);
+          tempIframe.contentDocument.open();
+          tempIframe.contentDocument.write(templateHTML);
+          tempIframe.contentDocument.close();
+          setTimeout(() => {
+            const defaultAccent = tempIframe.contentWindow?.cvDefaultAccent;
+            if (defaultAccent) {
+              accentColor = defaultAccent;
+              const input = document.getElementById("color-input");
+              const preview = document.getElementById("color-preview");
+              const hexLbl = document.getElementById("color-hex");
+              if (input) input.value = defaultAccent;
+              if (preview) preview.style.background = defaultAccent;
+              if (hexLbl) hexLbl.textContent = defaultAccent.toUpperCase();
+            }
+            document.body.removeChild(tempIframe);
+            scheduleUpdate();
+          }, 300);
         } catch (e) {
           console.error("[CV Maker] loadTemplate failed:", e);
           const errHTML =
@@ -2090,6 +2111,9 @@
       ${styleTag}
         :root {
           --accent-color: ${accentColor} !important;
+          --yellow: ${accentColor} !important;
+          --accent: ${accentColor} !important;
+          --cv-accent: ${accentColor} !important;
         }
         body, html { font-family: ${bodyFont.display} !important; }
         .sidebar__name, .sb-section__title, .sec-title, h1, h2, h3 {
