@@ -33,7 +33,9 @@
       body {
         width: 21cm;
         height: 30cm;
-        margin: 0 auto;
+        max-height: 30cm;
+        overflow: hidden;
+        margin: 0;
         font-family: "Open Sans", sans-serif;
         background: #f0f0f0;
       }
@@ -54,9 +56,11 @@
         width: 8.2cm;
         height: 30cm;
         background: var(--dark);
-        position: relative;
         flex-shrink: 0;
-        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        padding-top: 4.5cm; /* space for photo */
+        overflow: hidden;
       }
 
       /* Yellow top cap — ends exactly at circle center: y=25.5 from bottom → top=4.5cm */
@@ -105,13 +109,10 @@
         font-weight: 700;
       }
 
-      /* Name line: 21.2cm from bottom → top = 30 - 21.2 = 8.8cm */
+      /* Name block */
       .name-block {
-        position: absolute;
-        top: calc(30cm - 21.2cm); /* 8.8cm */
-        left: 0;
         width: 100%;
-        padding: 0 0.5cm;
+        padding: 0.3cm 0.5cm 0.25cm;
         z-index: 2;
       }
       .name-block h1 {
@@ -131,33 +132,24 @@
         text-transform: uppercase;
       }
 
-      /* Contact section: 17.7cm from bottom → top = 30 - 17.7 = 12.3cm */
+      /* Contact section */
       .contact-section {
-        position: absolute;
-        top: calc(30cm - 17.7cm); /* 12.3cm */
-        left: 0;
         width: 100%;
-        padding: 0 0.45cm;
+        padding: 0.25cm 0.45cm;
         z-index: 2;
       }
 
-      /* Skills section: 10.2cm from bottom → top = 30 - 10.2 = 19.8cm */
+      /* Skills section */
       .skills-section {
-        position: absolute;
-        top: calc(30cm - 10.2cm); /* 19.8cm */
-        left: 0;
         width: 100%;
-        padding: 0 0.45cm;
+        padding: 0.25cm 0.45cm;
         z-index: 2;
       }
 
-      /* Interests section: 4.6cm from bottom → top = 30 - 4.6 = 25.4cm */
+      /* Interests section */
       .interests-section {
-        position: absolute;
-        top: calc(30cm - 4.6cm); /* 25.4cm */
-        left: 0;
         width: 100%;
-        padding: 0 0.45cm;
+        padding: 0.25cm 0.45cm;
         z-index: 2;
       }
 
@@ -249,43 +241,33 @@
         width: 12.8cm;
         height: 30cm;
         background: #fff;
-        position: relative;
+        display: flex;
+        flex-direction: column;
         padding: 0.5cm 0.6cm;
+        overflow: hidden;
       }
 
-      /* Right panel sections anchored from bottom of PAGE.
-     CSS top = 30cm - user_from_bottom */
+      /* Right panel sections — flow with flexbox */
 
-      /* Profile: 27.6cm from bottom → top = 2.4cm */
+      /* Profile */
       .r-profile {
-        position: absolute;
-        top: calc(30cm - 27.6cm); /* 2.4cm */
-        left: 0.6cm;
-        right: 0.5cm;
+        margin-bottom: 0.3cm;
       }
 
       /* Experience: 21.2cm from bottom → top = 8.8cm */
+      /* Experience */
       .r-experience {
-        position: absolute;
-        top: calc(30cm - 21.2cm); /* 8.8cm */
-        left: 0.6cm;
-        right: 0.5cm;
+        margin-bottom: 0.3cm;
       }
 
-      /* Education: 10.8cm from bottom → top = 19.2cm */
+      /* Education */
       .r-education {
-        position: absolute;
-        top: calc(30cm - 10.8cm); /* 19.2cm */
-        left: 0.6cm;
-        right: 0.5cm;
+        margin-bottom: 0.3cm;
       }
 
-      /* Portfolio: 6.5cm from bottom → top = 23.5cm */
+      /* Portfolio */
       .r-portfolio {
-        position: absolute;
-        top: calc(30cm - 6.5cm); /* 23.5cm */
-        left: 0.6cm;
-        right: 0.5cm;
+        margin-bottom: 0.3cm;
       }
 
       /* Right section headings */
