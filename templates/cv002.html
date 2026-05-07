@@ -20,29 +20,29 @@
        User coordinate system: origin = bottom-left, x = horizontal, y = vertical
        CSS origin = top-left, so:  css-top = (30 - user_from_bottom) cm
        Full width = 21cm, left panel = 8.2cm, right panel = 12.8cm (starts at 8.2cm) */
-        --yellow: #f5c518;
+        --yellow: var(--accent-color, #f5c518);
         --dark: #1e2330;
         --dark2: #252a3a;
         --white: #ffffff;
         --light-gray: #e0e0e0;
         --text-body: #333333;
-        --accent: #f5c518;
+        --accent: var(--accent-color, #f5c518);
       }
 
       html,
       body {
-        width: 21cm;
-        height: 30cm;
-        max-height: 30cm;
+        width: 794px;
+        height: 1123px;
+        max-height: 1123px;
         overflow: hidden;
         margin: 0;
         font-family: "Open Sans", sans-serif;
-        background: #f0f0f0;
+        background: #ffffff;
       }
 
       .page {
-        width: 21cm;
-        height: 30cm;
+        width: 794px;
+        height: 1123px;
         position: relative;
         overflow: hidden;
         background: #fff;
@@ -56,11 +56,9 @@
         width: 8.2cm;
         height: 30cm;
         background: var(--dark);
+        position: relative;
         flex-shrink: 0;
-        display: flex;
-        flex-direction: column;
-        padding-top: 4.5cm; /* space for photo */
-        overflow: hidden;
+        z-index: 1;
       }
 
       /* Yellow top cap — ends exactly at circle center: y=25.5 from bottom → top=4.5cm */
@@ -109,10 +107,13 @@
         font-weight: 700;
       }
 
-      /* Name block */
+      /* Name line: 21.2cm from bottom → top = 30 - 21.2 = 8.8cm */
       .name-block {
+        position: absolute;
+        top: calc(30cm - 21.2cm); /* 8.8cm */
+        left: 0;
         width: 100%;
-        padding: 0.3cm 0.5cm 0.25cm;
+        padding: 0 0.5cm;
         z-index: 2;
       }
       .name-block h1 {
@@ -132,24 +133,33 @@
         text-transform: uppercase;
       }
 
-      /* Contact section */
+      /* Contact section: 17.7cm from bottom → top = 30 - 17.7 = 12.3cm */
       .contact-section {
+        position: absolute;
+        top: calc(30cm - 17.7cm); /* 12.3cm */
+        left: 0;
         width: 100%;
-        padding: 0.25cm 0.45cm;
+        padding: 0 0.45cm;
         z-index: 2;
       }
 
-      /* Skills section */
+      /* Skills section: 10.2cm from bottom → top = 30 - 10.2 = 19.8cm */
       .skills-section {
+        position: absolute;
+        top: calc(30cm - 10.2cm); /* 19.8cm */
+        left: 0;
         width: 100%;
-        padding: 0.25cm 0.45cm;
+        padding: 0 0.45cm;
         z-index: 2;
       }
 
-      /* Interests section */
+      /* Interests section: 4.6cm from bottom → top = 30 - 4.6 = 25.4cm */
       .interests-section {
+        position: absolute;
+        top: calc(30cm - 4.6cm); /* 25.4cm */
+        left: 0;
         width: 100%;
-        padding: 0.25cm 0.45cm;
+        padding: 0 0.45cm;
         z-index: 2;
       }
 
@@ -241,33 +251,43 @@
         width: 12.8cm;
         height: 30cm;
         background: #fff;
-        display: flex;
-        flex-direction: column;
+        position: relative;
         padding: 0.5cm 0.6cm;
-        overflow: hidden;
       }
 
-      /* Right panel sections — flow with flexbox */
+      /* Right panel sections anchored from bottom of PAGE.
+     CSS top = 30cm - user_from_bottom */
 
-      /* Profile */
+      /* Profile: 27.6cm from bottom → top = 2.4cm */
       .r-profile {
-        margin-bottom: 0.3cm;
+        position: absolute;
+        top: calc(30cm - 27.6cm); /* 2.4cm */
+        left: 0.6cm;
+        right: 0.5cm;
       }
 
       /* Experience: 21.2cm from bottom → top = 8.8cm */
-      /* Experience */
       .r-experience {
-        margin-bottom: 0.3cm;
+        position: absolute;
+        top: calc(30cm - 21.2cm); /* 8.8cm */
+        left: 0.6cm;
+        right: 0.5cm;
       }
 
-      /* Education */
+      /* Education: 10.8cm from bottom → top = 19.2cm */
       .r-education {
-        margin-bottom: 0.3cm;
+        position: absolute;
+        top: calc(30cm - 10.8cm); /* 19.2cm */
+        left: 0.6cm;
+        right: 0.5cm;
       }
 
-      /* Portfolio */
+      /* Portfolio: 6.5cm from bottom → top = 23.5cm */
       .r-portfolio {
-        margin-bottom: 0.3cm;
+        position: absolute;
+        top: calc(30cm - 6.5cm); /* 23.5cm */
+        left: 0.6cm;
+        right: 0.5cm;
       }
 
       /* Right section headings */
