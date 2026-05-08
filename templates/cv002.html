@@ -435,8 +435,7 @@
             <div class="skill-item">
               <span class="skill-name">{{name}}</span>
               <div class="skill-bar-bg">
-                <!-- The following line uses a template variable. If you see a validation error, it is expected in static HTML. -->
-                <div class="skill-bar-fill" style="width: 50%"></div>
+                <div class="skill-bar-fill" data-level="{{level}}"></div>
               </div>
             </div>
             {{/skills}}
@@ -568,5 +567,12 @@
       <!-- end right -->
     </div>
     <!-- end page -->
+    <script>
+      document
+        .querySelectorAll(".skill-bar-fill[data-level]")
+        .forEach(function (el) {
+          el.style.width = el.getAttribute("data-level") + "%";
+        });
+    </script>
   </body>
 </html>
