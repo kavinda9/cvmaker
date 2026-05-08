@@ -157,9 +157,11 @@
         .workspace {
           grid-template-columns: 1fr;
         }
+        /* default: show form, hide preview */
         .panel--preview {
           display: none;
         }
+        /* toggled: hide form, show preview */
         .workspace.show-preview .panel--form {
           display: none;
         }
@@ -234,6 +236,11 @@
       /* Section accordion style */
       .form-section {
         border-bottom: 1px solid var(--border);
+      }
+
+      /* Hidden sections (controlled by showSections) */
+      .form-section[data-section-id].section-hidden {
+        display: none;
       }
 
       .section-header {
@@ -394,6 +401,131 @@
       }
       .field input[type="number"]::-webkit-inner-spin-button {
         -webkit-appearance: none;
+      }
+
+      /* ── Skill slider ────────────────────────────────────────── */
+      .skill-slider-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .skill-slider-row input[type="text"] {
+        flex: 1;
+        font-family: var(--font-body);
+        font-size: var(--text-base);
+        color: var(--ink);
+        background: var(--surface);
+        border: 1px solid var(--border-lt);
+        border-radius: var(--radius);
+        padding: 0.4rem 0.6rem;
+        outline: none;
+        transition:
+          border-color var(--dur),
+          background var(--dur);
+      }
+      .skill-slider-row input[type="text"]:focus {
+        border-color: var(--accent);
+        background: var(--surface-2);
+        box-shadow: 0 0 0 3px var(--accent-dim);
+      }
+      .skill-slider-row input[type="range"] {
+        flex: 1;
+        accent-color: var(--accent);
+        cursor: pointer;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--border-lt);
+        outline: none;
+        border: none;
+        padding: 0;
+        appearance: auto;
+      }
+      .skill-level-pct {
+        font-size: var(--text-xs);
+        font-weight: 700;
+        color: var(--ink-2);
+        min-width: 34px;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      .btn-skill-remove {
+        width: 20px;
+        height: 20px;
+        border-radius: 3px;
+        border: none;
+        background: transparent;
+        color: var(--ink-3);
+        font-size: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background var(--dur),
+          color var(--dur);
+        flex-shrink: 0;
+      }
+      .btn-skill-remove:hover {
+        background: rgba(200, 50, 50, 0.15);
+        color: #c55;
+      }
+      .skills-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      /* ── Interest tags ───────────────────────────────────────── */
+      .interests-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .interest-entry {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        animation: slideIn 160ms var(--ease) both;
+      }
+      .interest-entry input {
+        flex: 1;
+        font-family: var(--font-body);
+        font-size: var(--text-base);
+        color: var(--ink);
+        background: var(--surface);
+        border: 1px solid var(--border-lt);
+        border-radius: var(--radius);
+        padding: 0.4rem 0.65rem;
+        outline: none;
+        transition:
+          border-color var(--dur),
+          background var(--dur);
+      }
+      .interest-entry input:focus {
+        border-color: var(--accent);
+        background: var(--surface-2);
+        box-shadow: 0 0 0 3px var(--accent-dim);
+      }
+      .btn-interest-remove {
+        width: 20px;
+        height: 20px;
+        border-radius: 3px;
+        border: none;
+        background: transparent;
+        color: var(--ink-3);
+        font-size: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background var(--dur),
+          color var(--dur);
+        flex-shrink: 0;
+      }
+      .btn-interest-remove:hover {
+        background: rgba(200, 50, 50, 0.15);
+        color: #c55;
       }
 
       .hint {
@@ -1098,6 +1230,20 @@
         <div class="topbar__brand"><span>CV</span> Maker</div>
       </div>
       <div class="topbar__actions">
+        <button class="btn-toggle-preview" id="btn-toggle-preview">
+          <svg
+            width="13"
+            height="13"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <rect x="2" y="3" width="20" height="14" rx="2" />
+            <path d="M8 21h8M12 17v4" />
+          </svg>
+          Preview
+        </button>
         <button class="btn-change-tpl" id="btn-change-tpl">
           <svg
             width="13"
@@ -1133,11 +1279,11 @@
     </header>
 
     <!-- ══ WORKSPACE ═════════════════════════════════════════ -->
-    <div class="workspace">
+    <div class="workspace" id="workspace">
       <!-- ══ FORM PANEL ══════════════════════════════════════ -->
       <aside class="panel--form" id="form-panel">
         <!-- Personal Info -->
-        <div class="form-section open">
+        <div class="form-section open" data-section-id="personal">
           <div class="section-header" data-toggle>
             <div class="section-header__left">
               <div class="section-icon">👤</div>
@@ -1252,7 +1398,7 @@
         </div>
 
         <!-- Profile Summary -->
-        <div class="form-section open">
+        <div class="form-section open" data-section-id="profile">
           <div class="section-header" data-toggle>
             <div class="section-header__left">
               <div class="section-icon">📝</div>
@@ -1283,7 +1429,11 @@
         </div>
 
         <!-- Experience -->
-        <div class="form-section open" id="section-experience">
+        <div
+          class="form-section open"
+          id="section-experience"
+          data-section-id="experience"
+        >
           <div class="section-header" data-toggle>
             <div class="section-header__left">
               <div class="section-icon">💼</div>
@@ -1316,7 +1466,11 @@
         </div>
 
         <!-- Education -->
-        <div class="form-section open" id="section-education">
+        <div
+          class="form-section open"
+          id="section-education"
+          data-section-id="education"
+        >
           <div class="section-header" data-toggle>
             <div class="section-header__left">
               <div class="section-icon">🎓</div>
@@ -1349,52 +1503,44 @@
         </div>
 
         <!-- Skills -->
-        <div class="form-section">
+        <div class="form-section" data-section-id="skills">
           <div class="section-header" data-toggle>
             <div class="section-header__left">
               <div class="section-icon">⚡</div>
               <span class="section-title">Skills</span>
             </div>
-            <svg
-              class="section-chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M6 9l6 6 6-6" />
-            </svg>
+            <div class="section-header__right">
+              <button
+                class="btn-add"
+                id="btn-add-skill"
+                onclick="event.stopPropagation()"
+              >
+                + Add
+              </button>
+              <svg
+                class="section-chevron"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </div>
           </div>
           <div class="section-body">
-            <div class="field">
-              <label for="f-skillsTechnical"
-                >Technical <span class="hint">comma-separated</span></label
-              >
-              <input
-                id="f-skillsTechnical"
-                type="text"
-                data-token="skillsTechnical"
-                placeholder="Python, TypeScript, SQL"
-              />
-            </div>
-            <div class="field">
-              <label for="f-skillsTools"
-                >Tools <span class="hint">comma-separated</span></label
-              >
-              <input
-                id="f-skillsTools"
-                type="text"
-                data-token="skillsTools"
-                placeholder="Git, Docker, Figma"
-              />
-            </div>
+            <div class="skills-list" id="skills-list"></div>
           </div>
         </div>
 
         <!-- Languages -->
-        <div class="form-section" id="section-languages">
+        <div
+          class="form-section"
+          id="section-language"
+          data-section-id="languages"
+        >
           <div class="section-header" data-toggle>
             <div class="section-header__left">
               <div class="section-icon">🌐</div>
@@ -1427,39 +1573,81 @@
         </div>
 
         <!-- Interests -->
-        <div class="form-section">
+        <div class="form-section" data-section-id="interests">
           <div class="section-header" data-toggle>
             <div class="section-header__left">
               <div class="section-icon">✨</div>
               <span class="section-title">Interests</span>
             </div>
-            <svg
-              class="section-chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M6 9l6 6 6-6" />
-            </svg>
+            <div class="section-header__right">
+              <button
+                class="btn-add"
+                id="btn-add-interest"
+                onclick="event.stopPropagation()"
+              >
+                + Add
+              </button>
+              <svg
+                class="section-chevron"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </div>
           </div>
           <div class="section-body">
-            <div class="field">
-              <label>Interests <span class="hint">comma-separated</span></label>
-              <input
-                id="f-interests"
-                type="text"
-                data-token="interests"
-                placeholder="Open source, Piano, Rock climbing"
-              />
+            <div class="interests-list" id="interests-list"></div>
+          </div>
+        </div>
+
+        <!-- Portfolio -->
+        <div
+          class="form-section"
+          id="section-portfolio"
+          data-section-id="portfolio"
+        >
+          <div class="section-header" data-toggle>
+            <div class="section-header__left">
+              <div class="section-icon">🗂️</div>
+              <span class="section-title">Portfolio</span>
             </div>
+            <div class="section-header__right">
+              <button
+                class="btn-add"
+                data-add="portfolio"
+                onclick="event.stopPropagation()"
+              >
+                + Add
+              </button>
+              <svg
+                class="section-chevron"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </div>
+          </div>
+          <div class="section-body">
+            <div class="dyn-entries" id="portfolio-entries"></div>
           </div>
         </div>
 
         <!-- Certifications -->
-        <div class="form-section" id="section-certifications">
+        <div
+          class="form-section"
+          id="section-certifications"
+          data-section-id="certifications"
+        >
           <div class="section-header" data-toggle>
             <div class="section-header__left">
               <div class="section-icon">🏅</div>
@@ -1511,7 +1699,7 @@
                 ></div>
                 <input type="color" id="color-input" value="#c94a1f" />
               </div>
-              <span class="color-hex" id="color-hex">#c94a1f</span>
+              <span class="color-hex" id="color-hex">#C94A1F</span>
             </div>
           </div>
           <div class="cbar-group">
@@ -1584,11 +1772,11 @@
           </div>
         </div>
         <div class="field">
-          <label>Bullets <span class="hint">one per line</span></label>
+          <label>Description</label>
           <textarea
-            name="bullets"
+            name="description"
             rows="3"
-            placeholder="Led a team of 5 engineers…"
+            placeholder="Describe your responsibilities and achievements…"
           ></textarea>
         </div>
       </div>
@@ -1615,6 +1803,10 @@
           </div>
         </div>
         <div class="field-row">
+          <div class="field">
+            <label>Location</label
+            ><input type="text" name="location" placeholder="Cambridge, MA" />
+          </div>
           <div class="field field--half">
             <label>Year</label
             ><input type="text" name="year" placeholder="2018" />
@@ -1652,6 +1844,27 @@
               placeholder="4"
             />
           </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="tpl-portfolio">
+      <div class="dyn-entry" data-type="portfolio">
+        <div class="dyn-entry__top">
+          <span class="dyn-entry__label">Portfolio Item</span>
+          <button class="dyn-entry__remove" title="Remove">✕</button>
+        </div>
+        <div class="field">
+          <label>Project Name</label>
+          <input type="text" name="name" placeholder="My Awesome Project" />
+        </div>
+        <div class="field">
+          <label>Description</label>
+          <textarea
+            name="description"
+            rows="2"
+            placeholder="Short description of the project…"
+          ></textarea>
         </div>
       </div>
     </template>
@@ -1783,9 +1996,8 @@
       const btnDownload = document.getElementById("btn-download");
 
       // ══════════════════════════════════════════════════════════
-      //  BOOT
+      //  DEFAULT DATA
       // ══════════════════════════════════════════════════════════
-      // Default data for Nina
       const DEFAULT_DATA = {
         firstName: "Nina",
         lastName: "Lane",
@@ -1797,16 +2009,18 @@
         website: "ninalane.com",
         summary:
           "Creative and detail-oriented Product Designer with 7+ years of experience crafting user-centric digital experiences. Passionate about design systems, accessibility, and cross-functional collaboration.",
-        skillsTechnical: [
-          "Figma",
-          "Sketch",
-          "Adobe XD",
-          "HTML",
-          "CSS",
-          "JavaScript",
+        skills: [
+          { name: "Figma", level: 95 },
+          { name: "Sketch", level: 80 },
+          { name: "Adobe XD", level: 75 },
+          { name: "HTML/CSS", level: 70 },
+          { name: "JavaScript", level: 60 },
         ],
-        skillsTools: ["Jira", "Notion", "Slack"],
-        interests: ["Travel", "Photography", "Yoga"],
+        interests: [
+          { name: "Travel" },
+          { name: "Photography" },
+          { name: "Yoga" },
+        ],
         photo: "",
         experience: [
           {
@@ -1815,11 +2029,8 @@
             location: "Remote",
             startDate: "2022",
             endDate: "Present",
-            bullets: [
-              "Led design for Acme's flagship SaaS platform.",
-              "Mentored 3 junior designers.",
-              "Collaborated with PMs and engineers to ship 10+ features.",
-            ],
+            description:
+              "Led design for Acme's flagship SaaS platform. Mentored 3 junior designers. Collaborated with PMs and engineers to ship 10+ features.",
           },
           {
             role: "Product Designer",
@@ -1827,16 +2038,15 @@
             location: "San Francisco, CA",
             startDate: "2019",
             endDate: "2022",
-            bullets: [
-              "Redesigned mobile app, increasing NPS by 25%.",
-              "Ran user research and usability tests.",
-            ],
+            description:
+              "Redesigned mobile app, increasing NPS by 25%. Ran user research and usability tests.",
           },
         ],
         education: [
           {
             degree: "BFA Graphic Design",
             school: "ArtCenter College of Design",
+            location: "Pasadena, CA",
             year: "2017",
             detail: "Graduated with Honors",
           },
@@ -1861,11 +2071,152 @@
             l5: "",
           },
         ],
+        portfolio: [],
         certifications: [{ name: "UX Certified (NN/g)", year: "2021" }],
       };
 
+      // ══════════════════════════════════════════════════════════
+      //  LOCALSTORAGE PERSISTENCE
+      // ══════════════════════════════════════════════════════════
+      function saveFormState() {
+        try {
+          const state = {
+            fields: {},
+            skills: collectRawSkills(),
+            interests: collectRawInterests(),
+            experience: collectRawEntries("experience"),
+            education: collectRawEntries("education"),
+            language: collectRawEntries("language"),
+            portfolio: collectRawEntries("portfolio"),
+            certification: collectRawEntries("certification"),
+            photo: photoDataURL,
+            accentColor,
+            headerFont: currentHeaderFont,
+            bodyFont: currentBodyFont,
+          };
+          document.querySelectorAll("[data-token]").forEach((el) => {
+            if (el.value.trim()) state.fields[el.dataset.token] = el.value;
+          });
+          localStorage.setItem("cvFormState", JSON.stringify(state));
+        } catch (e) {
+          // storage may be full — silently ignore
+        }
+      }
+
+      function restoreFormState() {
+        try {
+          const raw = localStorage.getItem("cvFormState");
+          if (!raw) return false;
+          const state = JSON.parse(raw);
+          // Fields
+          if (state.fields) {
+            Object.entries(state.fields).forEach(([token, value]) => {
+              const el = document.querySelector(`[data-token="${token}"]`);
+              if (el) el.value = value;
+            });
+          }
+          // Skills
+          if (Array.isArray(state.skills)) {
+            const list = document.getElementById("skills-list");
+            list.innerHTML = "";
+            state.skills.forEach(({ name, level }) => addSkillRow(name, level));
+          }
+          // Interests
+          if (Array.isArray(state.interests)) {
+            const list = document.getElementById("interests-list");
+            list.innerHTML = "";
+            state.interests.forEach(({ name }) => addInterestRow(name));
+          }
+          // Dynamic entries
+          const dynTypes = [
+            "experience",
+            "education",
+            "language",
+            "portfolio",
+            "certification",
+          ];
+          dynTypes.forEach((type) => {
+            if (Array.isArray(state[type])) {
+              const container = document.getElementById(`${type}-entries`);
+              if (container) container.innerHTML = "";
+              state[type].forEach((fields) => addEntryWithValues(type, fields));
+            }
+          });
+          // Photo
+          if (state.photo) {
+            photoDataURL = state.photo;
+            const preview = document.getElementById("photo-preview-img");
+            const removeBtn = document.getElementById("photo-remove");
+            if (preview) {
+              preview.src = photoDataURL;
+              preview.style.display = "block";
+            }
+            if (removeBtn) removeBtn.style.display = "inline-flex";
+          }
+          // Accent
+          if (state.accentColor) {
+            accentColor = state.accentColor;
+            const input = document.getElementById("color-input");
+            const preview = document.getElementById("color-preview");
+            const hex = document.getElementById("color-hex");
+            if (input) input.value = accentColor;
+            if (preview) preview.style.background = accentColor;
+            if (hex) hex.textContent = accentColor.toUpperCase();
+          }
+          // Fonts
+          if (state.headerFont) {
+            currentHeaderFont = state.headerFont;
+            const sel = document.getElementById("header-font-select");
+            if (sel) sel.value = currentHeaderFont;
+          }
+          if (state.bodyFont) {
+            currentBodyFont = state.bodyFont;
+            const sel = document.getElementById("body-font-select");
+            if (sel) sel.value = currentBodyFont;
+          }
+          return true;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function collectRawSkills() {
+        return Array.from(document.querySelectorAll(".skill-slider-row")).map(
+          (row) => ({
+            name: row.querySelector("input[type='text']")?.value || "",
+            level: parseInt(
+              row.querySelector("input[type='range']")?.value || "80",
+            ),
+          }),
+        );
+      }
+
+      function collectRawInterests() {
+        return Array.from(
+          document.querySelectorAll(".interest-entry input"),
+        ).map((el) => ({
+          name: el.value,
+        }));
+      }
+
+      function collectRawEntries(type) {
+        const c = document.getElementById(`${type}-entries`);
+        if (!c) return [];
+        return Array.from(
+          c.querySelectorAll(`.dyn-entry[data-type="${type}"]`),
+        ).map((entry) => {
+          const obj = {};
+          entry.querySelectorAll("[name]").forEach((el) => {
+            obj[el.name] = el.value;
+          });
+          return obj;
+        });
+      }
+
+      // ══════════════════════════════════════════════════════════
+      //  BOOT
+      // ══════════════════════════════════════════════════════════
       document.addEventListener("DOMContentLoaded", () => {
-        loadTemplate(currentTemplate);
         bindAccordions();
         bindStaticInputs();
         bindDynamicAddButtons();
@@ -1875,47 +2226,102 @@
         bindChangeTplButton();
         initModal();
         bindDownload();
+
+        // Add default skill and interest rows
+        addSkillRow("Figma", 95);
+        addSkillRow("Sketch", 80);
+        addInterestRow("Travel");
+        addInterestRow("Photography");
+
+        // Add default dynamic entries
         addEntry("experience");
         addEntry("education");
+
+        // Restore saved state if available, then load template
+        const hadSavedState = restoreFormState();
+
+        loadTemplate(currentTemplate, !hadSavedState);
+
         fitScale();
         window.addEventListener("resize", fitScale);
-        scheduleUpdate();
+
+        // Mobile preview toggle — fix: toggle .show-preview on workspace
         document
           .getElementById("btn-toggle-preview")
           ?.addEventListener("click", () => {
             document
-              .querySelector(".workspace")
+              .getElementById("workspace")
               .classList.toggle("show-preview");
           });
+
+        // Auto-save on any input
+        document.addEventListener("input", () => {
+          saveFormState();
+          scheduleUpdate();
+        });
       });
+
+      // ══════════════════════════════════════════════════════════
+      //  cvConfig READER — load sections & accent from template
+      // ══════════════════════════════════════════════════════════
+      function readCvConfig(tplWindow) {
+        const config = tplWindow?.cvConfig;
+        if (!config) return;
+
+        // Set accent color from template default
+        if (config.accent) {
+          accentColor = config.accent;
+          const input = document.getElementById("color-input");
+          const preview = document.getElementById("color-preview");
+          const hex = document.getElementById("color-hex");
+          if (input) input.value = accentColor;
+          if (preview) preview.style.background = accentColor;
+          if (hex) hex.textContent = accentColor.toUpperCase();
+        }
+
+        // Show/hide sections based on template config
+        if (Array.isArray(config.sections)) {
+          showSections(config.sections);
+        }
+      }
+
+      // ══════════════════════════════════════════════════════════
+      //  showSections — hide/show form sections by template config
+      // ══════════════════════════════════════════════════════════
+      function showSections(allowedSections) {
+        document.querySelectorAll("[data-section-id]").forEach((section) => {
+          const id = section.dataset.sectionId;
+          // personal is always shown
+          if (id === "personal" || id === "profile") {
+            section.classList.remove("section-hidden");
+          } else if (allowedSections.includes(id)) {
+            section.classList.remove("section-hidden");
+          } else {
+            section.classList.add("section-hidden");
+          }
+        });
+      }
 
       // ══════════════════════════════════════════════════════════
       //  TEMPLATE LOADING
       // ══════════════════════════════════════════════════════════
-      async function loadTemplate(name) {
+      async function loadTemplate(name, applyDefaults = false) {
         try {
           const res = await fetch(`${TEMPLATES_DIR}${name}.html`);
           if (!res.ok) throw new Error(`${res.status}`);
           templateHTML = await res.text();
-          scheduleUpdate();
-          // Read default accent from loaded template
+
+          // Read cvConfig from template via temp iframe
           const tempIframe = document.createElement("iframe");
-          tempIframe.style.display = "none";
+          tempIframe.style.cssText =
+            "position:fixed;left:-9999px;top:0;width:1px;height:1px;";
           document.body.appendChild(tempIframe);
           tempIframe.contentDocument.open();
           tempIframe.contentDocument.write(templateHTML);
           tempIframe.contentDocument.close();
+
           setTimeout(() => {
-            const defaultAccent = tempIframe.contentWindow?.cvDefaultAccent;
-            if (defaultAccent) {
-              accentColor = defaultAccent;
-              const input = document.getElementById("color-input");
-              const preview = document.getElementById("color-preview");
-              const hexLbl = document.getElementById("color-hex");
-              if (input) input.value = defaultAccent;
-              if (preview) preview.style.background = defaultAccent;
-              if (hexLbl) hexLbl.textContent = defaultAccent.toUpperCase();
-            }
+            readCvConfig(tempIframe.contentWindow);
             document.body.removeChild(tempIframe);
             scheduleUpdate();
           }, 300);
@@ -1930,61 +2336,142 @@
       }
 
       // ══════════════════════════════════════════════════════════
+      //  SKILLS — slider-based add/remove
+      // ══════════════════════════════════════════════════════════
+      function addSkillRow(name = "", level = 80) {
+        const list = document.getElementById("skills-list");
+        const row = document.createElement("div");
+        row.className = "skill-slider-row";
+        row.innerHTML = `
+          <input type="text" placeholder="Skill name" value="${esc(name)}" style="flex:1.2" />
+          <input type="range" min="0" max="100" value="${level}" />
+          <span class="skill-level-pct">${level}%</span>
+          <button class="btn-skill-remove" title="Remove">✕</button>
+        `;
+        const rangeInput = row.querySelector("input[type='range']");
+        const pctLabel = row.querySelector(".skill-level-pct");
+        rangeInput.addEventListener("input", () => {
+          pctLabel.textContent = rangeInput.value + "%";
+          saveFormState();
+          scheduleUpdate();
+        });
+        row
+          .querySelector("input[type='text']")
+          .addEventListener("input", () => {
+            saveFormState();
+            scheduleUpdate();
+          });
+        row.querySelector(".btn-skill-remove").addEventListener("click", () => {
+          row.remove();
+          saveFormState();
+          scheduleUpdate();
+        });
+        list.appendChild(row);
+      }
+
+      // ══════════════════════════════════════════════════════════
+      //  INTERESTS — add/remove entries
+      // ══════════════════════════════════════════════════════════
+      function addInterestRow(name = "") {
+        const list = document.getElementById("interests-list");
+        const row = document.createElement("div");
+        row.className = "interest-entry";
+        row.innerHTML = `
+          <input type="text" placeholder="e.g. Rock climbing" value="${esc(name)}" />
+          <button class="btn-interest-remove" title="Remove">✕</button>
+        `;
+        row.querySelector("input").addEventListener("input", () => {
+          saveFormState();
+          scheduleUpdate();
+        });
+        row
+          .querySelector(".btn-interest-remove")
+          .addEventListener("click", () => {
+            row.remove();
+            saveFormState();
+            scheduleUpdate();
+          });
+        list.appendChild(row);
+      }
+
+      // ══════════════════════════════════════════════════════════
       //  DATA COLLECTION
       // ══════════════════════════════════════════════════════════
       function collectData() {
-        // Start with a deep copy of DEFAULT_DATA
         const data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+
+        // Static tokens
         document.querySelectorAll("[data-token]").forEach((el) => {
           const v = el.value.trim();
           if (v) data[el.dataset.token] = v;
         });
-        // Overwrite arrays if user input exists
-        const arrFields = [
-          { key: "skillsTechnical", id: "f-skillsTechnical" },
-          { key: "skillsTools", id: "f-skillsTools" },
-          { key: "interests", id: "f-interests" },
-        ];
-        arrFields.forEach(({ key, id }) => {
-          const el = document.getElementById(id);
-          if (el && el.value.trim()) data[key] = splitComma(el.value);
-        });
+
         data.photo = photoDataURL || data.photo;
+
+        // Skills — slider-based, filter empty names
+        const skillRows = document.querySelectorAll(".skill-slider-row");
+        if (skillRows.length) {
+          const skills = Array.from(skillRows)
+            .map((row) => ({
+              name: row.querySelector("input[type='text']")?.value.trim() || "",
+              level: parseInt(
+                row.querySelector("input[type='range']")?.value || "80",
+              ),
+            }))
+            .filter((s) => s.name !== "");
+          if (skills.length) data.skills = skills;
+        }
+
+        // Interests — add/remove rows, filter empty
+        const interestInputs = document.querySelectorAll(
+          ".interest-entry input",
+        );
+        if (interestInputs.length) {
+          const interests = Array.from(interestInputs)
+            .map((el) => ({ name: el.value.trim() }))
+            .filter((i) => i.name !== "");
+          if (interests.length) data.interests = interests;
+        }
+
         // Dynamic entries
         const dyns = [
           { key: "experience", type: "experience" },
           { key: "education", type: "education" },
           { key: "languages", type: "language" },
+          { key: "portfolio", type: "portfolio" },
           { key: "certifications", type: "certification" },
         ];
         dyns.forEach(({ key, type }) => {
           const entries = collectEntries(type, (e) => {
             if (type === "experience") {
-              return {
+              const obj = {
                 role: val(e, "role"),
                 company: val(e, "company"),
                 location: val(e, "location"),
                 startDate: val(e, "startDate"),
                 endDate: val(e, "endDate"),
-                bullets: val(e, "bullets")
-                  .split("\n")
-                  .map((s) => s.trim())
-                  .filter(Boolean),
+                description: val(e, "description"),
               };
+              // filter totally empty entries
+              return obj.role || obj.company ? obj : null;
             } else if (type === "education") {
-              return {
+              const obj = {
                 degree: val(e, "degree"),
                 school: val(e, "school"),
+                location: val(e, "location"),
                 year: val(e, "year"),
                 detail: val(e, "detail"),
               };
+              return obj.degree || obj.school ? obj : null;
             } else if (type === "language") {
+              const name = val(e, "name");
+              if (!name) return null;
               const level = Math.min(
                 5,
                 Math.max(1, parseInt(val(e, "level")) || 3),
               );
               return {
-                name: val(e, "name"),
+                name,
                 level,
                 l1: level >= 1 ? "on" : "",
                 l2: level >= 2 ? "on" : "",
@@ -1992,16 +2479,21 @@
                 l4: level >= 4 ? "on" : "",
                 l5: level >= 5 ? "on" : "",
               };
+            } else if (type === "portfolio") {
+              const name = val(e, "name");
+              if (!name) return null;
+              return { name, description: val(e, "description") };
             } else if (type === "certification") {
-              return {
-                name: val(e, "name"),
-                year: val(e, "year"),
-              };
+              const name = val(e, "name");
+              if (!name) return null;
+              return { name, year: val(e, "year") };
             }
-            return {};
+            return null;
           });
-          if (entries.length) data[key] = entries;
+          const filtered = entries.filter(Boolean);
+          if (filtered.length) data[key] = filtered;
         });
+
         return data;
       }
 
@@ -2009,11 +2501,7 @@
         const el = p.querySelector(`[name="${n}"]`);
         return el ? el.value.trim() : "";
       };
-      const splitComma = (s = "") =>
-        s
-          .split(",")
-          .map((x) => x.trim())
-          .filter(Boolean);
+
       function collectEntries(type, mapper) {
         const c = document.getElementById(`${type}-entries`);
         return c
@@ -2028,6 +2516,16 @@
       // ══════════════════════════════════════════════════════════
       function renderTemplate(html, data) {
         let out = html;
+        // Inverted sections {{^key}}...{{/key}}
+        out = out.replace(
+          /\{\{\^(\w+)\}\}([\s\S]*?)\{\{\/\1\}\}/g,
+          (_, key, inner) => {
+            const v = data[key];
+            if (!v || (Array.isArray(v) && !v.length)) return inner;
+            return "";
+          },
+        );
+        // Normal sections {{#key}}...{{/key}}
         out = out.replace(
           /\{\{#(\w+)\}\}([\s\S]*?)\{\{\/\1\}\}/g,
           (_, key, inner) => {
@@ -2047,6 +2545,7 @@
             return "";
           },
         );
+        // Simple tokens
         out = out.replace(/\{\{(\w+)\}\}/g, (_, key) => {
           const v = data[key];
           if (v == null) return "";
@@ -2059,12 +2558,38 @@
 
       function renderBlock(inner, item, root) {
         let b = inner;
-        b = b.replace(/\{\{#(\w+)\}\}([\s\S]*?)\{\{\/\1\}\}/g, (__, k, i2) => {
-          const s = item[k];
-          return Array.isArray(s) && s.length
-            ? s.map((x) => i2.replace(/\{\{\.\}\}/g, esc(x))).join("")
-            : "";
+        // Inverted inside block
+        b = b.replace(/\{\{\^(\w+)\}\}([\s\S]*?)\{\{\/\1\}\}/g, (__, k, i2) => {
+          const s = item[k] !== undefined ? item[k] : root[k];
+          if (!s || (Array.isArray(s) && !s.length)) return i2;
+          return "";
         });
+        // Nested sections inside block
+        b = b.replace(/\{\{#(\w+)\}\}([\s\S]*?)\{\{\/\1\}\}/g, (__, k, i2) => {
+          const s = item[k] !== undefined ? item[k] : root[k];
+          if (Array.isArray(s) && s.length)
+            return s
+              .map((x) =>
+                i2.replace(/\{\{(\w+)\}\}/g, (_, kk) =>
+                  esc(String(x[kk] !== undefined ? x[kk] : x)),
+                ),
+              )
+              .join("");
+          if (s)
+            return i2.replace(/\{\{(\w+)\}\}/g, (_, kk) =>
+              esc(
+                String(
+                  item[kk] !== undefined
+                    ? item[kk]
+                    : root[kk] !== undefined
+                      ? root[kk]
+                      : "",
+                ),
+              ),
+            );
+          return "";
+        });
+        // Simple tokens
         b = b.replace(/\{\{(\w+)\}\}/g, (__, k) => {
           const v =
             item[k] !== undefined
@@ -2099,16 +2624,12 @@
       }
 
       function injectCustomStyles(html) {
-        // Header and body font URLs
         const headerFont = FONTS[currentHeaderFont] || FONTS.playfair;
         const bodyFont = FONTS[currentBodyFont] || FONTS.dmSans;
-        const styleTag = "<" + "style>";
-        const closeStyle = "<" + "/style>";
-        const closeHead = "<" + "/head>";
         const style = `
       <link rel="stylesheet" href="${headerFont.url}" />
       <link rel="stylesheet" href="${bodyFont.url}" />
-      ${styleTag}
+      <style>
         :root {
           --accent-color: ${accentColor} !important;
           --yellow: ${accentColor} !important;
@@ -2119,9 +2640,9 @@
         .sidebar__name, .sb-section__title, .sec-title, h1, h2, h3 {
           font-family: ${headerFont.display} !important;
         }
-      ${closeStyle}
+      </style>
     `;
-        return html.replace(closeHead, style + closeHead);
+        return html.replace("</head>", style + "</head>");
       }
 
       function updateIframe(html) {
@@ -2159,6 +2680,10 @@
       //  DYNAMIC ENTRIES
       // ══════════════════════════════════════════════════════════
       function addEntry(type) {
+        addEntryWithValues(type, {});
+      }
+
+      function addEntryWithValues(type, values) {
         const tpl = document.getElementById(`tpl-${type}`);
         const container = document.getElementById(`${type}-entries`);
         if (!tpl || !container) return;
@@ -2167,16 +2692,26 @@
         const count = container.querySelectorAll(".dyn-entry").length + 1;
         const lbl = entry.querySelector(".dyn-entry__label");
         if (lbl) lbl.textContent = `${cap(type)} ${count}`;
+
+        // Restore field values
+        Object.entries(values).forEach(([name, value]) => {
+          const el = entry.querySelector(`[name="${name}"]`);
+          if (el) el.value = value;
+        });
+
         entry
           .querySelector(".dyn-entry__remove")
           .addEventListener("click", () => {
             entry.remove();
             renumber(type);
+            saveFormState();
             scheduleUpdate();
           });
-        entry.addEventListener("input", scheduleUpdate);
+        entry.addEventListener("input", () => {
+          saveFormState();
+          scheduleUpdate();
+        });
         container.appendChild(entry);
-        // Open the parent section
         const section = document.getElementById(`section-${type}`);
         if (section) section.classList.add("open");
       }
@@ -2197,9 +2732,32 @@
           btn.addEventListener("click", (e) => {
             e.stopPropagation();
             addEntry(btn.dataset.add);
+            saveFormState();
             scheduleUpdate();
           });
         });
+        // Skills add button
+        document
+          .getElementById("btn-add-skill")
+          ?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const section = e.target.closest(".form-section");
+            if (section) section.classList.add("open");
+            addSkillRow();
+            saveFormState();
+            scheduleUpdate();
+          });
+        // Interests add button
+        document
+          .getElementById("btn-add-interest")
+          ?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const section = e.target.closest(".form-section");
+            if (section) section.classList.add("open");
+            addInterestRow();
+            saveFormState();
+            scheduleUpdate();
+          });
       }
 
       // ══════════════════════════════════════════════════════════
@@ -2207,7 +2765,10 @@
       // ══════════════════════════════════════════════════════════
       function bindStaticInputs() {
         document.querySelectorAll("[data-token]").forEach((el) => {
-          el.addEventListener("input", scheduleUpdate);
+          el.addEventListener("input", () => {
+            saveFormState();
+            scheduleUpdate();
+          });
         });
       }
 
@@ -2230,6 +2791,7 @@
               preview.style.display = "block";
             }
             if (remove) remove.style.display = "inline-flex";
+            saveFormState();
             scheduleUpdate();
           };
           reader.readAsDataURL(file);
@@ -2242,6 +2804,7 @@
             preview.style.display = "none";
           }
           remove.style.display = "none";
+          saveFormState();
           scheduleUpdate();
         });
       }
@@ -2259,13 +2822,13 @@
           accentColor = input.value;
           if (preview) preview.style.background = accentColor;
           if (hexLbl) hexLbl.textContent = accentColor.toUpperCase();
+          saveFormState();
           scheduleUpdate();
         };
 
         input.addEventListener("input", apply);
         input.addEventListener("change", apply);
 
-        // Click the preview box opens the picker
         document
           .getElementById("color-picker-btn")
           ?.addEventListener("click", () => input.click());
@@ -2300,11 +2863,13 @@
         headerSel.addEventListener("change", () => {
           currentHeaderFont = headerSel.value;
           applyHeaderFont();
+          saveFormState();
           scheduleUpdate();
         });
         bodySel.addEventListener("change", () => {
           currentBodyFont = bodySel.value;
           applyBodyFont();
+          saveFormState();
           scheduleUpdate();
         });
 
@@ -2345,13 +2910,11 @@
         const dotsWrap = document.getElementById("modal-dots");
         if (!track) return;
 
-        // Find current template index
         modalCurrent = Math.max(
           0,
           TEMPLATES.findIndex((t) => t.id === currentTemplate),
         );
 
-        // Build cards
         modalCards = TEMPLATES.map((tpl, i) => {
           const card = document.createElement("div");
           card.className = "modal-card";
@@ -2372,11 +2935,9 @@
           return card;
         });
 
-        // Size cards
         sizeModalCards();
         window.addEventListener("resize", sizeModalCards);
 
-        // Build dots
         TEMPLATES.forEach((_, i) => {
           const d = document.createElement("div");
           d.className = "modal-dot" + (i === modalCurrent ? " active" : "");
@@ -2388,7 +2949,6 @@
 
         renderModal();
 
-        // Arrows
         document
           .getElementById("modal-prev")
           ?.addEventListener("click", () =>
@@ -2403,7 +2963,6 @@
             modalGoTo((modalCurrent + 1) % TEMPLATES.length, 1),
           );
 
-        // Keyboard inside modal
         document.addEventListener("keydown", (e) => {
           const overlay = document.getElementById("tpl-modal-overlay");
           if (!overlay.classList.contains("open")) return;
@@ -2418,7 +2977,6 @@
           if (e.key === "Enter") applyTemplate(TEMPLATES[modalCurrent].id);
         });
 
-        // Touch swipe
         let touchX = 0;
         track.addEventListener(
           "touchstart",
@@ -2442,14 +3000,12 @@
           { passive: true },
         );
 
-        // Use button
         document
           .getElementById("btn-use-tpl")
           ?.addEventListener("click", () =>
             applyTemplate(TEMPLATES[modalCurrent].id),
           );
 
-        // Close
         document
           .getElementById("modal-close")
           ?.addEventListener("click", closeModal);
@@ -2502,7 +3058,6 @@
         const newCard = modalCards[index];
 
         oldCard.classList.remove("anim-enter-right", "anim-enter-left");
-
         newCard.classList.remove(
           "is-hidden",
           "is-prev",
@@ -2523,7 +3078,6 @@
       }
 
       function openModal() {
-        // Sync to current template
         modalCurrent = Math.max(
           0,
           TEMPLATES.findIndex((t) => t.id === currentTemplate),
@@ -2550,7 +3104,7 @@
       }
 
       // ══════════════════════════════════════════════════════════
-      //  PDF DOWNLOAD
+      //  PDF DOWNLOAD — uses px units [794, 1123]
       // ══════════════════════════════════════════════════════════
       function bindDownload() {
         btnDownload?.addEventListener("click", async () => {
@@ -2571,6 +3125,13 @@
               iframe.contentDocument || iframe.contentWindow?.document;
             const clone = document.createElement("div");
             clone.innerHTML = iDoc.querySelector("body").innerHTML;
+
+            // Force .page element to exact pixel dimensions
+            const pageEl = clone.querySelector(".page");
+            if (pageEl) {
+              pageEl.style.cssText +=
+                ";width:794px!important;height:1123px!important;max-height:1123px!important;overflow:hidden!important;";
+            }
             clone.style.cssText =
               "width:794px;height:1123px;max-height:1123px;overflow:hidden;background:#fff;";
 
@@ -2592,8 +3153,15 @@
                   scale: 2,
                   useCORS: true,
                   backgroundColor: "#ffffff",
+                  width: 794,
+                  height: 1123,
                 },
-                jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+                jsPDF: {
+                  unit: "px",
+                  format: [794, 1123],
+                  orientation: "portrait",
+                  hotfixes: ["px_scaling"],
+                },
                 pagebreak: { mode: ["avoid-all", "css"] },
               })
               .from(clone)
