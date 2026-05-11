@@ -3104,7 +3104,8 @@
       }
 
       // ══════════════════════════════════════════════════════════
-      //  PDF DOWNLOAD — uses px units [794, 1123]
+      //  PDF DOWNLOAD — serialise the live iframe HTML → Blob →
+      //  temp off-screen iframe → html2pdf on its <body>
       // ══════════════════════════════════════════════════════════
       function bindDownload() {
         btnDownload?.addEventListener("click", async () => {
@@ -3112,68 +3113,87 @@
             alert("PDF library not loaded. Check lib/html2pdf.bundle.min.js.");
             return;
           }
+
           const data = collectData();
           const first = (data.firstName || "").trim();
-          const last = (data.lastName || "").trim();
-          const name = [first, last].filter(Boolean).join("_") || "CV";
+          const last  = (data.lastName  || "").trim();
+          const filename = ([first, last].filter(Boolean).join("_") || "CV") + "_CV.pdf";
 
+          // ── Loading state ───────────────────────────────────
+          const originalHTML = btnDownload.innerHTML;
           btnDownload.textContent = "Exporting…";
           btnDownload.disabled = true;
 
+          let blobURL = null;
+          let tempFrame = null;
+
           try {
-            const iDoc =
-              iframe.contentDocument || iframe.contentWindow?.document;
-            const clone = document.createElement("div");
-            clone.innerHTML = iDoc.querySelector("body").innerHTML;
-
-            // Force .page element to exact pixel dimensions
-            const pageEl = clone.querySelector(".page");
-            if (pageEl) {
-              pageEl.style.cssText +=
-                ";width:794px!important;height:1123px!important;max-height:1123px!important;overflow:hidden!important;";
+            // 1. Grab the full rendered HTML from the live preview iframe
+            const liveDoc = iframe.contentDocument || iframe.contentWindow?.document;
+            if (!liveDoc || !liveDoc.documentElement) {
+              throw new Error("Preview iframe is not ready.");
             }
-            clone.style.cssText =
-              "width:794px;height:1123px;max-height:1123px;overflow:hidden;background:#fff;";
+            const fullHTML = "<!DOCTYPE html>\n" + liveDoc.documentElement.outerHTML;
 
-            const wrapper = document.createElement("div");
-            wrapper.style.cssText =
-              "position:fixed;left:-9999px;top:0;z-index:-1;";
-            iDoc
-              .querySelectorAll("style,link[rel='stylesheet']")
-              .forEach((el) => wrapper.appendChild(el.cloneNode(true)));
-            wrapper.appendChild(clone);
-            document.body.appendChild(wrapper);
+            // 2. Create a Blob URL so the temp iframe treats it as same-origin
+            const blob = new Blob([fullHTML], { type: "text/html; charset=utf-8" });
+            blobURL = URL.createObjectURL(blob);
+
+            // 3. Load into a hidden off-screen iframe so styles & fonts render
+            tempFrame = document.createElement("iframe");
+            tempFrame.style.cssText =
+              "position:fixed;left:-9999px;top:0;width:794px;height:1123px;border:none;visibility:hidden;";
+            document.body.appendChild(tempFrame);
+
+            await new Promise((resolve, reject) => {
+              tempFrame.onload = resolve;
+              tempFrame.onerror = reject;
+              tempFrame.src = blobURL;
+            });
+
+            // 4. Wait for Google Fonts / layout to settle
+            await new Promise((r) => setTimeout(r, 800));
+
+            // 5. Point html2pdf at the temp iframe's <body>
+            const printDoc  = tempFrame.contentDocument || tempFrame.contentWindow?.document;
+            const printBody = printDoc.body;
 
             await html2pdf()
               .set({
                 margin: 0,
-                filename: `${name}_CV.pdf`,
+                filename,
                 image: { type: "jpeg", quality: 0.98 },
                 html2canvas: {
                   scale: 2,
                   useCORS: true,
+                  allowTaint: true,
                   backgroundColor: "#ffffff",
-                  width: 794,
-                  height: 1123,
+                  logging: false,
+                  windowWidth: 794,
+                  windowHeight: 1123,
                 },
                 jsPDF: {
-                  unit: "px",
-                  format: [794, 1123],
+                  unit: "mm",
+                  format: "a4",
                   orientation: "portrait",
-                  hotfixes: ["px_scaling"],
                 },
                 pagebreak: { mode: ["avoid-all", "css"] },
               })
-              .from(clone)
+              .from(printBody)
               .save();
 
-            document.body.removeChild(wrapper);
           } catch (err) {
-            console.error(err);
-            alert("PDF export failed. Try again.");
+            console.error("[CV Maker] PDF export failed:", err);
+            alert("PDF export failed. Please try again.");
           } finally {
-            btnDownload.innerHTML =
-              '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg><span>Download PDF</span>';
+            // Clean up
+            if (tempFrame && tempFrame.parentNode) {
+              document.body.removeChild(tempFrame);
+            }
+            if (blobURL) {
+              URL.revokeObjectURL(blobURL);
+            }
+            btnDownload.innerHTML = originalHTML;
             btnDownload.disabled = false;
           }
         });
