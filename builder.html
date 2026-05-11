@@ -2402,7 +2402,8 @@
 
         // Static tokens
         document.querySelectorAll("[data-token]").forEach((el) => {
-          data[el.dataset.token] = el.value.trim();
+          const v = el.value.trim();
+          if (v) data[el.dataset.token] = v;
         });
 
         data.photo = photoDataURL || data.photo;
@@ -2545,15 +2546,8 @@
           },
         );
         // Simple tokens
-        out = out.replace(/\{\{([\w.]+)\}\}/g, (_, key) => {
-          let v;
-          if (key.includes(".")) {
-            const [k, p] = key.split(".");
-            v = data[k];
-            if (v && p === "0") v = String(v).charAt(0);
-          } else {
-            v = data[key];
-          }
+        out = out.replace(/\{\{(\w+)\}\}/g, (_, key) => {
+          const v = data[key];
           if (v == null) return "";
           if (Array.isArray(v)) return v.map(esc).join(", ");
           if (key === "photo") return String(v);
@@ -2596,17 +2590,13 @@
           return "";
         });
         // Simple tokens
-        b = b.replace(/\{\{([\w.]+)\}\}/g, (__, k) => {
-          let v;
-          if (k.includes(".")) {
-            const [k2, p] = k.split(".");
-            const base = item[k2] !== undefined ? item[k2] : root[k2];
-            if (base && p === "0") v = String(base).charAt(0);
-            else v = base;
-          } else {
-            v = item[k] !== undefined ? item[k] : root[k];
-          }
-          if (v === undefined || v === null) return "";
+        b = b.replace(/\{\{(\w+)\}\}/g, (__, k) => {
+          const v =
+            item[k] !== undefined
+              ? item[k]
+              : root[k] !== undefined
+                ? root[k]
+                : "";
           return Array.isArray(v) ? v.map(esc).join(", ") : esc(String(v));
         });
         return b;
@@ -2637,9 +2627,9 @@
         const headerFont = FONTS[currentHeaderFont] || FONTS.playfair;
         const bodyFont = FONTS[currentBodyFont] || FONTS.dmSans;
         const style = `
+      <link rel="stylesheet" href="${headerFont.url}" />
+      <link rel="stylesheet" href="${bodyFont.url}" />
       <style>
-        @import url('${headerFont.url}');
-        @import url('${bodyFont.url}');
         :root {
           --accent-color: ${accentColor} !important;
           --yellow: ${accentColor} !important;
@@ -3126,99 +3116,49 @@
 
           const data = collectData();
           const first = (data.firstName || "").trim();
-          const last  = (data.lastName  || "").trim();
-          const filename = ([first, last].filter(Boolean).join("_") || "CV") + "_CV.pdf";
+          const last = (data.lastName || "").trim();
+          const filename =
+            ([first, last].filter(Boolean).join("_") || "CV") + "_CV.pdf";
 
-          // ── Loading state ───────────────────────────────────
           const originalHTML = btnDownload.innerHTML;
           btnDownload.textContent = "Exporting…";
           btnDownload.disabled = true;
 
-          let blobURL = null;
-          let tempFrame = null;
-
           try {
-            // 1. Grab the full rendered HTML from the live preview iframe
-            const liveDoc = iframe.contentDocument || iframe.contentWindow?.document;
-            if (!liveDoc || !liveDoc.documentElement) {
-              throw new Error("Preview iframe is not ready.");
-            }
-            
-            // 2. Clone the document element to avoid modifying the live one
-            // We'll also ensure all styles are captured correctly
-            const fullHTML = "<!DOCTYPE html>\n" + liveDoc.documentElement.outerHTML;
+            const liveDoc = document.getElementById("cv-preview").contentDocument;
+            if (!liveDoc) throw new Error("Preview not ready.");
 
-            // 3. Create a Blob URL
-            const blob = new Blob([fullHTML], { type: "text/html; charset=utf-8" });
-            blobURL = URL.createObjectURL(blob);
+            const el = liveDoc.querySelector(".page");
+            if (!el) throw new Error("No .page element found.");
 
-            // 4. Load into a hidden off-screen iframe
-            tempFrame = document.createElement("iframe");
-            // Set fixed width to match A4 pixel width at 96dpi (794px)
-            tempFrame.style.cssText =
-              "position:fixed;left:-9999px;top:0;width:794px;height:1123px;border:none;";
-            document.body.appendChild(tempFrame);
-
-            await new Promise((resolve, reject) => {
-              tempFrame.onload = resolve;
-              tempFrame.onerror = reject;
-              tempFrame.src = blobURL;
-            });
-
-            // 5. Wait for fonts and images to be fully ready
-            const printDoc = tempFrame.contentDocument || tempFrame.contentWindow?.document;
-            
-            if (tempFrame.contentWindow.document.fonts) {
-              await tempFrame.contentWindow.document.fonts.ready;
-            }
-            
-            // Extra safety delay for layout/images/gradients
-            await new Promise((r) => setTimeout(r, 1000));
-
-            // 6. Target the actual CV page element
-            const elementToPrint = printDoc.querySelector(".page");
-            if (!elementToPrint) {
-              throw new Error("Could not find .page element in template.");
-            }
-            
-            // Calculate dimensions to ensure 1:1 scale
-            const opt = {
-              margin: 0,
-              filename: filename,
-              image: { type: "jpeg", quality: 1.0 },
-              html2canvas: {
-                scale: 2, // High quality
-                useCORS: true,
-                backgroundColor: "#ffffff",
-                width: elementToPrint.offsetWidth || 794,
-                height: elementToPrint.offsetHeight || 1123,
-                windowWidth: elementToPrint.offsetWidth || 794,
-                windowHeight: elementToPrint.offsetHeight || 1123,
-                scrollX: 0,
-                scrollY: 0,
-                logging: false
-              },
-              jsPDF: {
-                unit: "px",
-                format: [elementToPrint.offsetWidth || 794, elementToPrint.offsetHeight || 1123],
-                orientation: "portrait",
-                hotfixes: ["px_scaling"]
-              },
-              pagebreak: { mode: "avoid-all" }
-            };
-
-            await html2pdf().set(opt).from(elementToPrint).save();
-
+            await html2pdf()
+              .set({
+                margin: 0,
+                filename: filename,
+                image: { type: "jpeg", quality: 1.0 },
+                html2canvas: {
+                  scale: 2,
+                  useCORS: true,
+                  backgroundColor: "#ffffff",
+                  width: 794,
+                  height: 1123,
+                  scrollX: 0,
+                  scrollY: 0,
+                  logging: false,
+                },
+                jsPDF: {
+                  unit: "px",
+                  format: [794, 1123],
+                  orientation: "portrait",
+                  hotfixes: ["px_scaling"],
+                },
+              })
+              .from(el)
+              .save();
           } catch (err) {
             console.error("[CV Maker] PDF export failed:", err);
-            alert("PDF export failed. Please check console for details.");
+            alert("PDF export failed. Please try again.");
           } finally {
-            if (tempFrame && tempFrame.parentNode) {
-              document.body.removeChild(tempFrame);
-            }
-            if (blobURL) {
-              URL.revokeObjectURL(blobURL);
-            }
             btnDownload.innerHTML = originalHTML;
             btnDownload.disabled = false;
           }

@@ -62,30 +62,36 @@ async function downloadPDF() {
   setButtonLoading(true);
 
   try {
-    // Clone the iframe body so we don't mutate the live preview
-    const clone = iframeDoc.documentElement.cloneNode(true);
+    const liveDoc = document.getElementById("cv-preview").contentDocument;
+    if (!liveDoc) throw new Error("Preview not ready.");
 
-    // Inline the <style> from the iframe head so html2canvas sees it
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = clone.querySelector("body").innerHTML;
-    tempDiv.style.cssText = `
-      width: 794px;
-      min-height: 1123px;
-      background: #fff;
-      font-family: 'DM Sans', system-ui, sans-serif;
-    `;
+    const el = liveDoc.querySelector(".page");
+    if (!el) throw new Error("No .page element found.");
 
-    // Copy all <style> and <link rel=stylesheet> into a wrapper
-    const wrapper = document.createElement("div");
-    const styleEls = clone.querySelectorAll("style, link[rel='stylesheet']");
-    styleEls.forEach((el) => wrapper.appendChild(el.cloneNode(true)));
-    wrapper.appendChild(tempDiv);
-
-    // Temporarily attach to DOM (off-screen) so fonts render
-    wrapper.style.cssText = "position:fixed;left:-9999px;top:0;z-index:-1;";
-    document.body.appendChild(wrapper);
-
-    await html2pdf().set(getPdfOptions(filename)).from(tempDiv).save();
+    await html2pdf()
+      .set({
+        margin: 0,
+        filename: filename,
+        image: { type: "jpeg", quality: 1.0 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: "#ffffff",
+          width: 794,
+          height: 1123,
+          scrollX: 0,
+          scrollY: 0,
+          logging: false,
+        },
+        jsPDF: {
+          unit: "px",
+          format: [794, 1123],
+          orientation: "portrait",
+          hotfixes: ["px_scaling"],
+        },
+      })
+      .from(el)
+      .save();
 
     document.body.removeChild(wrapper);
   } catch (err) {
