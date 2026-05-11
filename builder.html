@@ -2637,9 +2637,9 @@
         const headerFont = FONTS[currentHeaderFont] || FONTS.playfair;
         const bodyFont = FONTS[currentBodyFont] || FONTS.dmSans;
         const style = `
-      <link rel="stylesheet" href="${headerFont.url}" />
-      <link rel="stylesheet" href="${bodyFont.url}" />
       <style>
+        @import url('${headerFont.url}');
+        @import url('${bodyFont.url}');
         :root {
           --accent-color: ${accentColor} !important;
           --yellow: ${accentColor} !important;
@@ -3176,7 +3176,10 @@
             await new Promise((r) => setTimeout(r, 1000));
 
             // 6. Target the actual CV page element
-            const elementToPrint = printDoc.querySelector(".page") || printDoc.body;
+            const elementToPrint = printDoc.querySelector(".page");
+            if (!elementToPrint) {
+              throw new Error("Could not find .page element in template.");
+            }
             
             // Calculate dimensions to ensure 1:1 scale
             const opt = {
