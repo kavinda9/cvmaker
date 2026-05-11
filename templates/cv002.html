@@ -41,9 +41,9 @@
 
       html,
       body {
-        width: 794px;
-        height: 1123px;
-        max-height: 1123px;
+        width: 210mm;
+        height: 297mm;
+        max-height: 297mm;
         overflow: hidden;
         margin: 0;
         font-family: "Open Sans", sans-serif;
@@ -51,8 +51,8 @@
       }
 
       .page {
-        width: 794px;
-        height: 1123px;
+        width: 210mm;
+        height: 297mm;
         overflow: hidden;
         background: #fff;
         display: flex;
@@ -62,8 +62,8 @@
      LEFT PANEL  width = 8.2cm
   ───────────────────────────────────────── */
       .left {
-        width: 8.2cm;
-        height: 1123px;
+        width: 82mm;
+        height: 297mm;
         background: var(--dark);
         flex-shrink: 0;
         display: flex;
@@ -78,7 +78,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: calc(30cm - 25.5cm); /* = 4.5cm */
+        height: calc(297mm - 255mm); 
         background: var(--yellow);
         z-index: 0;
       }
@@ -86,10 +86,10 @@
       /* Profile photo circle */
       .profile-photo {
         position: absolute;
-        left: calc(3.8cm - 2.6cm);
-        top: calc(30cm - 25.5cm - 2.6cm); /* 1.9cm */
-        width: 5.2cm;
-        height: 5.2cm;
+        left: calc(38mm - 26mm);
+        top: calc(297mm - 255mm - 26mm); 
+        width: 52mm;
+        height: 52mm;
         border-radius: 50%;
         overflow: hidden;
         border: 4px solid var(--dark);
@@ -121,8 +121,7 @@
         height: 100%;
         position: relative;
         z-index: 2;
-        /* push name-block to ~8.8cm from top */
-        padding-top: 8.8cm;
+        padding-top: 85mm;
       }
 
       .name-block {
@@ -247,12 +246,12 @@
   ───────────────────────────────────────── */
       .right {
         flex: 1;
-        height: 1123px;
+        height: 297mm;
         background: #fff;
         display: flex;
         flex-direction: column;
-        padding: 0.5cm 0.6cm;
-        gap: 0.3cm;
+        padding: 5mm 6mm;
+        gap: 3mm;
         overflow: hidden;
       }
 

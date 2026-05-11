@@ -31,9 +31,9 @@
 
       html,
       body {
-        width: 21cm;
-        height: 30cm;
-        max-height: 30cm;
+        width: 210mm;
+        height: 297mm;
+        max-height: 297mm;
         overflow: hidden;
         margin: 0;
         font-family: "Open Sans", sans-serif;
@@ -41,8 +41,8 @@
       }
 
       .page {
-        width: 21cm;
-        height: 30cm;
+        width: 210mm;
+        height: 297mm;
         position: relative;
         overflow: hidden;
         background: #fff;
@@ -53,8 +53,8 @@
      LEFT PANEL  width = 8.2cm
   ───────────────────────────────────────── */
       .left {
-        width: 8.2cm;
-        height: 30cm;
+        width: 82mm;
+        height: 297mm;
         background: var(--dark);
         position: relative;
         flex-shrink: 0;
@@ -67,7 +67,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: calc(30cm - 25.5cm); /* = 4.5cm */
+        height: calc(297mm - 255mm); /* = 42mm */
         background: var(--yellow);
         z-index: 0;
       }
@@ -78,12 +78,12 @@
      r = 2.6cm → diameter = 5.2cm */
       .profile-photo {
         position: absolute;
-        left: calc(3.8cm - 2.6cm); /* cx - r */
+        left: calc(38mm - 26mm); /* cx - r */
         top: calc(
-          30cm - 25.5cm - 2.6cm
-        ); /* (30 - y) - r = 4.5cm - 2.6cm = 1.9cm */
-        width: 5.2cm;
-        height: 5.2cm;
+          297mm - 255mm - 26mm
+        );
+        width: 52mm;
+        height: 52mm;
         border-radius: 50%;
         overflow: hidden;
         border: 4px solid var(--dark);
@@ -110,7 +110,7 @@
       /* Name line: 21.2cm from bottom → top = 30 - 21.2 = 8.8cm */
       .name-block {
         position: absolute;
-        top: calc(30cm - 21.2cm); /* 8.8cm */
+        top: calc(297mm - 212mm); 
         left: 0;
         width: 100%;
         padding: 0 0.5cm;
@@ -136,7 +136,7 @@
       /* Contact section: 17.7cm from bottom → top = 30 - 17.7 = 12.3cm */
       .contact-section {
         position: absolute;
-        top: calc(30cm - 17.7cm); /* 12.3cm */
+        top: calc(297mm - 177mm);
         left: 0;
         width: 100%;
         padding: 0 0.45cm;
@@ -146,7 +146,7 @@
       /* Skills section: 10.2cm from bottom → top = 30 - 10.2 = 19.8cm */
       .skills-section {
         position: absolute;
-        top: calc(30cm - 10.2cm); /* 19.8cm */
+        top: calc(297mm - 102mm);
         left: 0;
         width: 100%;
         padding: 0 0.45cm;
@@ -156,7 +156,7 @@
       /* Interests section: 4.6cm from bottom → top = 30 - 4.6 = 25.4cm */
       .interests-section {
         position: absolute;
-        top: calc(30cm - 4.6cm); /* 25.4cm */
+        top: calc(297mm - 46mm);
         left: 0;
         width: 100%;
         padding: 0 0.45cm;
@@ -248,8 +248,8 @@
      RIGHT PANEL  width = 12.8cm
   ───────────────────────────────────────── */
       .right {
-        width: 12.8cm;
-        height: 30cm;
+        width: 128mm;
+        height: 297mm;
         background: #fff;
         position: relative;
         padding: 0.5cm 0.6cm;
@@ -261,32 +261,32 @@
       /* Profile: 27.6cm from bottom → top = 2.4cm */
       .r-profile {
         position: absolute;
-        top: calc(30cm - 27.6cm); /* 2.4cm */
-        left: 0.6cm;
+        top: calc(297mm - 276mm);
+        left: 6mm;
         right: 0.5cm;
       }
 
       /* Experience: 21.2cm from bottom → top = 8.8cm */
       .r-experience {
         position: absolute;
-        top: calc(30cm - 21.2cm); /* 8.8cm */
-        left: 0.6cm;
+        top: calc(297mm - 212mm);
+        left: 6mm;
         right: 0.5cm;
       }
 
       /* Education: 10.8cm from bottom → top = 19.2cm */
       .r-education {
         position: absolute;
-        top: calc(30cm - 10.8cm); /* 19.2cm */
-        left: 0.6cm;
+        top: calc(297mm - 108mm);
+        left: 6mm;
         right: 0.5cm;
       }
 
       /* Portfolio: 6.5cm from bottom → top = 23.5cm */
       .r-portfolio {
         position: absolute;
-        top: calc(30cm - 6.5cm); /* 23.5cm */
-        left: 0.6cm;
+        top: calc(297mm - 65mm);
+        left: 6mm;
         right: 0.5cm;
       }
 

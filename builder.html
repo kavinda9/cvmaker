@@ -3145,7 +3145,7 @@
             tempFrame = document.createElement("iframe");
             // Set fixed width to match A4 pixel width at 96dpi (approx 794px)
             tempFrame.style.cssText =
-              "position:fixed;left:-9999px;top:0;width:800px;height:1200px;border:none;visibility:hidden;";
+              "position:fixed;left:-9999px;top:0;width:794px;height:1123px;border:none;";
             document.body.appendChild(tempFrame);
 
             await new Promise((resolve, reject) => {
@@ -3169,11 +3169,6 @@
             // Most templates use .page, fallback to body
             const elementToPrint = printDoc.querySelector(".page") || printDoc.body;
             
-            // Ensure no margins/transforms on the target element for clean capture
-            if (elementToPrint !== printDoc.body) {
-              elementToPrint.style.margin = "0";
-              elementToPrint.style.transform = "none";
-            }
 
             await html2pdf()
               .set({
@@ -3184,18 +3179,20 @@
                   scale: 2,
                   useCORS: true,
                   backgroundColor: "#ffffff",
-                  letterRendering: true,
-                  width: 794, // Fixed A4 width
-                  scrollY: 0,
-                  scrollX: 0
+                  width:        elementToPrint.offsetWidth  || 794,
+                  height:       elementToPrint.offsetHeight || 1123,
+                  windowWidth:  elementToPrint.offsetWidth  || 794,
+                  windowHeight: elementToPrint.offsetHeight || 1123,
+                  scrollX: 0,
+                  scrollY: 0
                 },
                 jsPDF: {
-                  unit: "mm",
-                  format: "a4",
+                  unit: "px",
+                  format: [elementToPrint.offsetWidth || 794, elementToPrint.offsetHeight || 1123],
                   orientation: "portrait",
-                  compress: true
+                  hotfixes: ["px_scaling"],
                 },
-                pagebreak: { mode: ["avoid-all", "css"] },
+                pagebreak: { mode: [] },
               })
               .from(elementToPrint)
               .save();
