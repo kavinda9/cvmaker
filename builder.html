@@ -3133,16 +3133,19 @@
             if (!liveDoc || !liveDoc.documentElement) {
               throw new Error("Preview iframe is not ready.");
             }
+            
+            // Clone the document element to avoid modifying the live one
             const fullHTML = "<!DOCTYPE html>\n" + liveDoc.documentElement.outerHTML;
 
-            // 2. Create a Blob URL so the temp iframe treats it as same-origin
+            // 2. Create a Blob URL
             const blob = new Blob([fullHTML], { type: "text/html; charset=utf-8" });
             blobURL = URL.createObjectURL(blob);
 
-            // 3. Load into a hidden off-screen iframe so styles & fonts render
+            // 3. Load into a hidden off-screen iframe
             tempFrame = document.createElement("iframe");
+            // Set fixed width to match A4 pixel width at 96dpi (approx 794px)
             tempFrame.style.cssText =
-              "position:fixed;left:-9999px;top:0;width:794px;height:1123px;border:none;visibility:hidden;";
+              "position:fixed;left:-9999px;top:0;width:800px;height:1200px;border:none;visibility:hidden;";
             document.body.appendChild(tempFrame);
 
             await new Promise((resolve, reject) => {
@@ -3151,42 +3154,56 @@
               tempFrame.src = blobURL;
             });
 
-            // 4. Wait for Google Fonts / layout to settle
-            await new Promise((r) => setTimeout(r, 800));
+            // 4. Wait for fonts and images
+            const printDoc = tempFrame.contentDocument || tempFrame.contentWindow?.document;
+            
+            // Wait for Google Fonts specifically
+            if (tempFrame.contentWindow.document.fonts) {
+              await tempFrame.contentWindow.document.fonts.ready;
+            }
+            
+            // Extra safety delay for layout/images
+            await new Promise((r) => setTimeout(r, 1000));
 
-            // 5. Point html2pdf at the temp iframe's <body>
-            const printDoc  = tempFrame.contentDocument || tempFrame.contentWindow?.document;
-            const printBody = printDoc.body;
+            // 5. Target the actual CV page element
+            // Most templates use .page, fallback to body
+            const elementToPrint = printDoc.querySelector(".page") || printDoc.body;
+            
+            // Ensure no margins/transforms on the target element for clean capture
+            if (elementToPrint !== printDoc.body) {
+              elementToPrint.style.margin = "0";
+              elementToPrint.style.transform = "none";
+            }
 
             await html2pdf()
               .set({
                 margin: 0,
                 filename,
-                image: { type: "jpeg", quality: 0.98 },
+                image: { type: "jpeg", quality: 1.0 },
                 html2canvas: {
                   scale: 2,
                   useCORS: true,
-                  allowTaint: true,
                   backgroundColor: "#ffffff",
-                  logging: false,
-                  windowWidth: 794,
-                  windowHeight: 1123,
+                  letterRendering: true,
+                  width: 794, // Fixed A4 width
+                  scrollY: 0,
+                  scrollX: 0
                 },
                 jsPDF: {
                   unit: "mm",
                   format: "a4",
                   orientation: "portrait",
+                  compress: true
                 },
                 pagebreak: { mode: ["avoid-all", "css"] },
               })
-              .from(printBody)
+              .from(elementToPrint)
               .save();
 
           } catch (err) {
             console.error("[CV Maker] PDF export failed:", err);
             alert("PDF export failed. Please try again.");
           } finally {
-            // Clean up
             if (tempFrame && tempFrame.parentNode) {
               document.body.removeChild(tempFrame);
             }
