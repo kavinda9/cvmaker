@@ -9,7 +9,7 @@ const DEBOUNCE_MS = 300;
 
 let currentTemplate = localStorage.getItem("selectedTemplate") || "cv001";
 let templateHTML = "";
-let photoDataURL = ""; // base64 photo
+let photoDataURL = "assets/images/cvpfp.png"; // base64 photo
 
 // ═══════════════════════════════════════════════════════════
 //  DEFAULT SAMPLE DATA  (shown until user types)
@@ -30,6 +30,7 @@ const DEFAULT_DATA = {
     skillsTechnical: "Figma, Sketch, Prototyping, UX Research, Design Systems",
     skillsTools: "Jira, Notion, Zeplin, Miro, Framer",
     interests: "Type Design, Hiking, Architecture",
+    photo: "assets/images/cvpfp.png",
   },
   cv002: {
     firstName: "Nina",
@@ -44,6 +45,7 @@ const DEFAULT_DATA = {
     skillsTechnical: "Photoshop, Illustrator, Figma",
     skillsTools: "Adobe XD, InDesign, Canva",
     interests: "Minimalist Art, Urban Photography, Art Installations",
+    photo: "assets/images/cvpfp.png",
   },
 };
 
@@ -157,6 +159,14 @@ document.addEventListener("DOMContentLoaded", () => {
   addEntry("education");
   addEntry("language");
   addEntry("certification");
+
+  const preview = document.getElementById("photo-preview");
+  const removeBtn = document.getElementById("photo-remove");
+  if (preview) {
+    preview.src = "assets/images/cvpfp.png";
+    preview.style.display = "block";
+  }
+  if (removeBtn) removeBtn.style.display = "inline-flex";
 
   loadTemplate(currentTemplate);
   bindStaticInputs();

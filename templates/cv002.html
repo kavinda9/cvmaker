@@ -325,6 +325,28 @@
         color: #777;
         margin: 0.04cm 0;
       }
+      .exp-company:empty,
+      .exp-location:empty,
+      .exp-start:empty,
+      .exp-end:empty {
+        display: none;
+      }
+      .exp-company:not(:empty) + .exp-location:not(:empty)::before {
+        content: " | ";
+      }
+      .exp-date-block {
+        display: block;
+      }
+      .exp-date-block:not(:has(.exp-start:not(:empty))):not(:has(.exp-end:not(:empty))) {
+        display: none;
+      }
+      .exp-date-block:has(.exp-start:not(:empty)),
+      .exp-date-block:has(.exp-end:not(:empty)) {
+        margin-top: 0.04cm;
+      }
+      .exp-start:not(:empty) + .exp-end:not(:empty)::before {
+        content: " – ";
+      }
       .exp-desc {
         font-size: 0.27cm;
         color: #555;
@@ -346,6 +368,23 @@
         font-size: 0.27cm;
         color: #777;
         margin-top: 0.05cm;
+      }
+      .edu-school:empty,
+      .edu-location:empty,
+      .edu-year:empty {
+        display: none;
+      }
+      .edu-school:not(:empty) + .edu-location:not(:empty)::before {
+        content: " | ";
+      }
+      .edu-year-block {
+        display: block;
+      }
+      .edu-year-block:not(:has(.edu-year:not(:empty))) {
+        display: none;
+      }
+      .edu-year-block:has(.edu-year:not(:empty)) {
+        margin-top: 0.04cm;
       }
 
       /* Portfolio */
@@ -502,8 +541,7 @@
             <div class="exp-content">
               <div class="exp-title">{{role}}</div>
               <div class="exp-meta">
-                {{company}}{{#location}} | {{location}}{{/location}}<br />{{startDate}}
-                – {{endDate}}
+                <span class="exp-company">{{company}}</span><span class="exp-location">{{location}}</span><span class="exp-date-block"><span class="exp-start">{{startDate}}</span><span class="exp-end">{{endDate}}</span></span>
               </div>
               {{#description}}
               <div class="exp-desc">{{description}}</div>
@@ -529,7 +567,7 @@
           <div class="edu-item">
             <div class="edu-title">{{degree}}</div>
             <div class="edu-meta">
-              {{school}}{{#location}} | {{location}}{{/location}}<br />{{year}}
+              <span class="edu-school">{{school}}</span><span class="edu-location">{{location}}</span><span class="edu-year-block"><span class="edu-year">{{year}}</span></span>
             </div>
             {{#detail}}
             <div class="edu-meta">{{detail}}</div>

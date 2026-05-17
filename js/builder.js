@@ -34,7 +34,7 @@ const FONTS = {
 // ── State ─────────────────────────────────────────────────
 let currentTemplate = localStorage.getItem("selectedTemplate") || "cv001";
 let templateHTML = "";
-let photoDataURL = "";
+let photoDataURL = "assets/images/cvpfp.png";
 let accentColor = "#c94a1f";
 let currentHeaderFont = "playfair";
 let currentBodyFont = "dmSans";
@@ -69,7 +69,7 @@ const DEFAULT_DATA = {
     { name: "JavaScript", level: 60 },
   ],
   interests: [{ name: "Travel" }, { name: "Photography" }, { name: "Yoga" }],
-  photo: "",
+  photo: "assets/images/cvpfp.png",
   experience: [
     {
       role: "Lead Product Designer",
@@ -184,6 +184,15 @@ function restoreFormState() {
         preview.style.display = "block";
       }
       if (removeBtn) removeBtn.style.display = "inline-flex";
+    } else {
+      photoDataURL = "";
+      const preview = document.getElementById("photo-preview-img");
+      const removeBtn = document.getElementById("photo-remove");
+      if (preview) {
+        preview.src = "";
+        preview.style.display = "none";
+      }
+      if (removeBtn) removeBtn.style.display = "none";
     }
     if (state.accentColor) {
       accentColor = state.accentColor;
@@ -264,6 +273,15 @@ document.addEventListener("DOMContentLoaded", () => {
   addEntry("education");
 
   const hadSavedState = restoreFormState();
+  if (!hadSavedState) {
+    const preview = document.getElementById("photo-preview-img");
+    const removeBtn = document.getElementById("photo-remove");
+    if (preview) {
+      preview.src = "assets/images/cvpfp.png";
+      preview.style.display = "block";
+    }
+    if (removeBtn) removeBtn.style.display = "inline-flex";
+  }
   loadTemplate(currentTemplate, !hadSavedState);
 
   fitScale();
