@@ -287,19 +287,6 @@
         overflow: hidden;
       }
 
-      .about-watermark {
-        font-family: "Dancing Script", cursive;
-        font-size: 1.25cm;
-        font-weight: 700;
-        color: rgba(160, 120, 0, 0.28);
-        position: absolute;
-        top: 2mm;
-        right: 2mm;
-        line-height: 1.05;
-        pointer-events: none;
-        text-align: right;
-        user-select: none;
-      }
 
       .about-text {
         font-size: 0.37cm;
@@ -386,8 +373,8 @@
 
         <!-- Name + contact -->
         <div class="header-info">
-          <span class="name-first">{{firstName}}</span>
-          <span class="name-last">{{lastName}}</span>
+          <span class="name-first sidebar__name">{{firstName}}</span>
+          <span class="name-last sidebar__name">{{lastName}}</span>
           {{#jobTitle}}
           <div class="header-title">{{jobTitle}}</div>
           {{/jobTitle}}
@@ -446,7 +433,7 @@
                   />
                 </svg>
               </div>
-              <span class="section-title">Expertise</span>
+              <span class="section-title sec-title">Expertise</span>
             </div>
             <div class="expertise-list">
               {{#skills}}
@@ -476,7 +463,7 @@
                   <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
                 </svg>
               </div>
-              <span class="section-title">Experience</span>
+              <span class="section-title sec-title">Experience</span>
             </div>
             {{#experience}}
             <div class="exp-item">
@@ -499,7 +486,7 @@
                   <path d="M6 12v5c3.33 1.67 6.67 1.67 10 0v-5" />
                 </svg>
               </div>
-              <span class="section-title">Education</span>
+              <span class="section-title sec-title">Education</span>
             </div>
             {{#education}}
             <div class="edu-item">
