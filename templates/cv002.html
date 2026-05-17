@@ -86,7 +86,7 @@
       /* Profile photo circle */
       .profile-photo {
         position: absolute;
-        left: calc(38mm - 26mm);
+        left: calc(50% - 26mm);
         top: calc(297mm - 255mm - 26mm); 
         width: 52mm;
         height: 52mm;
@@ -121,19 +121,20 @@
         height: 100%;
         position: relative;
         z-index: 2;
-        padding-top: 85mm;
+        padding-top: 70mm;
       }
 
       .name-block {
         padding: 0 0.5cm;
-        margin-bottom: auto; /* let flexbox space out remaining sections */
+        margin-bottom: 0.7cm;
+        text-align: center;
       }
       .name-block h1 {
         font-family: "Raleway", sans-serif;
         font-size: 0.62cm;
         font-weight: 800;
         color: var(--yellow);
-        line-height: 1.2;
+        line-height: 1.1;
         letter-spacing: 0.5px;
       }
       .name-block .title {
@@ -427,7 +428,7 @@
         <div class="left-content">
           <!-- Name Block -->
           <div class="name-block">
-            <h1>{{firstName}} {{lastName}}</h1>
+            <h1>{{firstName}}<br>{{lastName}}</h1>
             <div class="title">{{jobTitle}}</div>
           </div>
 
