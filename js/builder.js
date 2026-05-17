@@ -763,17 +763,93 @@ function bindStaticInputs() {
 // ══════════════════════════════════════════════════════════
 //  PHOTO UPLOAD
 // ══════════════════════════════════════════════════════════
+let cropperInstance = null;
+
 function bindPhotoUpload() {
   const input = document.getElementById("f-photo");
   const preview = document.getElementById("photo-preview-img");
   const remove = document.getElementById("photo-remove");
+  
+  const modal = document.getElementById("crop-modal-overlay");
+  const cropImg = document.getElementById("crop-image");
+  const btnCancel = document.getElementById("btn-crop-cancel");
+  const btnApply = document.getElementById("btn-crop-apply");
+  const btnClose = document.getElementById("crop-modal-close");
+  
+  const zoomIn = document.getElementById("btn-crop-zoom-in");
+  const zoomOut = document.getElementById("btn-crop-zoom-out");
+  const rotateLeft = document.getElementById("btn-crop-rotate-left");
+
   if (!input) return;
+
+  const closeCropModal = () => {
+    modal.classList.remove("open");
+    if (cropperInstance) {
+      cropperInstance.destroy();
+      cropperInstance = null;
+    }
+    input.value = "";
+  };
+
   input.addEventListener("change", () => {
     const file = input.files[0];
     if (!file) return;
+
     const reader = new FileReader();
     reader.onload = (e) => {
-      photoDataURL = e.target.result;
+      cropImg.src = e.target.result;
+      modal.classList.add("open");
+
+      if (cropperInstance) {
+        cropperInstance.destroy();
+      }
+
+      setTimeout(() => {
+        cropperInstance = new Cropper(cropImg, {
+          aspectRatio: 1,
+          viewMode: 1,
+          dragMode: "move",
+          autoCropArea: 1,
+          restore: false,
+          guides: false,
+          center: false,
+          highlight: false,
+          cropBoxMovable: false,
+          cropBoxResizable: false,
+          toggleDragModeOnDblclick: false,
+          minContainerWidth: 320,
+          minContainerHeight: 320,
+        });
+      }, 100);
+    };
+    reader.readAsDataURL(file);
+  });
+
+  zoomIn?.addEventListener("click", () => {
+    if (cropperInstance) cropperInstance.zoom(0.1);
+  });
+  zoomOut?.addEventListener("click", () => {
+    if (cropperInstance) cropperInstance.zoom(-0.1);
+  });
+  rotateLeft?.addEventListener("click", () => {
+    if (cropperInstance) cropperInstance.rotate(-90);
+  });
+
+  btnCancel?.addEventListener("click", closeCropModal);
+  btnClose?.addEventListener("click", closeCropModal);
+
+  btnApply?.addEventListener("click", () => {
+    if (!cropperInstance) return;
+
+    const canvas = cropperInstance.getCroppedCanvas({
+      width: 320,
+      height: 320,
+      imageSmoothingEnabled: true,
+      imageSmoothingQuality: "high",
+    });
+
+    if (canvas) {
+      photoDataURL = canvas.toDataURL("image/png");
       if (preview) {
         preview.src = photoDataURL;
         preview.style.display = "block";
@@ -781,9 +857,11 @@ function bindPhotoUpload() {
       if (remove) remove.style.display = "inline-flex";
       saveFormState();
       scheduleUpdate();
-    };
-    reader.readAsDataURL(file);
+    }
+
+    closeCropModal();
   });
+
   remove?.addEventListener("click", () => {
     photoDataURL = "";
     input.value = "";
