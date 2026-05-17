@@ -93,7 +93,7 @@ async function downloadPDF() {
       .from(el)
       .save();
 
-    document.body.removeChild(wrapper);
+
   } catch (err) {
     console.error("[CV Maker] PDF export failed:", err);
     alert("PDF export failed. Please try again.");
