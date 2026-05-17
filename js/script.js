@@ -39,7 +39,7 @@ const DEFAULT_DATA = {
     email: "nina.lane@email.com",
     phone: "+1 234 567-8900",
     location: "New York, NY",
-    website: "ninalane.com",
+    linkedin: "linkedin.com/in/ninalane",
     summary:
       "Creative graphic designer with 5+ years' experience in impactful print and digital visuals. Skilled in brand identity, social media, and packaging design, with Adobe Creative Suite and Figma expertise. Focused on delivering fresh, aesthetic solutions.",
     skillsTechnical: "Photoshop, Illustrator, Figma",
