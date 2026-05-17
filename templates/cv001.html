@@ -3,9 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nina Lane - Resume</title>
+    <title>CV Template 001</title>
+    <script>
+      window.cvConfig = {
+        accent: "#c8902a",
+        sections: ["profile", "experience", "education", "skills", "contact"],
+      };
+    </script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@400;600;700;800&family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Dancing+Script:wght@700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -16,17 +22,12 @@
       }
 
       :root {
-        /* A4 = 210mm x 297mm. We use cm units for precision.
-       User coordinate system: origin = bottom-left, x = horizontal, y = vertical
-       CSS origin = top-left, so:  css-top = (30 - user_from_bottom) cm
-       Full width = 21cm, left panel = 8.2cm, right panel = 12.8cm (starts at 8.2cm) */
-        --yellow: #f5c518;
-        --dark: #1e2330;
-        --dark2: #252a3a;
-        --white: #ffffff;
-        --light-gray: #e0e0e0;
-        --text-body: #333333;
-        --accent: #f5c518;
+        --accent: var(--accent-color, #c8902a);
+        --yellow: #e8c840;
+        --dark: #2b1f10;
+        --bg: #fafaf8;
+        --text: #333333;
+        --text-light: #555555;
       }
 
       html,
@@ -37,547 +38,487 @@
         overflow: hidden;
         margin: 0;
         font-family: "Open Sans", sans-serif;
-        background: #f0f0f0;
+        background: var(--bg);
       }
 
       .page {
         width: 210mm;
         height: 297mm;
-        position: relative;
         overflow: hidden;
-        background: #fff;
+        background: var(--bg);
         display: flex;
+        flex-direction: column;
       }
 
       /* ─────────────────────────────────────────
-     LEFT PANEL  width = 8.2cm
-  ───────────────────────────────────────── */
-      .left {
-        width: 82mm;
-        height: 297mm;
-        background: var(--dark);
-        position: relative;
+         HEADER
+      ───────────────────────────────────────── */
+      .header {
+        display: flex;
+        align-items: center;
+        padding: 9mm 10mm 7mm 10mm;
+        gap: 9mm;
         flex-shrink: 0;
-        z-index: 1;
+        border-bottom: 1.5px solid #e0d8c8;
       }
 
-      /* Yellow top cap — ends exactly at circle center: y=25.5 from bottom → top=4.5cm */
-      .left-top-cap {
+      /* Photo block */
+      .photo-area {
+        position: relative;
+        width: 68mm;
+        height: 74mm;
+        flex-shrink: 0;
+      }
+
+      /* Yellow outlined rectangle — offset lower-left */
+      .deco-outline {
         position: absolute;
-        top: 0;
         left: 0;
-        width: 100%;
-        height: calc(297mm - 255mm); /* = 42mm */
-        background: var(--yellow);
+        top: 10mm;
+        width: 52mm;
+        height: 60mm;
+        border: 3px solid var(--yellow);
         z-index: 0;
       }
 
-      /* Profile photo circle
-     center at (3.8, 25.5) from bottom-left of full page
-     In left panel coords: cx = 3.8cm, cy = 30 - 25.5 = 4.5cm from top
-     r = 2.6cm → diameter = 5.2cm */
-      .profile-photo {
+      /* Small solid orange square — upper right */
+      .deco-solid {
         position: absolute;
-        left: calc(38mm - 26mm); /* cx - r */
-        top: calc(
-          297mm - 255mm - 26mm
-        );
-        width: 52mm;
-        height: 52mm;
-        border-radius: 50%;
-        overflow: hidden;
-        border: 4px solid var(--dark);
-        z-index: 2;
-        background: #888;
+        right: 0;
+        top: 0;
+        width: 12mm;
+        height: 12mm;
+        background: var(--accent);
+        opacity: 0.85;
+        z-index: 3;
       }
-      .profile-photo img {
+
+      /* The actual photo */
+      .photo-wrap {
+        position: absolute;
+        left: 8mm;
+        top: 4mm;
+        width: 54mm;
+        height: 65mm;
+        z-index: 2;
+        overflow: hidden;
+        background: #c0bab0;
+      }
+
+      .photo-wrap img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        display: block;
       }
-      .profile-photo-placeholder {
+
+      .photo-placeholder {
         width: 100%;
         height: 100%;
-        background: linear-gradient(135deg, #9ab, #678);
+        background: linear-gradient(135deg, #b0a898, #7a7060);
         display: flex;
         align-items: center;
         justify-content: center;
         color: #fff;
-        font-size: 0.9cm;
+        font-size: 1.4cm;
         font-weight: 700;
+        font-family: "Playfair Display", serif;
       }
 
-      /* Name line: 21.2cm from bottom → top = 30 - 21.2 = 8.8cm */
-      .name-block {
-        position: absolute;
-        top: calc(297mm - 212mm); 
-        left: 0;
-        width: 100%;
-        padding: 0 0.5cm;
-        z-index: 2;
+      /* Name & contact */
+      .header-info {
+        flex: 1;
       }
-      .name-block h1 {
-        font-family: "Raleway", sans-serif;
-        font-size: 0.62cm;
-        font-weight: 800;
-        color: var(--yellow);
-        line-height: 1.2;
+
+      .name-first {
+        display: block;
+        font-family: "Playfair Display", serif;
+        font-size: 1.35cm;
+        font-weight: 400;
+        color: var(--dark);
+        line-height: 1.1;
         letter-spacing: 0.5px;
       }
-      .name-block .title {
-        font-size: 0.32cm;
-        color: #aaa;
-        margin-top: 0.1cm;
-        font-weight: 400;
-        letter-spacing: 1px;
+
+      .name-last {
+        display: block;
+        font-family: "Playfair Display", serif;
+        font-size: 1.35cm;
+        font-weight: 900;
+        color: var(--dark);
+        line-height: 1.1;
+        letter-spacing: 2px;
         text-transform: uppercase;
       }
 
-      /* Contact section: 17.7cm from bottom → top = 30 - 17.7 = 12.3cm */
-      .contact-section {
-        position: absolute;
-        top: calc(297mm - 177mm);
-        left: 0;
-        width: 100%;
-        padding: 0 0.45cm;
-        z-index: 2;
+      .header-title {
+        font-size: 0.42cm;
+        color: var(--accent);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-top: 2mm;
+        margin-bottom: 4mm;
       }
 
-      /* Skills section: 10.2cm from bottom → top = 30 - 10.2 = 19.8cm */
-      .skills-section {
-        position: absolute;
-        top: calc(297mm - 102mm);
-        left: 0;
-        width: 100%;
-        padding: 0 0.45cm;
-        z-index: 2;
+      .contact-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2.2mm;
       }
 
-      /* Interests section: 4.6cm from bottom → top = 30 - 4.6 = 25.4cm */
-      .interests-section {
-        position: absolute;
-        top: calc(297mm - 46mm);
-        left: 0;
-        width: 100%;
-        padding: 0 0.45cm;
-        z-index: 2;
-      }
-
-      /* Shared section heading style (left panel) */
-      .section-heading-left {
+      .contact-item {
         display: flex;
         align-items: center;
-        gap: 0.2cm;
-        margin-bottom: 0.2cm;
+        gap: 3mm;
+        font-size: 0.42cm;
+        color: var(--text);
       }
-      .section-heading-left .icon-circle {
-        width: 0.55cm;
-        height: 0.55cm;
+
+      .contact-icon {
+        width: 6.5mm;
+        height: 6.5mm;
         border-radius: 50%;
-        background: var(--yellow);
+        background: var(--accent);
         display: flex;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
       }
-      .section-heading-left .icon-circle svg {
-        width: 0.32cm;
-        height: 0.32cm;
-        fill: var(--dark);
-      }
-      .section-heading-left h2 {
-        font-family: "Raleway", sans-serif;
-        font-size: 0.42cm;
-        font-weight: 700;
-        color: var(--yellow);
-        letter-spacing: 0.5px;
-      }
-      .section-divider-left {
-        width: 100%;
-        height: 1px;
-        background: #444;
-        margin-bottom: 0.22cm;
-      }
 
-      /* Contact items */
-      .contact-label {
-        font-size: 0.26cm;
-        color: var(--yellow);
-        font-weight: 600;
-        margin-bottom: 0.04cm;
-        margin-top: 0.14cm;
-      }
-      .contact-value {
-        font-size: 0.28cm;
-        color: #ccc;
-      }
-
-      /* Skill bars */
-      .skill-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 0.18cm;
-      }
-      .skill-name {
-        font-size: 0.29cm;
-        color: #ddd;
-        width: 2.2cm;
-      }
-      .skill-bar-bg {
-        width: 3cm;
-        height: 0.12cm;
-        background: #444;
-        border-radius: 2px;
-        overflow: visible;
-      }
-      .skill-bar-fill {
-        height: 0.12cm;
-        background: var(--yellow);
-        border-radius: 2px;
-      }
-
-      /* Interests */
-      .interest-item {
-        font-size: 0.28cm;
-        color: #ccc;
-        margin-bottom: 0.12cm;
+      .contact-icon svg {
+        width: 3.5mm;
+        height: 3.5mm;
+        fill: #fff;
       }
 
       /* ─────────────────────────────────────────
-     RIGHT PANEL  width = 12.8cm
-  ───────────────────────────────────────── */
-      .right {
-        width: 128mm;
-        height: 297mm;
-        background: #fff;
-        position: relative;
-        padding: 0.5cm 0.6cm;
+         BODY — two columns
+      ───────────────────────────────────────── */
+      .body {
+        flex: 1;
+        display: flex;
+        overflow: hidden;
+        padding: 6mm 10mm 7mm 10mm;
+        gap: 7mm;
       }
 
-      /* Right panel sections anchored from bottom of PAGE.
-     CSS top = 30cm - user_from_bottom */
-
-      /* Profile: 27.6cm from bottom → top = 2.4cm */
-      .r-profile {
-        position: absolute;
-        top: calc(297mm - 276mm);
-        left: 6mm;
-        right: 0.5cm;
+      /* ── LEFT COLUMN ── */
+      .left-col {
+        width: 53mm;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 5mm;
       }
 
-      /* Experience: 21.2cm from bottom → top = 8.8cm */
-      .r-experience {
-        position: absolute;
-        top: calc(297mm - 212mm);
-        left: 6mm;
-        right: 0.5cm;
+      /* ── RIGHT COLUMN ── */
+      .right-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 4mm;
+        overflow: hidden;
       }
 
-      /* Education: 10.8cm from bottom → top = 19.2cm */
-      .r-education {
-        position: absolute;
-        top: calc(297mm - 108mm);
-        left: 6mm;
-        right: 0.5cm;
-      }
-
-      /* Portfolio: 6.5cm from bottom → top = 23.5cm */
-      .r-portfolio {
-        position: absolute;
-        top: calc(297mm - 65mm);
-        left: 6mm;
-        right: 0.5cm;
-      }
-
-      /* Right section headings */
-      .section-heading-right {
+      /* ─────────────────────────────────────────
+         Section Heading (shared)
+      ───────────────────────────────────────── */
+      .section-heading {
         display: flex;
         align-items: center;
-        gap: 0.22cm;
-        margin-bottom: 0.15cm;
+        gap: 3mm;
+        margin-bottom: 3mm;
       }
-      .section-heading-right .icon-circle {
-        width: 0.6cm;
-        height: 0.6cm;
+
+      .section-icon {
+        width: 7.5mm;
+        height: 7.5mm;
         border-radius: 50%;
-        background: var(--yellow);
+        background: var(--accent);
         display: flex;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
       }
-      .section-heading-right .icon-circle svg {
-        width: 0.35cm;
-        height: 0.35cm;
-        fill: var(--dark);
-      }
-      .section-heading-right h2 {
-        font-family: "Raleway", sans-serif;
-        font-size: 0.52cm;
-        font-weight: 700;
-        color: var(--dark);
-        letter-spacing: 0.3px;
-      }
-      .section-divider-right {
-        width: 100%;
-        height: 1.5px;
-        background: var(--light-gray);
-        margin-bottom: 0.22cm;
+
+      .section-icon svg {
+        width: 4mm;
+        height: 4mm;
+        fill: #fff;
       }
 
-      /* Profile text */
-      .profile-text {
-        font-size: 0.29cm;
-        color: #555;
+      .section-title {
+        font-family: "Raleway", sans-serif;
+        font-size: 0.62cm;
+        font-weight: 800;
+        color: var(--dark);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+      }
+
+      /* ─────────────────────────────────────────
+         EXPERTISE
+      ───────────────────────────────────────── */
+      .expertise-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.8mm;
+      }
+
+      .expertise-item {
+        font-size: 0.48cm;
+        font-style: italic;
+        font-weight: 600;
+        color: var(--accent);
+        text-align: center;
+        line-height: 1.3;
+      }
+
+      /* ─────────────────────────────────────────
+         ABOUT MYSELF BOX
+      ───────────────────────────────────────── */
+      .about-box {
+        background: var(--yellow);
+        padding: 5mm 5mm 5mm 5mm;
+        position: relative;
+        flex: 1;
+        overflow: hidden;
+      }
+
+      .about-watermark {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.25cm;
+        font-weight: 700;
+        color: rgba(160, 120, 0, 0.28);
+        position: absolute;
+        top: 2mm;
+        right: 2mm;
+        line-height: 1.05;
+        pointer-events: none;
+        text-align: right;
+        user-select: none;
+      }
+
+      .about-text {
+        font-size: 0.37cm;
+        color: #3a3020;
+        line-height: 1.65;
+        text-align: justify;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ─────────────────────────────────────────
+         EXPERIENCE
+      ───────────────────────────────────────── */
+      .exp-item {
+        margin-bottom: 3.5mm;
+      }
+
+      .exp-title {
+        font-size: 0.47cm;
+        font-weight: 600;
+        font-style: italic;
+        color: var(--accent);
+        margin-bottom: 1.2mm;
+        line-height: 1.3;
+      }
+
+      .exp-desc {
+        font-size: 0.39cm;
+        color: var(--text-light);
         line-height: 1.6;
         text-align: justify;
       }
 
-      /* Experience items */
-      .exp-item {
-        display: flex;
-        gap: 0.22cm;
-        margin-bottom: 0.25cm;
-      }
-      .exp-dot {
-        margin-top: 0.1cm;
-        width: 0.25cm;
-        height: 0.25cm;
-        border-radius: 50%;
-        background: var(--yellow);
-        flex-shrink: 0;
+      /* ─────────────────────────────────────────
+         EDUCATION
+      ───────────────────────────────────────── */
+      .edu-item {
+        margin-bottom: 3mm;
       }
 
-      .exp-title {
-        font-family: "Raleway", sans-serif;
-        font-size: 0.32cm;
-        font-weight: 700;
-        color: var(--dark);
-      }
-      .exp-meta {
-        font-size: 0.26cm;
-        color: #777;
-        margin: 0.04cm 0;
-      }
-      .exp-desc {
-        font-size: 0.27cm;
-        color: #555;
-        line-height: 1.5;
-        text-align: justify;
-      }
-
-      /* Education */
       .edu-title {
-        font-family: "Raleway", sans-serif;
-        font-size: 0.33cm;
-        font-weight: 700;
-        color: var(--dark);
-      }
-      .edu-meta {
-        font-size: 0.27cm;
-        color: #777;
-        margin-top: 0.05cm;
+        font-size: 0.47cm;
+        font-weight: 600;
+        font-style: italic;
+        color: var(--accent);
+        margin-bottom: 1.2mm;
+        line-height: 1.3;
       }
 
-      /* Portfolio */
-      .portfolio-item {
-        font-size: 0.27cm;
-        color: #555;
-        margin-bottom: 0.14cm;
-        line-height: 1.5;
+      .edu-desc {
+        font-size: 0.39cm;
+        color: var(--text-light);
+        line-height: 1.6;
       }
-      .portfolio-item strong {
-        color: var(--dark);
-        font-weight: 700;
+
+      /* empty-field helpers */
+      .exp-company:empty,
+      .exp-dates:empty {
+        display: none;
       }
-      .portfolio-item em {
-        font-style: italic;
-        color: #666;
+      .exp-company:not(:empty) + .exp-dates:not(:empty)::before {
+        content: " ";
       }
     </style>
   </head>
   <body>
     <div class="page">
       <!-- ══════════════════════════════════
-       LEFT PANEL
-  ══════════════════════════════════ -->
-      <div class="left">
-        <div class="left-top-cap"></div>
-
-        <!-- Profile Photo -->
-        <div class="profile-photo">
-          {{#photo}}
-          <img src="{{photo}}" alt="Profile Photo" />
-          {{/photo}} {{^photo}}
-          <div class="profile-photo-placeholder">
-            {{firstName.0}}{{lastName.0}}
+           HEADER
+      ══════════════════════════════════ -->
+      <div class="header">
+        <!-- Photo + decorative elements -->
+        <div class="photo-area">
+          <div class="deco-outline"></div>
+          <div class="deco-solid"></div>
+          <div class="photo-wrap">
+            {{#photo}}
+            <img src="{{photo}}" alt="Profile Photo" />
+            {{/photo}}{{^photo}}
+            <div class="photo-placeholder">{{firstName.0}}{{lastName.0}}</div>
+            {{/photo}}
           </div>
-          {{/photo}}
         </div>
 
-        <!-- Name Block: top = 8.8cm -->
-        <div class="name-block">
-          <h1>{{firstName}} {{lastName}}</h1>
-          <div class="title">{{jobTitle}}</div>
-        </div>
-
-        <!-- Contact Section: top = 12.3cm -->
-        <div class="contact-section">
-          <div class="section-heading-left">
-            <div class="icon-circle">
-              <!-- phone icon -->
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"
-                />
-              </svg>
+        <!-- Name + contact -->
+        <div class="header-info">
+          <span class="name-first">{{firstName}}</span>
+          <span class="name-last">{{lastName}}</span>
+          {{#jobTitle}}
+          <div class="header-title">{{jobTitle}}</div>
+          {{/jobTitle}}
+          <div class="contact-list">
+            {{#linkedin}}
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                </svg>
+              </div>
+              <span>{{linkedin}}</span>
             </div>
-            <h2>Contact</h2>
-          </div>
-          <div class="section-divider-left"></div>
-          <div class="contact-label">Email</div>
-          <div class="contact-value">{{email}}</div>
-          <div class="contact-label">Phone</div>
-          <div class="contact-value">{{phone}}</div>
-          <div class="contact-label">Website</div>
-          <div class="contact-value">{{website}}</div>
-        </div>
-
-        <!-- Skills Section: top = 19.8cm -->
-        <div class="skills-section">
-          <div class="section-heading-left">
-            <div class="icon-circle">
-              <!-- bulb icon -->
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.2-1.2 4.2-3 5.4V17a1 1 0 0 1-1 1H10a1 1 0 0 1-1-1v-2.6A6 6 0 0 1 12 3z"
-                />
-              </svg>
+            {{/linkedin}} {{#phone}}
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"
+                  />
+                </svg>
+              </div>
+              <span>{{phone}}</span>
             </div>
-            <h2>Skills</h2>
-          </div>
-          <div class="section-divider-left"></div>
-          {{#skillsTechnical}}
-          <div class="skill-item">
-            <span class="skill-name">{{.}}</span>
-            <div class="skill-bar-bg">
-              <div class="skill-bar-fill" style="width: 85%"></div>
+            {{/phone}} {{#email}}
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+              </div>
+              <span>{{email}}</span>
             </div>
+            {{/email}}
           </div>
-          {{/skillsTechnical}}
-        </div>
-
-        <!-- Interests Section: top = 25.4cm -->
-        <div class="interests-section">
-          <div class="section-heading-left">
-            <div class="icon-circle">
-              <!-- heart icon -->
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-                />
-              </svg>
-            </div>
-            <h2>Interests</h2>
-          </div>
-          <div class="section-divider-left"></div>
-          {{#interests}}
-          <div class="interest-item">{{.}}</div>
-          {{/interests}}
         </div>
       </div>
+      <!-- end header -->
 
       <!-- ══════════════════════════════════
-       RIGHT PANEL
-  ══════════════════════════════════ -->
-      <div class="right">
-        <!-- Profile: top = 2.4cm -->
-        <div class="r-profile">
-          <div class="section-heading-right">
-            <div class="icon-circle">
-              <!-- user icon -->
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"
-                />
-              </svg>
-            </div>
-            <h2>Profile</h2>
-          </div>
-          <div class="section-divider-right"></div>
-          <p class="profile-text">{{summary}}</p>
-        </div>
-
-        <!-- Experience: top = 8.8cm -->
-        <div class="r-experience">
-          <div class="section-heading-right">
-            <div class="icon-circle">
-              <!-- briefcase icon -->
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
-              </svg>
-            </div>
-            <h2>Experience</h2>
-          </div>
-          <div class="section-divider-right"></div>
-          {{#experience}}
-          <div class="exp-item">
-            <div class="exp-dot"></div>
-            <div class="exp-content">
-              <div class="exp-title">{{role}}</div>
-              <div class="exp-meta">
-                {{company}} | {{location}}<br />{{startDate}} – {{endDate}}
+           BODY
+      ══════════════════════════════════ -->
+      <div class="body">
+        <!-- ── LEFT COLUMN ── -->
+        <div class="left-col">
+          <!-- EXPERTISE -->
+          <div class="expertise-section">
+            <div class="section-heading">
+              <div class="section-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                  />
+                </svg>
               </div>
-              {{#bullets}}
-              <div class="exp-desc">{{.}}</div>
-              {{/bullets}}
+              <span class="section-title">Expertise</span>
+            </div>
+            <div class="expertise-list">
+              {{#skills}}
+              <div class="expertise-item">{{name}}</div>
+              {{/skills}}
             </div>
           </div>
-          {{/experience}}
-        </div>
 
-        <!-- Education: top = 19.2cm -->
-        <div class="r-education">
-          <div class="section-heading-right">
-            <div class="icon-circle">
-              <!-- graduation cap icon -->
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z" />
-                <path d="M6 12v5c3.33 1.67 6.67 1.67 10 0v-5" />
-              </svg>
-            </div>
-            <h2>Education</h2>
+          <!-- ABOUT MYSELF -->
+          <div class="about-box">
+            <div class="about-watermark">about<br />myself</div>
+            {{#summary}}
+            <div class="about-text">{{summary}}</div>
+            {{/summary}}
           </div>
-          <div class="section-divider-right"></div>
-          {{#education}}
-          <div class="edu-title">{{degree}}</div>
-          <div class="edu-meta">{{school}}<br />Graduated: {{year}}</div>
-          <div class="edu-meta">{{detail}}</div>
-          {{/education}}
         </div>
+        <!-- end left-col -->
 
-        <!-- Portfolio: top = 23.5cm -->
-        <div class="r-portfolio">
-          <div class="section-heading-right">
-            <div class="icon-circle">
-              <!-- clipboard icon -->
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
-                />
-                <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
-              </svg>
+        <!-- ── RIGHT COLUMN ── -->
+        <div class="right-col">
+          <!-- EXPERIENCE -->
+          <div class="experience-section">
+            <div class="section-heading">
+              <div class="section-icon">
+                <svg viewBox="0 0 24 24">
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                  <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+                </svg>
+              </div>
+              <span class="section-title">Experience</span>
             </div>
-            <h2>Portfolio</h2>
+            {{#experience}}
+            <div class="exp-item">
+              <div class="exp-title">
+                {{role}}{{#company}} — {{company}}{{/company}} {{#startDate}}({{startDate}}{{/startDate}}{{#endDate}} &gt; {{endDate}}{{/endDate}}{{#startDate}}){{/startDate}}
+              </div>
+              {{#description}}
+              <div class="exp-desc">{{description}}</div>
+              {{/description}}
+            </div>
+            {{/experience}}
           </div>
-          <div class="section-divider-right"></div>
-          <!-- Portfolio section left for user customization if needed -->
-          <!-- Add tokens here if you want dynamic portfolio items -->
+
+          <!-- EDUCATION -->
+          <div class="education-section">
+            <div class="section-heading">
+              <div class="section-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z" />
+                  <path d="M6 12v5c3.33 1.67 6.67 1.67 10 0v-5" />
+                </svg>
+              </div>
+              <span class="section-title">Education</span>
+            </div>
+            {{#education}}
+            <div class="edu-item">
+              <div class="edu-title">
+                {{#school}}{{school}}{{/school}}{{^school}}{{degree}}{{/school}}
+                {{#year}} ({{year}}){{/year}}
+              </div>
+              {{#degree}}
+              <div class="edu-desc">{{degree}}</div>
+              {{/degree}} {{#detail}}
+              <div class="edu-desc">{{detail}}</div>
+              {{/detail}}
+            </div>
+            {{/education}}
+          </div>
         </div>
+        <!-- end right-col -->
       </div>
-      <!-- end right -->
+      <!-- end body -->
     </div>
     <!-- end page -->
   </body>
