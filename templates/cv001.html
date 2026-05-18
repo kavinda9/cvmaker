@@ -199,6 +199,7 @@
       .body {
         flex: 1;
         display: flex;
+        justify-content: flex-start;
         overflow: hidden;
         padding: 6mm 10mm 7mm 10mm;
         gap: 7mm;
@@ -215,7 +216,8 @@
 
       /* ── RIGHT COLUMN ── */
       .right-col {
-        flex: 1;
+        width: 130mm;
+        flex-shrink: 0;
         display: flex;
         flex-direction: column;
         gap: 4mm;
@@ -286,6 +288,17 @@
         position: relative;
         flex: 1;
         overflow: hidden;
+      }
+
+      .about-watermark {
+        font-size: 0.55cm;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 3.5mm;
+        line-height: 1.1;
+        text-align: center;
+        text-transform: uppercase;
+        display: block;
       }
 
 
@@ -475,7 +488,7 @@
 
           <!-- ABOUT MYSELF -->
           <div class="about-box">
-            <div class="about-watermark">about<br />myself</div>
+            <div class="about-watermark sec-title">about<br />myself</div>
             {{#summary}}
             <div class="about-text">{{summary}}</div>
             {{/summary}}
