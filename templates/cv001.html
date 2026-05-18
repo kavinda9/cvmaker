@@ -39,6 +39,7 @@
         margin: 0;
         font-family: "Open Sans", sans-serif;
         background: var(--bg);
+        color: var(--text);
       }
 
       .page {
@@ -73,11 +74,11 @@
       /* Yellow outlined rectangle — offset lower-left */
       .deco-outline {
         position: absolute;
-        left: 0;
-        top: 10mm;
+        left: 5;
+        top: 13mm;
         width: 52mm;
         height: 60mm;
-        border: 3px solid var(--yellow);
+        border: 8px solid var(--yellow);
         z-index: 0;
       }
 
@@ -89,7 +90,7 @@
         width: 12mm;
         height: 12mm;
         background: var(--accent);
-        opacity: 0.85;
+        opacity: 1;
         z-index: 3;
       }
 
@@ -315,7 +316,7 @@
 
       .exp-desc {
         font-size: 0.39cm;
-        color: var(--text-light);
+        color: var(--text);
         line-height: 1.6;
         text-align: justify;
       }
@@ -338,13 +339,21 @@
 
       .edu-desc {
         font-size: 0.39cm;
-        color: var(--text-light);
+        color: var(--text);
         line-height: 1.6;
+      }
+
+      .edu-school:empty {
+        display: none;
+      }
+      .edu-school:not(:empty) + .edu-degree-main {
+        display: none;
       }
 
       /* empty-field helpers */
       .exp-company:empty,
-      .exp-dates:empty {
+      .exp-dates:empty,
+      .edu-desc:empty {
         display: none;
       }
       .exp-company:not(:empty) + .exp-dates:not(:empty)::before {
@@ -491,12 +500,11 @@
             {{#education}}
             <div class="edu-item">
               <div class="edu-title">
-                {{#school}}{{school}}{{/school}}{{^school}}{{degree}}{{/school}}
-                {{#year}} ({{year}}){{/year}}
+                <span class="edu-school">{{school}}</span><span class="edu-degree-main">{{degree}}</span>{{#year}} ({{year}}){{/year}}
               </div>
-              {{#degree}}
+              {{#school}}
               <div class="edu-desc">{{degree}}</div>
-              {{/degree}} {{#detail}}
+              {{/school}} {{#detail}}
               <div class="edu-desc">{{detail}}</div>
               {{/detail}}
             </div>
