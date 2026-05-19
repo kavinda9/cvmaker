@@ -21,6 +21,14 @@
         box-sizing: border-box;
       }
 
+      h1, h2, h3 {
+        font-size: inherit;
+        font-weight: inherit;
+        font-family: inherit;
+        margin: 0;
+        padding: 0;
+      }
+
       :root {
         --accent: var(--accent-color, #f5a520);
         --dark: #2b2b2b;
@@ -403,7 +411,7 @@
         <div class="left-sections">
           <!-- EDUCATION -->
           <div class="section-banner">
-            <span class="section-banner-title">Education</span>
+            <h2 class="section-banner-title">Education</h2>
           </div>
           <div class="section-entries">
             {{#education}}
@@ -414,7 +422,7 @@
                 <div class="entry-institution">{{school}}</div>
               </div>
               <div class="entry-right">
-                <div class="entry-title">{{degree}}</div>
+                <h3 class="entry-title">{{degree}}</h3>
                 {{#detail}}
                 <div class="entry-desc">{{detail}}</div>
                 {{/detail}}
@@ -425,7 +433,7 @@
 
           <!-- EXPERIENCE -->
           <div class="section-banner">
-            <span class="section-banner-title">Experience</span>
+            <h2 class="section-banner-title">Experience</h2>
           </div>
           <div class="section-entries">
             {{#experience}}
@@ -438,7 +446,7 @@
                 <div class="entry-institution">{{company}}</div>
               </div>
               <div class="entry-right">
-                <div class="entry-title">{{role}}</div>
+                <h3 class="entry-title">{{role}}</h3>
                 {{#description}}
                 <div class="entry-desc">{{description}}</div>
                 {{/description}}
@@ -455,16 +463,16 @@
       <div class="right-col">
         <!-- Name + Title -->
         <div class="name-block">
-          <div class="name-text">{{firstName}} {{lastName}}</div>
+          <h1 class="name-text">{{firstName}} {{lastName}}</h1>
           {{#jobTitle}}
-          <div class="job-title-text">{{jobTitle}}</div>
+          <h3 class="job-title-text">{{jobTitle}}</h3>
           {{/jobTitle}}
         </div>
 
         <!-- CONTACT ME -->
         <div class="right-section">
           <div class="right-section-heading">
-            <span class="right-section-title">Contact Me</span>
+            <h2 class="right-section-title">Contact Me</h2>
           </div>
 
           {{#linkedin}}
@@ -496,7 +504,7 @@
               </svg>
             </div>
             <div>
-              <div class="c-text-label">Web</div>
+              <h3 class="c-text-label">Web</h3>
               <div class="c-text-value">{{linkedin}}</div>
             </div>
           </div>
@@ -517,7 +525,7 @@
               </svg>
             </div>
             <div>
-              <div class="c-text-label">Email</div>
+              <h3 class="c-text-label">Email</h3>
               <div class="c-text-value">{{email}}</div>
             </div>
           </div>
@@ -532,7 +540,7 @@
               </svg>
             </div>
             <div>
-              <div class="c-text-label">Phone</div>
+              <h3 class="c-text-label">Phone</h3>
               <div class="c-text-value">{{phone}}</div>
             </div>
           </div>
@@ -542,11 +550,11 @@
         <!-- PRO SKILLS -->
         <div class="right-section">
           <div class="right-section-heading">
-            <span class="right-section-title">Pro Skills</span>
+            <h2 class="right-section-title">Pro Skills</h2>
           </div>
           {{#skills}}
           <div class="skill-item">
-            <div class="skill-name">{{name}}</div>
+            <h3 class="skill-name">{{name}}</h3>
             <div class="skill-track">
               <div class="skill-fill" data-level="{{level}}"></div>
             </div>
