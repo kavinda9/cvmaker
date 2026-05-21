@@ -6,29 +6,259 @@ const DEBOUNCE_MS = 280;
 
 const FONTS = {
   playfair: {
+    name: "Playfair Display",
     display: "'Playfair Display', Georgia, serif",
     url: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap",
   },
   merriweather: {
+    name: "Merriweather",
     display: "'Merriweather', Georgia, serif",
     url: "https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap",
   },
   lato: {
+    name: "Lato",
     display: "'Lato', sans-serif",
     url: "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",
   },
   raleway: {
+    name: "Raleway",
     display: "'Raleway', sans-serif",
     url: "https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&display=swap",
   },
   source: {
+    name: "Source Sans 3",
     display: "'Source Sans 3', sans-serif",
     url: "https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap",
   },
   dmSans: {
+    name: "DM Sans",
     display: "'DM Sans', system-ui, sans-serif",
     url: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap",
   },
+  aloevera: {
+    name: "Aloevera",
+    display: "'Aloevera', sans-serif",
+    isLocal: true,
+    file: "Aloevera-OVoWO.ttf",
+    format: "truetype"
+  },
+  ayaha: {
+    name: "Ayaha (Swashes)",
+    display: "'Ayaha', sans-serif",
+    isLocal: true,
+    file: "AyahaRegularDemowthswshes-7OLKK.ttf",
+    format: "truetype"
+  },
+  believeStronger: {
+    name: "Believe Stronger",
+    display: "'Believe Stronger', sans-serif",
+    isLocal: true,
+    file: "BelieveStrongerPersonalUseOnlyRegular-aYdXK.ttf",
+    format: "truetype"
+  },
+  bequta: {
+    name: "Bequta",
+    display: "'Bequta', sans-serif",
+    isLocal: true,
+    file: "Bequta-1j5pv.otf",
+    format: "opentype"
+  },
+  brownieStencil: {
+    name: "Brownie Stencil",
+    display: "'Brownie Stencil', sans-serif",
+    isLocal: true,
+    file: "BrownieStencil-8O8MJ.ttf",
+    format: "truetype"
+  },
+  cinq: {
+    name: "Cinq",
+    display: "'Cinq', sans-serif",
+    isLocal: true,
+    file: "Cinq-8OW30.ttf",
+    format: "truetype"
+  },
+  csCrupie: {
+    name: "CsCrupie Stippled",
+    display: "'CsCrupie Stippled', sans-serif",
+    isLocal: true,
+    file: "CsCrupieStippledRegularDemo-Yq2Ay.otf",
+    format: "opentype"
+  },
+  debrosee: {
+    name: "Debrosee",
+    display: "'Debrosee', sans-serif",
+    isLocal: true,
+    file: "Debrosee-ALPnL.ttf",
+    format: "truetype"
+  },
+  drPhibes: {
+    name: "Dr. Phibes",
+    display: "'Dr Phibes', sans-serif",
+    isLocal: true,
+    file: "DrPhibes-nRWL0.ttf",
+    format: "truetype"
+  },
+  drPhibesShadow: {
+    name: "Dr. Phibes Shadow",
+    display: "'Dr Phibes Shadow', sans-serif",
+    isLocal: true,
+    file: "DrPhibesShadow-1GAnB.ttf",
+    format: "truetype"
+  },
+  fulcher: {
+    name: "Fulcher Extrude",
+    display: "'Fulcher Extrude', sans-serif",
+    isLocal: true,
+    file: "FulcherExtruderight-e9pEx.otf",
+    format: "opentype"
+  },
+  galafera: {
+    name: "Galafera",
+    display: "'Galafera', sans-serif",
+    isLocal: true,
+    file: "GalaferaMedium-V4xze.ttf",
+    format: "truetype"
+  },
+  gulams: {
+    name: "Gulams Condensed",
+    display: "'Gulams Condensed', sans-serif",
+    isLocal: true,
+    file: "GulamsCondensedDemoExtrabold-8OBrD.otf",
+    format: "opentype"
+  },
+  loveDays: {
+    name: "Love Days",
+    display: "'Love Days', sans-serif",
+    isLocal: true,
+    file: "LoveDays-2v7Oe.ttf",
+    format: "truetype"
+  },
+  ltVerola: {
+    name: "Lt Verola",
+    display: "'Lt Verola', sans-serif",
+    isLocal: true,
+    file: "LtVerolaFreeForPersonalUseRegular-R9EPA.otf",
+    format: "opentype"
+  },
+  maskingRenta: {
+    name: "Masking Renta",
+    display: "'Masking Renta', sans-serif",
+    isLocal: true,
+    file: "MaskingRenta-MAxjJ.otf",
+    format: "opentype"
+  },
+  mondayFeelings: {
+    name: "Monday Feelings",
+    display: "'Monday Feelings', sans-serif",
+    isLocal: true,
+    file: "MondayFeelings-7BD2l.ttf",
+    format: "truetype"
+  },
+  moogalator: {
+    name: "Moogalator",
+    display: "'Moogalator', sans-serif",
+    isLocal: true,
+    file: "Moogalator-yYJr3.ttf",
+    format: "truetype"
+  },
+  natureBeauty: {
+    name: "Nature Beauty",
+    display: "'Nature Beauty', sans-serif",
+    isLocal: true,
+    file: "NatureBeautyPersonalUse-9Y2DK.ttf",
+    format: "truetype"
+  },
+  pickyside: {
+    name: "Pickyside",
+    display: "'Pickyside', sans-serif",
+    isLocal: true,
+    file: "PickysideRegular-vn7w4.otf",
+    format: "opentype"
+  },
+  regaliaMonarch: {
+    name: "Regalia Monarch",
+    display: "'Regalia Monarch', sans-serif",
+    isLocal: true,
+    file: "RegaliaMonarchArtNouveau-q2OWl.otf",
+    format: "opentype"
+  },
+  roomach: {
+    name: "Roomach",
+    display: "'Roomach', sans-serif",
+    isLocal: true,
+    file: "RoomachRegular-6Rpx6.ttf",
+    format: "truetype"
+  },
+  runtime: {
+    name: "Runtime",
+    display: "'Runtime', sans-serif",
+    isLocal: true,
+    file: "RuntimeRegular-m2Odx.otf",
+    format: "opentype"
+  },
+  starShield: {
+    name: "Star Shield",
+    display: "'Star Shield', sans-serif",
+    isLocal: true,
+    file: "StarShieldV2-9M52K.ttf",
+    format: "truetype"
+  },
+  stencilPtx: {
+    name: "Stencil Ptx Sprayed",
+    display: "'Stencil Ptx Sprayed', sans-serif",
+    isLocal: true,
+    file: "StencilPtxSprayedDemo-j9MAM.ttf",
+    format: "truetype"
+  },
+  streetYear: {
+    name: "Street Year",
+    display: "'Street Year', sans-serif",
+    isLocal: true,
+    file: "StreetYear-dr4Kg.ttf",
+    format: "truetype"
+  },
+  superCircus: {
+    name: "Super Circus",
+    display: "'Super Circus', sans-serif",
+    isLocal: true,
+    file: "SuperCircus-pgpDv.ttf",
+    format: "truetype"
+  },
+  superKindly: {
+    name: "Super Kindly",
+    display: "'Super Kindly', sans-serif",
+    isLocal: true,
+    file: "SuperKindly-drE8E.ttf",
+    format: "truetype"
+  },
+  superMaples: {
+    name: "Super Maples",
+    display: "'Super Maples', sans-serif",
+    isLocal: true,
+    file: "SuperMaples-2vR2w.ttf",
+    format: "truetype"
+  },
+  superShiny: {
+    name: "Super Shiny",
+    display: "'Super Shiny', sans-serif",
+    isLocal: true,
+    file: "SuperShiny-0v0rG.ttf",
+    format: "truetype"
+  },
+  waitNotes: {
+    name: "Wait Notes",
+    display: "'Wait Notes', sans-serif",
+    isLocal: true,
+    file: "WaitNotes-gwWp5.ttf",
+    format: "truetype"
+  },
+  brand: {
+    name: "Brand Font",
+    display: "'Brand', sans-serif",
+    isLocal: true,
+    file: "font1.ttf",
+    format: "truetype"
+  }
 };
 
 // ── State ─────────────────────────────────────────────────
@@ -622,12 +852,69 @@ function scheduleUpdate() {
   }, DEBOUNCE_MS);
 }
 
+function getLocalFontsCSS(isIframe = false) {
+  const pathPrefix = isIframe ? "../assets/fonts/" : "assets/fonts/";
+  let css = "";
+  Object.values(FONTS).forEach((f) => {
+    if (f.isLocal) {
+      const familyName = f.display.split(",")[0].replace(/'/g, "").trim();
+      css += `
+        @font-face {
+          font-family: '${familyName}';
+          src: url('${pathPrefix}${f.file}') format('${f.format}');
+          font-weight: normal;
+          font-style: normal;
+          font-display: swap;
+        }
+      `;
+    }
+  });
+  return css;
+}
+
 function injectCustomStyles(html) {
   const headerFont = FONTS[currentHeaderFont] || FONTS.playfair;
   const bodyFont = FONTS[currentBodyFont] || FONTS.dmSans;
+
+  let headerStyle = "";
+  if (headerFont.isLocal) {
+    const familyName = headerFont.display.split(",")[0].replace(/'/g, "").trim();
+    headerStyle = `
+      <style>
+        @font-face {
+          font-family: '${familyName}';
+          src: url('../assets/fonts/${headerFont.file}') format('${headerFont.format}');
+          font-weight: normal;
+          font-style: normal;
+          font-display: swap;
+        }
+      </style>
+    `;
+  } else {
+    headerStyle = `<link rel="stylesheet" href="${headerFont.url}" />`;
+  }
+
+  let bodyStyle = "";
+  if (bodyFont.isLocal) {
+    const familyName = bodyFont.display.split(",")[0].replace(/'/g, "").trim();
+    bodyStyle = `
+      <style>
+        @font-face {
+          font-family: '${familyName}';
+          src: url('../assets/fonts/${bodyFont.file}') format('${bodyFont.format}');
+          font-weight: normal;
+          font-style: normal;
+          font-display: swap;
+        }
+      </style>
+    `;
+  } else {
+    bodyStyle = `<link rel="stylesheet" href="${bodyFont.url}" />`;
+  }
+
   const style = `
-    <link rel="stylesheet" href="${headerFont.url}" />
-    <link rel="stylesheet" href="${bodyFont.url}" />
+    ${headerStyle}
+    ${bodyStyle}
     <style>
       :root {
         --accent-color: ${accentColor} !important;
@@ -905,14 +1192,30 @@ function bindFontSelects() {
   const bodySel = document.getElementById("body-font-select");
   if (!headerSel || !bodySel) return;
 
-  headerSel.querySelectorAll("option").forEach((opt) => {
-    const f = FONTS[opt.value];
-    if (f) opt.style.fontFamily = f.display;
+  // Inject local font-face definitions into the main page so preview options render with them
+  const styleEl = document.createElement("style");
+  styleEl.textContent = getLocalFontsCSS(false);
+  document.head.appendChild(styleEl);
+
+  // Clear hardcoded options and build them dynamically from FONTS config
+  headerSel.innerHTML = "";
+  bodySel.innerHTML = "";
+
+  const createOption = (key, f) => {
+    const opt = document.createElement("option");
+    opt.value = key;
+    opt.textContent = f.name;
+    opt.style.fontFamily = f.display;
+    return opt;
+  };
+
+  Object.entries(FONTS).forEach(([key, f]) => {
+    headerSel.appendChild(createOption(key, f));
+    bodySel.appendChild(createOption(key, f));
   });
-  bodySel.querySelectorAll("option").forEach((opt) => {
-    const f = FONTS[opt.value];
-    if (f) opt.style.fontFamily = f.display;
-  });
+
+  headerSel.value = currentHeaderFont;
+  bodySel.value = currentBodyFont;
 
   const applyHeaderFont = () => {
     const f = FONTS[headerSel.value];
@@ -1167,10 +1470,16 @@ function bindDownload() {
         "position:fixed;left:-9999px;top:0;" +
         "width:794px;height:1123px;overflow:hidden;background:#fff;z-index:-1;";
 
+      // Add local font-faces with root path prefix for PDF generator context
+      const localFontsStyle = document.createElement("style");
+      localFontsStyle.textContent = getLocalFontsCSS(false);
+      container.appendChild(localFontsStyle);
+
       // Copy all <style> tags from the parsed template
       parsedDoc.querySelectorAll("style").forEach((s) => {
         const clone = document.createElement("style");
-        clone.textContent = s.textContent;
+        // Also map relative path from iframe context to root context if any
+        clone.textContent = s.textContent.replaceAll("../assets/fonts/", "assets/fonts/");
         container.appendChild(clone);
       });
 
