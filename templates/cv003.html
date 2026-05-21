@@ -260,6 +260,15 @@
         margin-top: 2mm;
       }
 
+      .summary-text {
+        font-size: 0.34cm;
+        font-weight: 400;
+        color: var(--muted);
+        line-height: 1.55;
+        margin-top: 3.5mm;
+        text-align: justify;
+      }
+
       /* Right section block */
       .right-section {
         padding: 0 7mm;
@@ -467,6 +476,9 @@
           {{#jobTitle}}
           <h3 class="job-title-text">{{jobTitle}}</h3>
           {{/jobTitle}}
+          {{#summary}}
+          <p class="summary-text">{{summary}}</p>
+          {{/summary}}
         </div>
 
         <!-- CONTACT ME -->
