@@ -837,7 +837,12 @@
     document.documentElement.style.setProperty('--accent-color', window.cvConfig.accent);
   }
   document.querySelectorAll('.sk-bar-fill[data-level], .lang-bar-fill[data-level]').forEach(function(el) {
-    el.style.width = el.getAttribute('data-level') + '%';
+    var lvl = parseFloat(el.getAttribute('data-level') || '0');
+    if (el.classList.contains('lang-bar-fill') && lvl <= 5) {
+      el.style.width = (lvl * 20) + '%';
+    } else {
+      el.style.width = lvl + '%';
+    }
   });
 </script>
 </body>
