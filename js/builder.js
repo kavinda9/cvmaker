@@ -923,7 +923,10 @@ function injectCustomStyles(html) {
         --cv-accent: ${accentColor} !important;
       }
       body, html { font-family: ${bodyFont.display} !important; }
-      .sidebar__name, .sb-section__title, .sec-title, h1, h2, h3 {
+      .sidebar__name, .sb-section__title, .sec-title, h1, h2, h3,
+      .header-name, .header-title, .sb-section-title, .main-sec-title,
+      .sk-name, .lang-name, .job-title, .uni-name, .comp-name, .cert-name,
+      .proj-title, .contact-label, .skill-name {
         font-family: ${headerFont.display} !important;
       }
     </style>
