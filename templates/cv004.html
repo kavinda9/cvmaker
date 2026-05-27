@@ -4,20 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CV Template 004</title>
+  <script>
+    window.cvConfig = {
+      accent: "#7c3aed",
+      sections: ["experience", "education", "skills", "languages"],
+    };
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --purple-darkest: #160830;
-      --purple-dark:    #2d1060;
-      --purple-header:  #3d1878;
-      --purple-mid:     #6b21a8;
-      --purple-bright:  #7c3aed;
-      --purple-accent:  #a78bfa;
-      --bar-grad-start: #5b21b6;
-      --bar-grad-end:   #a855f7;
-      --bar-bg:         #ddd6fe;
+      --accent-color: #7c3aed;
+      --purple-darkest: color-mix(in srgb, var(--accent-color) 15%, #000 85%);
+      --purple-dark:    color-mix(in srgb, var(--accent-color) 35%, #000 65%);
+      --purple-header:  color-mix(in srgb, var(--accent-color) 45%, #000 55%);
+      --purple-mid:     color-mix(in srgb, var(--accent-color) 70%, #000 30%);
+      --purple-bright:  var(--accent-color);
+      --purple-accent:  color-mix(in srgb, var(--accent-color) 60%, #fff 40%);
+      --bar-grad-start: color-mix(in srgb, var(--accent-color) 75%, #000 25%);
+      --bar-grad-end:   color-mix(in srgb, var(--accent-color) 80%, #fff 20%);
+      --bar-bg:         color-mix(in srgb, var(--accent-color) 20%, #fff 80%);
       --white:          #ffffff;
       --text-dark:      #1e1e2e;
       --text-mid:       #4b4b6b;
@@ -51,7 +58,7 @@
       height: 62mm;
       flex-shrink: 0;
       position: relative;
-      background: linear-gradient(125deg, var(--purple-darkest) 0%, #2a0f5a 45%, var(--purple-header) 100%);
+      background: linear-gradient(125deg, var(--purple-darkest) 0%, var(--purple-dark) 45%, var(--purple-header) 100%);
       display: flex;
       align-items: center;
       padding: 0 8mm 0 6mm;
@@ -67,7 +74,7 @@
       right: 25mm;
       width: 55mm;
       height: 90mm;
-      background: rgba(124, 58, 237, 0.18);
+      background: color-mix(in srgb, var(--accent-color) 18%, transparent);
       transform: rotate(-18deg);
       pointer-events: none;
     }
@@ -79,7 +86,7 @@
       border: 3.5px solid rgba(255,255,255,0.35);
       overflow: hidden;
       flex-shrink: 0;
-      background: #5b21b6;
+      background: var(--bar-grad-start);
       position: relative;
       z-index: 2;
     }
@@ -88,7 +95,7 @@
     }
     .header-photo-placeholder {
       width: 100%; height: 100%;
-      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      background: linear-gradient(135deg, var(--bar-grad-start), var(--bar-grad-end));
       display: flex; align-items: center; justify-content: center;
       color: #fff;
       font-family: 'Montserrat', sans-serif;
@@ -826,6 +833,9 @@
 </div><!-- end page -->
 
 <script>
+  if (window.cvConfig && window.cvConfig.accent) {
+    document.documentElement.style.setProperty('--accent-color', window.cvConfig.accent);
+  }
   document.querySelectorAll('.sk-bar-fill[data-level], .lang-bar-fill[data-level]').forEach(function(el) {
     el.style.width = el.getAttribute('data-level') + '%';
   });

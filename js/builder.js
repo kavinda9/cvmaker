@@ -1249,6 +1249,7 @@ const TEMPLATES = [
   { id: "cv001", name: "Editorial", num: "01", img: "assets/images/cv001.png" },
   { id: "cv002", name: "Minimal", num: "02", img: "assets/images/cv002.png" },
   { id: "cv003", name: "Executive", num: "03", img: "assets/images/cv003.png" },
+  { id: "cv004", name: "Executive", num: "04", img: "assets/images/cv004.png" },
 ];
 
 let modalCurrent = 0;
