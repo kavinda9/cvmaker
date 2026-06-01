@@ -298,6 +298,12 @@ const DEFAULT_DATA = {
     { name: "HTML/CSS", level: 70 },
     { name: "JavaScript", level: 60 },
   ],
+  software: [
+    { name: "Photoshop", level: 90 },
+    { name: "Illustrator", level: 85 },
+    { name: "Figma", level: 95 },
+    { name: "After Effects", level: 70 },
+  ],
   interests: [{ name: "Travel" }, { name: "Photography" }, { name: "Yoga" }],
   photo: "assets/images/cvpfp.png",
   experience: [
@@ -353,6 +359,7 @@ function saveFormState() {
     const state = {
       fields: {},
       skills: collectRawSkills(),
+      software: collectRawSoftware(),
       interests: collectRawInterests(),
       experience: collectRawEntries("experience"),
       education: collectRawEntries("education"),
@@ -386,6 +393,13 @@ function restoreFormState() {
       const list = document.getElementById("skills-list");
       list.innerHTML = "";
       state.skills.forEach(({ name, level }) => addSkillRow(name, level));
+    }
+    if (Array.isArray(state.software)) {
+      const list = document.getElementById("software-list");
+      if (list) {
+        list.innerHTML = "";
+        state.software.forEach(({ name, level }) => addSoftwareRow(name, level));
+      }
     }
     if (Array.isArray(state.interests)) {
       const list = document.getElementById("interests-list");
@@ -458,6 +472,15 @@ function collectRawSkills() {
   );
 }
 
+function collectRawSoftware() {
+  return Array.from(document.querySelectorAll(".software-slider-row")).map(
+    (row) => ({
+      name: row.querySelector("input[type='text']")?.value || "",
+      level: parseInt(row.querySelector("input[type='range']")?.value || "80"),
+    }),
+  );
+}
+
 function collectRawInterests() {
   return Array.from(document.querySelectorAll(".interest-entry input")).map(
     (el) => ({
@@ -496,6 +519,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   addSkillRow("Figma", 95);
   addSkillRow("Sketch", 80);
+  addSoftwareRow("Photoshop", 90);
+  addSoftwareRow("Illustrator", 85);
+  addSoftwareRow("Figma", 95);
+  addSoftwareRow("After Effects", 70);
   addInterestRow("Travel");
   addInterestRow("Photography");
 
@@ -622,6 +649,36 @@ function addSkillRow(name = "", level = 80) {
   list.appendChild(row);
 }
 
+function addSoftwareRow(name = "", level = 80) {
+  const list = document.getElementById("software-list");
+  if (!list) return;
+  const row = document.createElement("div");
+  row.className = "software-slider-row";
+  row.innerHTML = `
+    <input type="text" placeholder="Software name" value="${esc(name)}" style="flex:1.2" />
+    <input type="range" min="0" max="100" value="${level}" />
+    <span class="software-level-pct">${level}%</span>
+    <button class="btn-software-remove" title="Remove">✕</button>
+  `;
+  const rangeInput = row.querySelector("input[type='range']");
+  const pctLabel = row.querySelector(".software-level-pct");
+  rangeInput.addEventListener("input", () => {
+    pctLabel.textContent = rangeInput.value + "%";
+    saveFormState();
+    scheduleUpdate();
+  });
+  row.querySelector("input[type='text']").addEventListener("input", () => {
+    saveFormState();
+    scheduleUpdate();
+  });
+  row.querySelector(".btn-software-remove").addEventListener("click", () => {
+    row.remove();
+    saveFormState();
+    scheduleUpdate();
+  });
+  list.appendChild(row);
+}
+
 // ══════════════════════════════════════════════════════════
 //  INTERESTS
 // ══════════════════════════════════════════════════════════
@@ -669,6 +726,19 @@ function collectData() {
       }))
       .filter((s) => s.name !== "");
     if (skills.length) data.skills = skills;
+  }
+
+  const softwareRows = document.querySelectorAll(".software-slider-row");
+  if (softwareRows.length) {
+    const software = Array.from(softwareRows)
+      .map((row) => ({
+        name: row.querySelector("input[type='text']")?.value.trim() || "",
+        level: parseInt(
+          row.querySelector("input[type='range']")?.value || "80",
+        ),
+      }))
+      .filter((s) => s.name !== "");
+    if (software.length) data.software = software;
   }
 
   const interestInputs = document.querySelectorAll(".interest-entry input");
@@ -1027,6 +1097,13 @@ function bindDynamicAddButtons() {
     e.stopPropagation();
     e.target.closest(".form-section")?.classList.add("open");
     addSkillRow();
+    saveFormState();
+    scheduleUpdate();
+  });
+  document.getElementById("btn-add-software")?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    e.target.closest(".form-section")?.classList.add("open");
+    addSoftwareRow();
     saveFormState();
     scheduleUpdate();
   });
