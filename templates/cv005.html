@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV Template 005</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --yellow:  #F5C200;
+      --black:   #1C1C1C;
+      --bg:      #EBEBEB;
+      --text:    #3a3a3a;
+      --light:   #666;
+    }
+
+    html, body {
+      width: 210mm;
+      height: 297mm;
+      max-height: 297mm;
+      overflow: hidden;
+      margin: 0;
+      font-family: 'Lato', sans-serif;
+      background: #fff;
+    }
+
+    .page {
+      width: 210mm;
+      height: 297mm;
+      overflow: hidden;
+      display: flex;
+      background: var(--bg);
+    }
+
+    /* ══════════════════════════════════
+       LEFT SIDEBAR  77mm
+    ══════════════════════════════════ */
+    .sidebar {
+      width: 77mm;
+      height: 297mm;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      background: var(--yellow);
+    }
+
+    /* ── Black diagonal top shape ── */
+    /* Bottom-left: ~62mm,  Bottom-right: ~28mm */
+    .sb-black-top {
+      position: absolute;
+      inset: 0;
+      background: var(--black);
+      clip-path: polygon(0 0, 100% 0, 100% 28mm, 0 62mm);
+      z-index: 1;
+    }
+
+    /* ── Black accent shapes bottom-right of sidebar ── */
+    .sb-bot-1 {
+      position: absolute;
+      bottom: 34mm;
+      right: -10mm;
+      width: 36mm;
+      height: 13mm;
+      background: var(--black);
+      transform: rotate(-22deg);
+      z-index: 1;
+    }
+    .sb-bot-2 {
+      position: absolute;
+      bottom: 43mm;
+      right: -14mm;
+      width: 36mm;
+      height: 9mm;
+      background: var(--black);
+      transform: rotate(-22deg);
+      z-index: 1;
+    }
+
+    /* ── Diamond photo ── */
+    /* Underlying square: 48mm → diagonal: 67.9mm (spans most of sidebar) */
+    .photo-wrap {
+      position: absolute;
+      top: 3mm;
+      left: calc(50% - 24mm);   /* (77mm/2) - (48mm/2) = 14.5mm */
+      width: 48mm;
+      height: 48mm;
+      z-index: 5;
+    }
+    .photo-diamond {
+      width: 48mm;
+      height: 48mm;
+      transform: rotate(45deg);
+      overflow: hidden;
+      background: #888;
+      /* thin white/yellow border for contrast */
+      outline: 3px solid var(--yellow);
+    }
+    .photo-diamond img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: rotate(-45deg) scale(1.42);
+      transform-origin: center;
+    }
+    .photo-diamond-ph {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ccc, #999);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-diamond-ph span {
+      transform: rotate(-45deg);
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1cm;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* ── Sidebar content (below photo) ── */
+    .sb-content {
+      position: absolute;
+      z-index: 4;
+      top: 75mm;
+      left: 0;
+      right: 0;
+      padding: 0 7mm;
+    }
+
+    /* section heading */
+    .sb-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.60cm;
+      font-weight: 700;
+      color: var(--black);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-align: center;
+      margin-bottom: 4mm;
+      margin-top: 4mm;
+    }
+
+    /* contact rows */
+    .c-row {
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+      margin-bottom: 4.5mm;
+    }
+    .c-icon {
+      width: 8.5mm;
+      height: 8.5mm;
+      border: 1.8px solid var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: transparent;
+    }
+    .c-icon svg {
+      width: 5mm;
+      height: 5mm;
+      fill: none;
+      stroke: var(--black);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .c-text {
+      font-size: 0.385cm;
+      color: var(--black);
+      font-weight: 400;
+    }
+
+    /* skills list */
+    .sk-list {
+      list-style: none;
+    }
+    .sk-list li {
+      display: flex;
+      align-items: center;
+      gap: 3.5mm;
+      font-size: 0.39cm;
+      color: var(--black);
+      margin-bottom: 3.5mm;
+      font-weight: 400;
+    }
+    .sk-list li::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--black);
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════
+       RIGHT MAIN PANEL  133mm
+    ══════════════════════════════════ */
+    .main {
+      flex: 1;
+      height: 297mm;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    /* ── Black diagonal header band ── */
+    /* Taller on left (~38mm), shorter on right (~26mm) */
+    .main-header-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--black);
+      clip-path: polygon(0 0, 100% 0, 100% 26mm, 0 40mm);
+      z-index: 1;
+    }
+
+    /* Name text inside header */
+    .main-name {
+      position: absolute;
+      z-index: 3;
+      top: 9mm;
+      left: 8mm;
+    }
+    .name-first {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.92cm;
+      font-weight: 400;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+    .name-last {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.92cm;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+      margin-left: 2mm;
+    }
+    .name-job {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.37cm;
+      font-weight: 300;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 1.2px;
+      margin-top: 2mm;
+    }
+
+    /* ── Right-side decorative shapes ── */
+    /* Mid-right pair */
+    .deco-mid-1 {
+      position: absolute;
+      top: 104mm;
+      right: -9mm;
+      width: 38mm;
+      height: 14mm;
+      background: var(--black);
+      transform: rotate(-22deg);
+      z-index: 0;
+    }
+    .deco-mid-2 {
+      position: absolute;
+      top: 113mm;
+      right: -14mm;
+      width: 38mm;
+      height: 10mm;
+      background: var(--black);
+      transform: rotate(-22deg);
+      z-index: 0;
+    }
+    /* Bottom-right pair */
+    .deco-bot-1 {
+      position: absolute;
+      bottom: 20mm;
+      right: -9mm;
+      width: 38mm;
+      height: 14mm;
+      background: var(--black);
+      transform: rotate(-22deg);
+      z-index: 0;
+    }
+    .deco-bot-2 {
+      position: absolute;
+      bottom: 29mm;
+      right: -14mm;
+      width: 38mm;
+      height: 10mm;
+      background: var(--black);
+      transform: rotate(-22deg);
+      z-index: 0;
+    }
+
+    /* ── Content area ── */
+    .main-content {
+      position: absolute;
+      z-index: 2;
+      top: 43mm;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 2mm 8mm 4mm 8mm;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Section title */
+    .sec-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.70cm;
+      font-weight: 700;
+      color: var(--black);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 3mm;
+      margin-top: 4mm;
+    }
+    .sec-title:first-child {
+      margin-top: 0;
+    }
+
+    /* About me text */
+    .about-text {
+      font-size: 0.365cm;
+      color: var(--light);
+      line-height: 1.6;
+    }
+
+    /* Education items */
+    .edu-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 3.5mm;
+      margin-bottom: 3.5mm;
+    }
+    .yellow-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--yellow);
+      flex-shrink: 0;
+      margin-top: 1.5mm;
+    }
+    .edu-school {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.42cm;
+      font-weight: 600;
+      color: var(--black);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .edu-sub {
+      font-size: 0.355cm;
+      color: var(--light);
+      margin-top: 0.8mm;
+    }
+
+    /* Experience items */
+    .exp-wrap {
+      position: relative;
+      padding-left: 5.5mm;
+    }
+    /* Vertical yellow line connecting bullets */
+    .exp-wrap::before {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 12px;
+      bottom: 14px;
+      width: 2px;
+      background: var(--yellow);
+    }
+    .exp-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 3.5mm;
+      margin-bottom: 3mm;
+      position: relative;
+    }
+    .exp-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--yellow);
+      flex-shrink: 0;
+      margin-top: 1.5mm;
+      position: relative;
+      z-index: 1;
+    }
+    .exp-date {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.42cm;
+      font-weight: 600;
+      color: var(--black);
+      letter-spacing: 0.3px;
+    }
+    .exp-sub {
+      font-size: 0.355cm;
+      color: var(--light);
+      margin-top: 0.8mm;
+    }
+
+    /* Social icons — bottom of main panel */
+    .social-row {
+      position: absolute;
+      z-index: 3;
+      bottom: 6mm;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 5mm;
+    }
+    .soc-circle {
+      width: 10mm;
+      height: 10mm;
+      border-radius: 50%;
+      border: 2px solid var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .soc-circle svg {
+      width: 5.5mm;
+      height: 5.5mm;
+      fill: var(--black);
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══════════════════════════════════
+       LEFT SIDEBAR
+  ══════════════════════════════════ -->
+  <div class="sidebar">
+    <div class="sb-black-top"></div>
+    <div class="sb-bot-1"></div>
+    <div class="sb-bot-2"></div>
+
+    <!-- Diamond Photo -->
+    <div class="photo-wrap">
+      <div class="photo-diamond">
+        {{#photo}}
+        <img src="{{photo}}" alt="Profile" />
+        {{/photo}}{{^photo}}
+        <div class="photo-diamond-ph">
+          <span>{{firstName.0}}{{lastName.0}}</span>
+        </div>
+        {{/photo}}
+      </div>
+    </div>
+
+    <!-- Sidebar text content -->
+    <div class="sb-content">
+
+      <!-- CONTACTS -->
+      <div class="sb-title">Contacts</div>
+
+      {{#email}}
+      <div class="c-row">
+        <div class="c-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 6 10-6"/></svg>
+        </div>
+        <div class="c-text">{{email}}</div>
+      </div>
+      {{/email}}
+
+      {{#phone}}
+      <div class="c-row">
+        <div class="c-icon">
+          <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="2.5"/></svg>
+        </div>
+        <div class="c-text">{{phone}}</div>
+      </div>
+      {{/phone}}
+
+      {{#website}}
+      <div class="c-row">
+        <div class="c-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="c-text">{{website}}</div>
+      </div>
+      {{/website}}
+
+      {{^email}}{{^phone}}{{^website}}
+      <div class="c-row">
+        <div class="c-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 6 10-6"/></svg>
+        </div>
+        <div class="c-text">simons@mail.com</div>
+      </div>
+      <div class="c-row">
+        <div class="c-icon">
+          <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="2.5"/></svg>
+        </div>
+        <div class="c-text">123-456-789</div>
+      </div>
+      <div class="c-row">
+        <div class="c-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="c-text">simons.com</div>
+      </div>
+      {{/website}}{{/phone}}{{/email}}
+
+      <!-- SKILLS -->
+      <div class="sb-title" style="margin-top:6mm;">Skills</div>
+      <ul class="sk-list">
+        {{#skills}}
+        <li>{{name}}</li>
+        {{/skills}}
+        {{^skills}}
+        <li>Product creation</li>
+        <li>Business analytics</li>
+        <li>Marketing</li>
+        <li>Team work</li>
+        {{/skills}}
+      </ul>
+
+    </div><!-- end sb-content -->
+  </div><!-- end sidebar -->
+
+
+  <!-- ══════════════════════════════════
+       RIGHT MAIN PANEL
+  ══════════════════════════════════ -->
+  <div class="main">
+
+    <!-- Black diagonal header -->
+    <div class="main-header-bg"></div>
+
+    <!-- Name + Job Title -->
+    <div class="main-name">
+      <div>
+        <span class="name-first">{{firstName}}</span><span class="name-last"> {{lastName}}</span>
+      </div>
+      <div class="name-job">{{jobTitle}}</div>
+    </div>
+
+    <!-- Right-side decorative diagonal shapes -->
+    <div class="deco-mid-1"></div>
+    <div class="deco-mid-2"></div>
+    <div class="deco-bot-1"></div>
+    <div class="deco-bot-2"></div>
+
+    <!-- Main content -->
+    <div class="main-content">
+
+      <!-- ABOUT ME -->
+      <div class="sec-title">About Me</div>
+      {{#summary}}
+      <p class="about-text">{{summary}}</p>
+      {{/summary}}
+      {{^summary}}
+      <p class="about-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis</p>
+      {{/summary}}
+
+      <!-- EDUCATION -->
+      <div class="sec-title">Education</div>
+
+      {{#education}}
+      <div class="edu-item">
+        <div class="yellow-dot"></div>
+        <div>
+          <div class="edu-school">{{school}}</div>
+          <div class="edu-sub">{{detail}}</div>
+        </div>
+      </div>
+      {{/education}}
+      {{^education}}
+      <div class="edu-item">
+        <div class="yellow-dot"></div>
+        <div>
+          <div class="edu-school">First Business School</div>
+          <div class="edu-sub">Lorem ipsum dolor sit amet, consectetuer</div>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="yellow-dot"></div>
+        <div>
+          <div class="edu-school">Second Business School</div>
+          <div class="edu-sub">Lorem ipsum dolor sit amet, consectetuer</div>
+        </div>
+      </div>
+      {{/education}}
+
+      <!-- EXPERIENCE -->
+      <div class="sec-title">Experience</div>
+      <div class="exp-wrap">
+        {{#experience}}
+        <div class="exp-item">
+          <div class="exp-dot"></div>
+          <div>
+            <div class="exp-date">{{startDate}}{{#endDate}}-{{endDate}}{{/endDate}}</div>
+            <div class="exp-sub">{{description}}</div>
+          </div>
+        </div>
+        {{/experience}}
+        {{^experience}}
+        <div class="exp-item">
+          <div class="exp-dot"></div>
+          <div>
+            <div class="exp-date">2001-2005</div>
+            <div class="exp-sub">Lorem ipsum dolor sit amet, consectetuer</div>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-dot"></div>
+          <div>
+            <div class="exp-date">2005-2008</div>
+            <div class="exp-sub">Lorem ipsum dolor sit amet, consectetuer</div>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-dot"></div>
+          <div>
+            <div class="exp-date">2008-2015</div>
+            <div class="exp-sub">Lorem ipsum dolor sit amet, consectetuer</div>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-dot"></div>
+          <div>
+            <div class="exp-date">20015-2018</div>
+            <div class="exp-sub">Lorem ipsum dolor sit amet, consectetuer</div>
+          </div>
+        </div>
+        {{/experience}}
+      </div>
+
+    </div><!-- end main-content -->
+
+    <!-- Social Icons (bottom center of main panel) -->
+    <div class="social-row">
+      <!-- Twitter -->
+      <div class="soc-circle">
+        <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+      </div>
+      <!-- Facebook -->
+      <div class="soc-circle">
+        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </div>
+      <!-- Instagram -->
+      <div class="soc-circle">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2" stroke="var(--bg)"/></svg>
+      </div>
+    </div>
+
+  </div><!-- end main -->
+</div><!-- end page -->
+</body>
+</html>
