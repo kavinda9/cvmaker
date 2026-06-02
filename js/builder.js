@@ -625,7 +625,7 @@ function addSkillRow(name = "", level = 80) {
   const row = document.createElement("div");
   row.className = "skill-slider-row";
   row.innerHTML = `
-    <input type="text" placeholder="Skill name" value="${esc(name)}" style="flex:1.2" />
+    <input type="text" placeholder="Skill name" value="${esc(name)}" style="flex:1.2" maxlength="12" />
     <input type="range" min="0" max="100" value="${level}" />
     <span class="skill-level-pct">${level}%</span>
     <button class="btn-skill-remove" title="Remove">✕</button>
@@ -655,7 +655,7 @@ function addSoftwareRow(name = "", level = 80) {
   const row = document.createElement("div");
   row.className = "software-slider-row";
   row.innerHTML = `
-    <input type="text" placeholder="Software name" value="${esc(name)}" style="flex:1.2" />
+    <input type="text" placeholder="Software name" value="${esc(name)}" style="flex:1.2" maxlength="12" />
     <input type="range" min="0" max="100" value="${level}" />
     <span class="software-level-pct">${level}%</span>
     <button class="btn-software-remove" title="Remove">✕</button>
