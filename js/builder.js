@@ -40,225 +40,225 @@ const FONTS = {
     display: "'Aloevera', sans-serif",
     isLocal: true,
     file: "Aloevera-OVoWO.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   ayaha: {
     name: "Ayaha (Swashes)",
     display: "'Ayaha', sans-serif",
     isLocal: true,
     file: "AyahaRegularDemowthswshes-7OLKK.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   believeStronger: {
     name: "Believe Stronger",
     display: "'Believe Stronger', sans-serif",
     isLocal: true,
     file: "BelieveStrongerPersonalUseOnlyRegular-aYdXK.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   bequta: {
     name: "Bequta",
     display: "'Bequta', sans-serif",
     isLocal: true,
     file: "Bequta-1j5pv.otf",
-    format: "opentype"
+    format: "opentype",
   },
   brownieStencil: {
     name: "Brownie Stencil",
     display: "'Brownie Stencil', sans-serif",
     isLocal: true,
     file: "BrownieStencil-8O8MJ.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   cinq: {
     name: "Cinq",
     display: "'Cinq', sans-serif",
     isLocal: true,
     file: "Cinq-8OW30.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   csCrupie: {
     name: "CsCrupie Stippled",
     display: "'CsCrupie Stippled', sans-serif",
     isLocal: true,
     file: "CsCrupieStippledRegularDemo-Yq2Ay.otf",
-    format: "opentype"
+    format: "opentype",
   },
   debrosee: {
     name: "Debrosee",
     display: "'Debrosee', sans-serif",
     isLocal: true,
     file: "Debrosee-ALPnL.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   drPhibes: {
     name: "Dr. Phibes",
     display: "'Dr Phibes', sans-serif",
     isLocal: true,
     file: "DrPhibes-nRWL0.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   drPhibesShadow: {
     name: "Dr. Phibes Shadow",
     display: "'Dr Phibes Shadow', sans-serif",
     isLocal: true,
     file: "DrPhibesShadow-1GAnB.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   fulcher: {
     name: "Fulcher Extrude",
     display: "'Fulcher Extrude', sans-serif",
     isLocal: true,
     file: "FulcherExtruderight-e9pEx.otf",
-    format: "opentype"
+    format: "opentype",
   },
   galafera: {
     name: "Galafera",
     display: "'Galafera', sans-serif",
     isLocal: true,
     file: "GalaferaMedium-V4xze.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   gulams: {
     name: "Gulams Condensed",
     display: "'Gulams Condensed', sans-serif",
     isLocal: true,
     file: "GulamsCondensedDemoExtrabold-8OBrD.otf",
-    format: "opentype"
+    format: "opentype",
   },
   loveDays: {
     name: "Love Days",
     display: "'Love Days', sans-serif",
     isLocal: true,
     file: "LoveDays-2v7Oe.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   ltVerola: {
     name: "Lt Verola",
     display: "'Lt Verola', sans-serif",
     isLocal: true,
     file: "LtVerolaFreeForPersonalUseRegular-R9EPA.otf",
-    format: "opentype"
+    format: "opentype",
   },
   maskingRenta: {
     name: "Masking Renta",
     display: "'Masking Renta', sans-serif",
     isLocal: true,
     file: "MaskingRenta-MAxjJ.otf",
-    format: "opentype"
+    format: "opentype",
   },
   mondayFeelings: {
     name: "Monday Feelings",
     display: "'Monday Feelings', sans-serif",
     isLocal: true,
     file: "MondayFeelings-7BD2l.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   moogalator: {
     name: "Moogalator",
     display: "'Moogalator', sans-serif",
     isLocal: true,
     file: "Moogalator-yYJr3.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   natureBeauty: {
     name: "Nature Beauty",
     display: "'Nature Beauty', sans-serif",
     isLocal: true,
     file: "NatureBeautyPersonalUse-9Y2DK.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   pickyside: {
     name: "Pickyside",
     display: "'Pickyside', sans-serif",
     isLocal: true,
     file: "PickysideRegular-vn7w4.otf",
-    format: "opentype"
+    format: "opentype",
   },
   regaliaMonarch: {
     name: "Regalia Monarch",
     display: "'Regalia Monarch', sans-serif",
     isLocal: true,
     file: "RegaliaMonarchArtNouveau-q2OWl.otf",
-    format: "opentype"
+    format: "opentype",
   },
   roomach: {
     name: "Roomach",
     display: "'Roomach', sans-serif",
     isLocal: true,
     file: "RoomachRegular-6Rpx6.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   runtime: {
     name: "Runtime",
     display: "'Runtime', sans-serif",
     isLocal: true,
     file: "RuntimeRegular-m2Odx.otf",
-    format: "opentype"
+    format: "opentype",
   },
   starShield: {
     name: "Star Shield",
     display: "'Star Shield', sans-serif",
     isLocal: true,
     file: "StarShieldV2-9M52K.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   stencilPtx: {
     name: "Stencil Ptx Sprayed",
     display: "'Stencil Ptx Sprayed', sans-serif",
     isLocal: true,
     file: "StencilPtxSprayedDemo-j9MAM.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   streetYear: {
     name: "Street Year",
     display: "'Street Year', sans-serif",
     isLocal: true,
     file: "StreetYear-dr4Kg.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   superCircus: {
     name: "Super Circus",
     display: "'Super Circus', sans-serif",
     isLocal: true,
     file: "SuperCircus-pgpDv.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   superKindly: {
     name: "Super Kindly",
     display: "'Super Kindly', sans-serif",
     isLocal: true,
     file: "SuperKindly-drE8E.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   superMaples: {
     name: "Super Maples",
     display: "'Super Maples', sans-serif",
     isLocal: true,
     file: "SuperMaples-2vR2w.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   superShiny: {
     name: "Super Shiny",
     display: "'Super Shiny', sans-serif",
     isLocal: true,
     file: "SuperShiny-0v0rG.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   waitNotes: {
     name: "Wait Notes",
     display: "'Wait Notes', sans-serif",
     isLocal: true,
     file: "WaitNotes-gwWp5.ttf",
-    format: "truetype"
+    format: "truetype",
   },
   brand: {
     name: "Brand Font",
     display: "'Brand', sans-serif",
     isLocal: true,
     file: "font1.ttf",
-    format: "truetype"
-  }
+    format: "truetype",
+  },
 };
 
 // ── State ─────────────────────────────────────────────────
@@ -398,7 +398,9 @@ function restoreFormState() {
       const list = document.getElementById("software-list");
       if (list) {
         list.innerHTML = "";
-        state.software.forEach(({ name, level }) => addSoftwareRow(name, level));
+        state.software.forEach(({ name, level }) =>
+          addSoftwareRow(name, level),
+        );
       }
     }
     if (Array.isArray(state.interests)) {
@@ -948,7 +950,10 @@ function injectCustomStyles(html) {
 
   let headerStyle = "";
   if (headerFont.isLocal) {
-    const familyName = headerFont.display.split(",")[0].replace(/'/g, "").trim();
+    const familyName = headerFont.display
+      .split(",")[0]
+      .replace(/'/g, "")
+      .trim();
     headerStyle = `
       <style>
         @font-face {
@@ -1100,13 +1105,15 @@ function bindDynamicAddButtons() {
     saveFormState();
     scheduleUpdate();
   });
-  document.getElementById("btn-add-software")?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    e.target.closest(".form-section")?.classList.add("open");
-    addSoftwareRow();
-    saveFormState();
-    scheduleUpdate();
-  });
+  document
+    .getElementById("btn-add-software")
+    ?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      e.target.closest(".form-section")?.classList.add("open");
+      addSoftwareRow();
+      saveFormState();
+      scheduleUpdate();
+    });
   document
     .getElementById("btn-add-interest")
     ?.addEventListener("click", (e) => {
@@ -1136,13 +1143,13 @@ function bindPhotoUpload() {
   const input = document.getElementById("f-photo");
   const preview = document.getElementById("photo-preview-img");
   const remove = document.getElementById("photo-remove");
-  
+
   const modal = document.getElementById("crop-modal-overlay");
   const cropImg = document.getElementById("crop-image");
   const btnCancel = document.getElementById("btn-crop-cancel");
   const btnApply = document.getElementById("btn-crop-apply");
   const btnClose = document.getElementById("crop-modal-close");
-  
+
   const zoomIn = document.getElementById("btn-crop-zoom-in");
   const zoomOut = document.getElementById("btn-crop-zoom-out");
   const rotateLeft = document.getElementById("btn-crop-rotate-left");
@@ -1330,6 +1337,7 @@ const TEMPLATES = [
   { id: "cv002", name: "Minimal", num: "02", img: "assets/images/cv002.png" },
   { id: "cv003", name: "Executive", num: "03", img: "assets/images/cv003.png" },
   { id: "cv004", name: "Executive", num: "04", img: "assets/images/cv004.png" },
+  { id: "cv005", name: "Executive", num: "05", img: "assets/images/cv005.png" },
 ];
 
 let modalCurrent = 0;
@@ -1560,7 +1568,10 @@ function bindDownload() {
       parsedDoc.querySelectorAll("style").forEach((s) => {
         const clone = document.createElement("style");
         // Also map relative path from iframe context to root context if any
-        clone.textContent = s.textContent.replaceAll("../assets/fonts/", "assets/fonts/");
+        clone.textContent = s.textContent.replaceAll(
+          "../assets/fonts/",
+          "assets/fonts/",
+        );
         container.appendChild(clone);
       });
 

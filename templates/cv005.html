@@ -56,25 +56,51 @@
       z-index: 1;
     }
 
-    /* ── Black accent shapes bottom-right of sidebar ── */
+    /* ── Decorative shapes top-left of sidebar ── */
+    .sb-top-yellow-1 {
+      position: absolute;
+      top: 12mm;
+      left: -15mm;
+      width: 55mm;
+      height: 5mm;
+      background: var(--yellow);
+      transform: rotate(-45deg);
+      transform-origin: left top;
+      z-index: 2;
+    }
+    .sb-top-yellow-2 {
+      position: absolute;
+      top: 22.6mm;
+      left: -15mm;
+      width: 55mm;
+      height: 1.5mm;
+      background: var(--yellow);
+      transform: rotate(-45deg);
+      transform-origin: left top;
+      z-index: 2;
+    }
+
+    /* ── Black accent shapes bottom-left of sidebar ── */
     .sb-bot-1 {
       position: absolute;
-      bottom: 34mm;
-      right: -10mm;
-      width: 36mm;
-      height: 13mm;
+      top: 265mm;
+      left: -15mm;
+      width: 50mm;
+      height: 25mm;
       background: var(--black);
-      transform: rotate(-22deg);
+      transform: rotate(-45deg);
+      transform-origin: left top;
       z-index: 1;
     }
     .sb-bot-2 {
       position: absolute;
-      bottom: 43mm;
-      right: -14mm;
-      width: 36mm;
-      height: 9mm;
+      top: 256.4mm;
+      left: -15mm;
+      width: 50mm;
+      height: 3mm;
       background: var(--black);
-      transform: rotate(-22deg);
+      transform: rotate(-45deg);
+      transform-origin: left top;
       z-index: 1;
     }
 
@@ -94,8 +120,7 @@
       transform: rotate(45deg);
       overflow: hidden;
       background: #888;
-      /* thin white/yellow border for contrast */
-      outline: 3px solid var(--yellow);
+      border: 4.5px solid var(--black);
     }
     .photo-diamond img {
       width: 100%;
@@ -151,20 +176,22 @@
       margin-bottom: 4.5mm;
     }
     .c-icon {
-      width: 8.5mm;
-      height: 8.5mm;
-      border: 1.8px solid var(--black);
+      width: 13mm;
+      height: 7.5mm;
+      background: var(--black);
+      margin-left: -7mm;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding-right: 2.5mm;
       flex-shrink: 0;
-      background: transparent;
+      clip-path: polygon(0 0, 78% 0, 100% 50%, 78% 100%, 0 100%);
     }
     .c-icon svg {
-      width: 5mm;
-      height: 5mm;
+      width: 4.2mm;
+      height: 4.2mm;
       fill: none;
-      stroke: var(--black);
+      stroke: #fff;
       stroke-width: 2;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -210,12 +237,19 @@
 
     /* ── Black diagonal header band ── */
     /* Taller on left (~38mm), shorter on right (~26mm) */
+    .main-header-accent {
+      position: absolute;
+      inset: 0;
+      background: var(--yellow);
+      clip-path: polygon(0 0, 100% 0, 100% 30mm, 0 44mm);
+      z-index: 1;
+    }
     .main-header-bg {
       position: absolute;
       inset: 0;
       background: var(--black);
       clip-path: polygon(0 0, 100% 0, 100% 26mm, 0 40mm);
-      z-index: 1;
+      z-index: 2;
     }
 
     /* Name text inside header */
@@ -249,47 +283,75 @@
       margin-top: 2mm;
     }
 
+    /* ── Decorative shapes top-right of main panel ── */
+    .main-top-yellow-1 {
+      position: absolute;
+      top: 12mm;
+      right: -15mm;
+      width: 55mm;
+      height: 5mm;
+      background: var(--yellow);
+      transform: rotate(-45deg);
+      transform-origin: right top;
+      z-index: 3;
+    }
+    .main-top-yellow-2 {
+      position: absolute;
+      top: 22.6mm;
+      right: -15mm;
+      width: 55mm;
+      height: 1.5mm;
+      background: var(--yellow);
+      transform: rotate(-45deg);
+      transform-origin: right top;
+      z-index: 3;
+    }
+
     /* ── Right-side decorative shapes ── */
     /* Mid-right pair */
     .deco-mid-1 {
       position: absolute;
-      top: 104mm;
-      right: -9mm;
-      width: 38mm;
+      top: 120mm;
+      right: -15mm;
+      width: 50mm;
       height: 14mm;
       background: var(--black);
-      transform: rotate(-22deg);
+      transform: rotate(-45deg);
+      transform-origin: right top;
       z-index: 0;
     }
     .deco-mid-2 {
       position: absolute;
-      top: 113mm;
-      right: -14mm;
-      width: 38mm;
-      height: 10mm;
+      top: 140.6mm;
+      right: -15mm;
+      width: 50mm;
+      height: 3mm;
       background: var(--black);
-      transform: rotate(-22deg);
+      transform: rotate(-45deg);
+      transform-origin: right top;
       z-index: 0;
     }
     /* Bottom-right pair */
     .deco-bot-1 {
       position: absolute;
-      bottom: 20mm;
-      right: -9mm;
-      width: 38mm;
+      top: 235mm;
+      right: -15mm;
+      width: 50mm;
       height: 14mm;
       background: var(--black);
-      transform: rotate(-22deg);
+      transform: rotate(-45deg);
+      transform-origin: right top;
       z-index: 0;
     }
     .deco-bot-2 {
       position: absolute;
-      bottom: 29mm;
-      right: -14mm;
-      width: 38mm;
-      height: 10mm;
+      top: 255.6mm;
+      right: -15mm;
+      width: 50mm;
+      height: 3mm;
       background: var(--black);
-      transform: rotate(-22deg);
+      transform: rotate(-45deg);
+      transform-origin: right top;
       z-index: 0;
     }
 
@@ -438,6 +500,8 @@
   ══════════════════════════════════ -->
   <div class="sidebar">
     <div class="sb-black-top"></div>
+    <div class="sb-top-yellow-1"></div>
+    <div class="sb-top-yellow-2"></div>
     <div class="sb-bot-1"></div>
     <div class="sb-bot-2"></div>
 
@@ -532,7 +596,10 @@
   <div class="main">
 
     <!-- Black diagonal header -->
+    <div class="main-header-accent"></div>
     <div class="main-header-bg"></div>
+    <div class="main-top-yellow-1"></div>
+    <div class="main-top-yellow-2"></div>
 
     <!-- Name + Job Title -->
     <div class="main-name">
