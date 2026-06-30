@@ -1,852 +1,1092 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CV Template 004</title>
-  <script>
-    window.cvConfig = {
-      accent: "#7c3aed",
-      sections: ["experience", "education", "skills", "software", "languages"],
-    };
-  </script>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV Template 004</title>
+    <script>
+      window.cvConfig = {
+        accent: "#7c3aed",
+        sections: [
+          "experience",
+          "education",
+          "skills",
+          "software",
+          "languages",
+        ],
+      };
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    :root {
-      --accent-color: #7c3aed;
-      --purple-darkest: color-mix(in srgb, var(--accent-color) 15%, #000 85%);
-      --purple-dark:    color-mix(in srgb, var(--accent-color) 35%, #000 65%);
-      --purple-header:  color-mix(in srgb, var(--accent-color) 45%, #000 55%);
-      --purple-mid:     color-mix(in srgb, var(--accent-color) 70%, #000 30%);
-      --purple-bright:  var(--accent-color);
-      --purple-accent:  color-mix(in srgb, var(--accent-color) 60%, #fff 40%);
-      --bar-grad-start: color-mix(in srgb, var(--accent-color) 75%, #000 25%);
-      --bar-grad-end:   color-mix(in srgb, var(--accent-color) 80%, #fff 20%);
-      --bar-bg:         color-mix(in srgb, var(--accent-color) 20%, #fff 80%);
-      --white:          #ffffff;
-      --text-dark:      #1e1e2e;
-      --text-mid:       #4b4b6b;
-      --text-light:     #7e7e9e;
-    }
+      :root {
+        --accent-color: #7c3aed;
+        --purple-darkest: color-mix(in srgb, var(--accent-color) 15%, #000 85%);
+        --purple-dark: color-mix(in srgb, var(--accent-color) 35%, #000 65%);
+        --purple-header: color-mix(in srgb, var(--accent-color) 45%, #000 55%);
+        --purple-mid: color-mix(in srgb, var(--accent-color) 70%, #000 30%);
+        --purple-bright: var(--accent-color);
+        --purple-accent: color-mix(in srgb, var(--accent-color) 60%, #fff 40%);
+        --bar-grad-start: color-mix(in srgb, var(--accent-color) 75%, #000 25%);
+        --bar-grad-end: color-mix(in srgb, var(--accent-color) 80%, #fff 20%);
+        --bar-bg: color-mix(in srgb, var(--accent-color) 20%, #fff 80%);
+        --white: #ffffff;
+        --text-dark: #1e1e2e;
+        --text-mid: #4b4b6b;
+        --text-light: #7e7e9e;
+      }
 
-    html, body {
-      width: 210mm;
-      height: 297mm;
-      max-height: 297mm;
-      overflow: hidden;
-      margin: 0;
-      font-family: 'Open Sans', sans-serif;
-      background: #fff;
-    }
+      html,
+      body {
+        width: 210mm;
+        height: 297mm;
+        max-height: 297mm;
+        overflow: hidden;
+        margin: 0;
+        font-family: "Open Sans", sans-serif;
+        background: #fff;
+      }
 
-    .page {
-      width: 210mm;
-      height: 297mm;
-      overflow: hidden;
-      background: #fff;
-      display: flex;
-      flex-direction: column;
-    }
+      .page {
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+      }
 
-    /* ══════════════════════════════════
+      /* ══════════════════════════════════
        HEADER
     ══════════════════════════════════ */
-    .header {
-      width: 100%;
-      height: 62mm;
-      flex-shrink: 0;
-      position: relative;
-      background: linear-gradient(125deg, var(--purple-darkest) 0%, var(--purple-dark) 45%, var(--purple-header) 100%);
-      display: flex;
-      align-items: center;
-      padding: 0 8mm 0 6mm;
-      gap: 6mm;
-      overflow: hidden;
-    }
+      .header {
+        width: 100%;
+        height: 62mm;
+        flex-shrink: 0;
+        position: relative;
+        background: linear-gradient(
+          125deg,
+          var(--purple-darkest) 0%,
+          var(--purple-dark) 45%,
+          var(--purple-header) 100%
+        );
+        display: flex;
+        align-items: center;
+        padding: 0 8mm 0 6mm;
+        gap: 6mm;
+        overflow: hidden;
+      }
 
-    /* subtle diagonal accent shape */
-    .header::after {
-      content: '';
-      position: absolute;
-      top: -10mm;
-      right: 25mm;
-      width: 55mm;
-      height: 90mm;
-      background: color-mix(in srgb, var(--accent-color) 18%, transparent);
-      transform: rotate(-18deg);
-      pointer-events: none;
-    }
+      /* subtle diagonal accent shape */
+      .header::after {
+        content: "";
+        position: absolute;
+        top: -10mm;
+        right: 25mm;
+        width: 55mm;
+        height: 90mm;
+        background: color-mix(in srgb, var(--accent-color) 18%, transparent);
+        transform: rotate(-18deg);
+        pointer-events: none;
+      }
 
-    .header-photo {
-      width: 51mm;
-      height: 51mm;
-      border-radius: 50%;
-      border: 3.5px solid rgba(255,255,255,0.35);
-      overflow: hidden;
-      flex-shrink: 0;
-      background: var(--bar-grad-start);
-      position: relative;
-      z-index: 2;
-    }
-    .header-photo img {
-      width: 100%; height: 100%; object-fit: cover;
-    }
-    .header-photo-placeholder {
-      width: 100%; height: 100%;
-      background: linear-gradient(135deg, var(--bar-grad-start), var(--bar-grad-end));
-      display: flex; align-items: center; justify-content: center;
-      color: #fff;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.3cm;
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
+      .header-photo {
+        width: 51mm;
+        height: 51mm;
+        border-radius: 50%;
+        border: 3.5px solid rgba(255, 255, 255, 0.35);
+        overflow: hidden;
+        flex-shrink: 0;
+        background: var(--bar-grad-start);
+        position: relative;
+        z-index: 2;
+      }
+      .header-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .header-photo-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          var(--bar-grad-start),
+          var(--bar-grad-end)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.3cm;
+        font-weight: 900;
+        letter-spacing: 1px;
+      }
 
-    .header-info {
-      flex: 1;
-      position: relative;
-      z-index: 2;
-    }
-    .header-name {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.08cm;
-      font-weight: 900;
-      color: #ffffff;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      line-height: 1.1;
-    }
-    .header-profession {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.44cm;
-      font-weight: 700;
-      color: var(--purple-accent);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-top: 2.5mm;
-      margin-bottom: 3mm;
-    }
-    .header-bio {
-      font-size: 0.37cm;
-      color: rgba(255,255,255,0.78);
-      line-height: 1.55;
-      max-width: 113mm;
-    }
+      .header-info {
+        flex: 1;
+        position: relative;
+        z-index: 2;
+      }
+      .header-name {
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.08cm;
+        font-weight: 900;
+        color: #ffffff;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        line-height: 1.1;
+      }
+      .header-profession {
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.44cm;
+        font-weight: 700;
+        color: var(--purple-accent);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-top: 2.5mm;
+        margin-bottom: 3mm;
+      }
+      .header-bio {
+        font-size: 0.37cm;
+        color: rgba(255, 255, 255, 0.78);
+        line-height: 1.55;
+        max-width: 113mm;
+      }
 
-    /* ══════════════════════════════════
+      /* ══════════════════════════════════
        BODY
     ══════════════════════════════════ */
-    .body {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
-    }
+      .body {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+      }
 
-    /* ══════════════════════════════════
+      /* ══════════════════════════════════
        LEFT SIDEBAR
     ══════════════════════════════════ */
-    .sidebar {
-      width: 70mm;
-      flex-shrink: 0;
-      background: #ffffff;
-      padding: 5mm 5mm 4mm 5mm;
-      display: flex;
-      flex-direction: column;
-      gap: 3.5mm;
-      overflow: hidden;
-    }
+      .sidebar {
+        width: 70mm;
+        flex-shrink: 0;
+        background: #ffffff;
+        padding: 5mm 5mm 4mm 5mm;
+        display: flex;
+        flex-direction: column;
+        gap: 3.5mm;
+        overflow: hidden;
+      }
 
-    .sb-section-title {
-      background: var(--purple-dark);
-      color: #fff;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.41cm;
-      font-weight: 800;
-      letter-spacing: 1.8px;
-      text-transform: uppercase;
-      padding: 2.2mm 4mm;
-      border-radius: 2px;
-      margin-bottom: 2.5mm;
-    }
+      .sb-section-title {
+        background: var(--purple-dark);
+        color: #fff;
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.41cm;
+        font-weight: 800;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+        padding: 2.2mm 4mm;
+        border-radius: 2px;
+        margin-bottom: 2.5mm;
+      }
 
-    .about-text {
-      font-size: 0.365cm;
-      color: var(--text-mid);
-      line-height: 1.55;
-      margin-bottom: 2mm;
-    }
+      .about-text {
+        font-size: 0.365cm;
+        color: var(--text-mid);
+        line-height: 1.55;
+        margin-bottom: 2mm;
+      }
 
-    /* ── Language bars ── */
-    .lang-item {
-      display: flex;
-      align-items: center;
-      gap: 2.5mm;
-      margin-bottom: 2.8mm;
-    }
-    .lang-name {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.375cm;
-      font-weight: 700;
-      color: var(--text-dark);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      width: 17mm;
-      flex-shrink: 0;
-      text-align: right;
-    }
-    .lang-bar-bg {
-      flex: 1;
-      height: 5px;
-      background: var(--bar-bg);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .lang-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--bar-grad-start), var(--bar-grad-end));
-      border-radius: 3px;
-    }
+      /* ── Language bars ── */
+      .lang-item {
+        display: flex;
+        align-items: center;
+        gap: 2.5mm;
+        margin-bottom: 2.8mm;
+      }
+      .lang-name {
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.375cm;
+        font-weight: 700;
+        color: var(--text-dark);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        width: 17mm;
+        flex-shrink: 0;
+        text-align: right;
+      }
+      .lang-bar-bg {
+        flex: 1;
+        height: 5px;
+        background: var(--bar-bg);
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      .lang-bar-fill {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--bar-grad-start),
+          var(--bar-grad-end)
+        );
+        border-radius: 3px;
+      }
 
-    /* ── Contact items ── */
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 2mm;
-      margin-bottom: 3mm;
-    }
-    .contact-icon {
-      width: 7mm;
-      height: 7mm;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .contact-icon svg {
-      width: 4.8mm; height: 4.8mm;
-      fill: none;
-      stroke: var(--purple-dark);
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .contact-icon svg.filled {
-      fill: var(--purple-dark);
-      stroke: none;
-    }
-    .contact-connector {
-      display: flex;
-      align-items: center;
-      gap: 1px;
-    }
-    .contact-dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--purple-bright);
-      flex-shrink: 0;
-    }
-    .contact-dash {
-      width: 7mm;
-      border-top: 1.5px dashed var(--purple-bright);
-    }
-    .contact-text {
-      font-size: 0.37cm;
-      color: var(--text-mid);
-    }
+      /* ── Contact items ── */
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 2mm;
+        margin-bottom: 3mm;
+      }
+      .contact-icon {
+        width: 7mm;
+        height: 7mm;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .contact-icon svg {
+        width: 4.8mm;
+        height: 4.8mm;
+        fill: none;
+        stroke: var(--purple-dark);
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .contact-icon svg.filled {
+        fill: var(--purple-dark);
+        stroke: none;
+      }
+      .contact-connector {
+        display: flex;
+        align-items: center;
+        gap: 1px;
+      }
+      .contact-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--purple-bright);
+        flex-shrink: 0;
+      }
+      .contact-dash {
+        width: 7mm;
+        border-top: 1.5px dashed var(--purple-bright);
+      }
+      .contact-text {
+        font-size: 0.37cm;
+        color: var(--text-mid);
+      }
 
-    /* ══════════════════════════════════
+      /* ══════════════════════════════════
        MAIN RIGHT PANEL
     ══════════════════════════════════ */
-    .main {
-      flex: 1;
-      padding: 4.5mm 6mm 4mm 5mm;
-      display: flex;
-      flex-direction: column;
-      gap: 2.5mm;
-      overflow: hidden;
-    }
+      .main {
+        flex: 1;
+        padding: 4.5mm 6mm 4mm 5mm;
+        display: flex;
+        flex-direction: column;
+        gap: 2.5mm;
+        overflow: hidden;
+      }
 
-    /* section header row */
-    .main-sec-hdr {
-      display: flex;
-      align-items: center;
-      gap: 3mm;
-      margin-bottom: 2mm;
-    }
-    .main-sec-icon {
-      width: 8.5mm; height: 8.5mm;
-      border-radius: 50%;
-      background: var(--purple-dark);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .main-sec-icon svg {
-      width: 4.8mm; height: 4.8mm;
-      fill: none; stroke: #fff;
-      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-    }
-    .main-sec-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.46cm;
-      font-weight: 900;
-      color: var(--text-dark);
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-    }
+      /* section header row */
+      .main-sec-hdr {
+        display: flex;
+        align-items: center;
+        gap: 3mm;
+        margin-bottom: 2mm;
+      }
+      .main-sec-icon {
+        width: 8.5mm;
+        height: 8.5mm;
+        border-radius: 50%;
+        background: var(--purple-dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .main-sec-icon svg {
+        width: 4.8mm;
+        height: 4.8mm;
+        fill: none;
+        stroke: #fff;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .main-sec-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.46cm;
+        font-weight: 900;
+        color: var(--text-dark);
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+      }
 
-    /* ── Work Experience timeline ── */
-    .tl-item {
-      display: grid;
-      grid-template-columns: 25mm 5mm 1fr;
-      column-gap: 0;
-      margin-bottom: 3mm;
-      min-height: 0;
-    }
+      /* ── Work Experience timeline ── */
+      .tl-item {
+        display: grid;
+        grid-template-columns: 25mm 5mm 1fr;
+        column-gap: 0;
+        margin-bottom: 3mm;
+        min-height: 0;
+      }
 
-    /* left: company + date */
-    .tl-left {
-      padding-right: 2mm;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-    }
-    .tl-company {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.385cm;
-      font-weight: 800;
-      color: var(--text-dark);
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-      line-height: 1.2;
-    }
-    .tl-date {
-      font-size: 0.36cm;
-      color: var(--purple-mid);
-      font-weight: 600;
-      margin-top: 0.5mm;
-    }
+      /* left: company + date */
+      .tl-left {
+        padding-right: 2mm;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+      .tl-company {
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.385cm;
+        font-weight: 800;
+        color: var(--text-dark);
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        line-height: 1.2;
+      }
+      .tl-date {
+        font-size: 0.36cm;
+        color: var(--purple-mid);
+        font-weight: 600;
+        margin-top: 0.5mm;
+      }
 
-    /* center: dot + dashed line */
-    .tl-mid {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 1mm;
-    }
-    .tl-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--purple-bright);
-      flex-shrink: 0;
-    }
-    .tl-vline {
-      flex: 1;
-      width: 1.5px;
-      background: repeating-linear-gradient(
-        to bottom,
-        var(--purple-bright) 0px, var(--purple-bright) 3px,
-        transparent 3px, transparent 7px
-      );
-      min-height: 8mm;
-    }
+      /* center: dot + dashed line */
+      .tl-mid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 1mm;
+      }
+      .tl-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--purple-bright);
+        flex-shrink: 0;
+      }
+      .tl-vline {
+        flex: 1;
+        width: 1.5px;
+        background: repeating-linear-gradient(
+          to bottom,
+          var(--purple-bright) 0px,
+          var(--purple-bright) 3px,
+          transparent 3px,
+          transparent 7px
+        );
+        min-height: 8mm;
+      }
 
-    /* right: job + description */
-    .tl-right {
-      padding-left: 3mm;
-      border-left: 1.5px solid var(--bar-bg);
-    }
-    .tl-job {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.40cm;
-      font-weight: 800;
-      color: var(--text-dark);
-      margin-bottom: 1mm;
-    }
-    .tl-desc {
-      font-size: 0.355cm;
-      color: var(--text-light);
-      line-height: 1.45;
-    }
+      /* right: job + description */
+      .tl-right {
+        padding-left: 3mm;
+        border-left: 1.5px solid var(--bar-bg);
+      }
+      .tl-job {
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.4cm;
+        font-weight: 800;
+        color: var(--text-dark);
+        margin-bottom: 1mm;
+      }
+      .tl-desc {
+        font-size: 0.355cm;
+        color: var(--text-light);
+        line-height: 1.45;
+      }
 
-    /* ── Education ── */
-    .edu-item {
-      display: grid;
-      grid-template-columns: 25mm 5mm 1fr;
-      column-gap: 0;
-      margin-bottom: 3mm;
-    }
-    .edu-left {
-      padding-right: 2mm;
-    }
-    .edu-uni {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.385cm;
-      font-weight: 800;
-      color: var(--text-dark);
-      text-transform: uppercase;
-      letter-spacing: 0.2px;
-      line-height: 1.2;
-    }
-    .edu-year {
-      font-size: 0.385cm;
-      font-weight: 700;
-      color: var(--text-dark);
-    }
-    .edu-mid {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 1mm;
-    }
-    .edu-right {
-      padding-left: 3mm;
-      border-left: 1.5px solid var(--bar-bg);
-    }
-    .edu-degree-lbl {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.37cm;
-      font-weight: 600;
-      color: var(--text-light);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 1mm;
-    }
-    .edu-desc {
-      font-size: 0.355cm;
-      color: var(--text-light);
-      line-height: 1.45;
-    }
+      /* ── Education ── */
+      .edu-item {
+        display: grid;
+        grid-template-columns: 25mm 5mm 1fr;
+        column-gap: 0;
+        margin-bottom: 3mm;
+      }
+      .edu-left {
+        padding-right: 2mm;
+      }
+      .edu-uni {
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.385cm;
+        font-weight: 800;
+        color: var(--text-dark);
+        text-transform: uppercase;
+        letter-spacing: 0.2px;
+        line-height: 1.2;
+      }
+      .edu-year {
+        font-size: 0.385cm;
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+      .edu-mid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 1mm;
+      }
+      .edu-right {
+        padding-left: 3mm;
+        border-left: 1.5px solid var(--bar-bg);
+      }
+      .edu-degree-lbl {
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.37cm;
+        font-weight: 600;
+        color: var(--text-light);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1mm;
+      }
+      .edu-location {
+        font-size: 0.36cm;
+        font-weight: 700;
+        color: var(--purple-mid);
+        margin-bottom: 1mm;
+      }
+      .edu-desc {
+        font-size: 0.355cm;
+        color: var(--text-light);
+        line-height: 1.45;
+      }
 
-    /* ── Skills + Software two-column ── */
-    .skills-row {
-      display: grid;
-      grid-template-columns: 1fr 1.5px 1fr;
-      column-gap: 4mm;
-      margin-top: 1mm;
-    }
-    .skills-divider-line {
-      background: var(--bar-bg);
-      width: 1.5px;
-    }
+      /* ── Skills + Software two-column ── */
+      .skills-row {
+        display: grid;
+        grid-template-columns: 1fr 1.5px 1fr;
+        column-gap: 4mm;
+        margin-top: 1mm;
+      }
+      .skills-divider-line {
+        background: var(--bar-bg);
+        width: 1.5px;
+      }
 
-    .sk-sec-hdr {
-      display: flex;
-      align-items: center;
-      gap: 2mm;
-      margin-bottom: 2.5mm;
-    }
-    .sk-sec-icon {
-      width: 7.5mm; height: 7.5mm;
-      border-radius: 50%;
-      background: var(--purple-dark);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .sk-sec-icon svg {
-      width: 4mm; height: 4mm;
-      fill: none; stroke: #fff;
-      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-    }
-    .sk-sec-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.44cm;
-      font-weight: 900;
-      color: var(--text-dark);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .sk-sec-line {
-      flex: 1;
-      height: 1.5px;
-      background: var(--bar-bg);
-    }
+      .sk-sec-hdr {
+        display: flex;
+        align-items: center;
+        gap: 2mm;
+        margin-bottom: 2.5mm;
+      }
+      .sk-sec-icon {
+        width: 7.5mm;
+        height: 7.5mm;
+        border-radius: 50%;
+        background: var(--purple-dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .sk-sec-icon svg {
+        width: 4mm;
+        height: 4mm;
+        fill: none;
+        stroke: #fff;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .sk-sec-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.44cm;
+        font-weight: 900;
+        color: var(--text-dark);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .sk-sec-line {
+        flex: 1;
+        height: 1.5px;
+        background: var(--bar-bg);
+      }
 
-    .sk-item {
-      display: flex;
-      align-items: center;
-      gap: 2.5mm;
-      margin-bottom: 2.5mm;
-    }
-    .sk-name {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.36cm;
-      font-weight: 600;
-      color: var(--text-light);
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      width: 32mm;
-      flex-shrink: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .sk-bar-bg {
-      flex: 1;
-      height: 5px;
-      background: var(--bar-bg);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .sk-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--bar-grad-start), var(--bar-grad-end));
-      border-radius: 3px;
-    }
-  </style>
-</head>
-<body>
-<div class="page">
-
-  <!-- ══════════════════════════════════
+      .sk-item {
+        display: flex;
+        align-items: center;
+        gap: 2.5mm;
+        margin-bottom: 2.5mm;
+      }
+      .sk-name {
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.36cm;
+        font-weight: 600;
+        color: var(--text-light);
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        width: 32mm;
+        flex-shrink: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .sk-bar-bg {
+        flex: 1;
+        height: 5px;
+        background: var(--bar-bg);
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      .sk-bar-fill {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--bar-grad-start),
+          var(--bar-grad-end)
+        );
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- ══════════════════════════════════
        HEADER
   ══════════════════════════════════ -->
-  <div class="header">
-    <div class="header-photo">
-      {{#photo}}
-      <img src="{{photo}}" alt="Profile Photo" />
-      {{/photo}}{{^photo}}
-      <div class="header-photo-placeholder">{{firstName.0}}{{lastName.0}}</div>
-      {{/photo}}
-    </div>
-    <div class="header-info">
-      <div class="header-name">{{firstName}} {{lastName}}</div>
-      <div class="header-profession">{{jobTitle}}</div>
-      <div class="header-bio">{{summary}}</div>
-    </div>
-  </div>
+      <div class="header">
+        <div class="header-photo">
+          {{#photo}}
+          <img src="{{photo}}" alt="Profile Photo" />
+          {{/photo}}{{^photo}}
+          <div class="header-photo-placeholder">
+            {{firstName.0}}{{lastName.0}}
+          </div>
+          {{/photo}}
+        </div>
+        <div class="header-info">
+          <div class="header-name">{{firstName}} {{lastName}}</div>
+          <div class="header-profession">{{jobTitle}}</div>
+          <div class="header-bio">{{summary}}</div>
+        </div>
+      </div>
 
-  <!-- ══════════════════════════════════
+      <!-- ══════════════════════════════════
        BODY
   ══════════════════════════════════ -->
-  <div class="body">
-
-    <!-- ══════════════════════════════════
+      <div class="body">
+        <!-- ══════════════════════════════════
          LEFT SIDEBAR
     ══════════════════════════════════ -->
-    <div class="sidebar">
+        <div class="sidebar">
+          <!-- About Me -->
+          <div>
+            <div class="sb-section-title">About Me</div>
+            {{#aboutMe}}
+            <p class="about-text">{{.}}</p>
+            {{/aboutMe}}{{^aboutMe}}
+            <p class="about-text">
+              Creative and detail-oriented Product Designer with 7+ years of
+              experience crafting user-centric digital experiences. Passionate
+              about design systems, accessibility, and cross-functional
+              collaboration.
+            </p>
+            <p class="about-text" style="margin-top: 2.5mm">
+              Proven track record of scaling SaaS platforms, conducting deep
+              user research, and bridging the gap between engineering and design
+              to deliver intuitive, high-impact products that drive measurable
+              business growth.
+            </p>
+            {{/aboutMe}}
+          </div>
 
-      <!-- About Me -->
-      <div>
-        <div class="sb-section-title">About Me</div>
-        {{#aboutMe}}
-        <p class="about-text">{{.}}</p>
-        {{/aboutMe}}{{^aboutMe}}
-        <p class="about-text">Creative and detail-oriented Product Designer with 7+ years of experience crafting user-centric digital experiences. Passionate about design systems, accessibility, and cross-functional collaboration.</p>
-        <p class="about-text" style="margin-top:2.5mm">Proven track record of scaling SaaS platforms, conducting deep user research, and bridging the gap between engineering and design to deliver intuitive, high-impact products that drive measurable business growth.</p>
-        {{/aboutMe}}
-      </div>
+          <!-- Languages -->
+          <div>
+            <div class="sb-section-title">Languages</div>
+            {{#languages}}
+            <div class="lang-item">
+              <div class="lang-name">{{name}}</div>
+              <div class="lang-bar-bg">
+                <div class="lang-bar-fill" data-level="{{level}}"></div>
+              </div>
+            </div>
+            {{/languages}} {{^languages}}
+            <div class="lang-item">
+              <div class="lang-name">English</div>
+              <div class="lang-bar-bg">
+                <div class="lang-bar-fill" style="width: 85%"></div>
+              </div>
+            </div>
+            <div class="lang-item">
+              <div class="lang-name">Spanish</div>
+              <div class="lang-bar-bg">
+                <div class="lang-bar-fill" style="width: 55%"></div>
+              </div>
+            </div>
+            <div class="lang-item">
+              <div class="lang-name">Chinese</div>
+              <div class="lang-bar-bg">
+                <div class="lang-bar-fill" style="width: 30%"></div>
+              </div>
+            </div>
+            {{/languages}}
+          </div>
 
-      <!-- Languages -->
-      <div>
-        <div class="sb-section-title">Languages</div>
-        {{#languages}}
-        <div class="lang-item">
-          <div class="lang-name">{{name}}</div>
-          <div class="lang-bar-bg">
-            <div class="lang-bar-fill" data-level="{{level}}"></div>
-          </div>
-        </div>
-        {{/languages}}
-        {{^languages}}
-        <div class="lang-item">
-          <div class="lang-name">English</div>
-          <div class="lang-bar-bg"><div class="lang-bar-fill" style="width:85%"></div></div>
-        </div>
-        <div class="lang-item">
-          <div class="lang-name">Spanish</div>
-          <div class="lang-bar-bg"><div class="lang-bar-fill" style="width:55%"></div></div>
-        </div>
-        <div class="lang-item">
-          <div class="lang-name">Chinese</div>
-          <div class="lang-bar-bg"><div class="lang-bar-fill" style="width:30%"></div></div>
-        </div>
-        {{/languages}}
-      </div>
+          <!-- Contact Info -->
+          <div>
+            <div class="sb-section-title">Contact Info</div>
 
-      <!-- Contact Info -->
-      <div>
-        <div class="sb-section-title">Contact Info</div>
+            {{#phone}}
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"
+                  />
+                </svg>
+              </div>
+              <div class="contact-connector">
+                <div class="contact-dot"></div>
+                <div class="contact-dash"></div>
+              </div>
+              <div class="contact-text">{{phone}}</div>
+            </div>
+            {{/phone}} {{#email}}
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24">
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="M2 8l10 6 10-6" />
+                </svg>
+              </div>
+              <div class="contact-connector">
+                <div class="contact-dot"></div>
+                <div class="contact-dash"></div>
+              </div>
+              <div class="contact-text">{{email}}</div>
+            </div>
+            {{/email}} {{#location}}
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  />
+                  <circle
+                    cx="12"
+                    cy="9"
+                    r="2.5"
+                    stroke="#fff"
+                    stroke-width="1.5"
+                    fill="var(--purple-dark)"
+                  />
+                </svg>
+              </div>
+              <div class="contact-connector">
+                <div class="contact-dot"></div>
+                <div class="contact-dash"></div>
+              </div>
+              <div class="contact-text">{{location}}</div>
+            </div>
+            {{/location}} {{#linkedin}}
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg class="filled" viewBox="0 0 24 24">
+                  <path
+                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"
+                  />
+                  <circle cx="4" cy="4" r="2" />
+                </svg>
+              </div>
+              <div class="contact-connector">
+                <div class="contact-dot"></div>
+                <div class="contact-dash"></div>
+              </div>
+              <div class="contact-text">{{linkedin}}</div>
+            </div>
+            {{/linkedin}}
 
-        {{#phone}}
-        <div class="contact-item">
-          <div class="contact-icon">
-            <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+            <!-- default placeholders when no data -->
+            {{^phone}}{{^email}}{{^location}}{{^linkedin}}
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"
+                  />
+                </svg>
+              </div>
+              <div class="contact-connector">
+                <div class="contact-dot"></div>
+                <div class="contact-dash"></div>
+              </div>
+              <div class="contact-text">+00 000 000 00 00</div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24">
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="M2 8l10 6 10-6" />
+                </svg>
+              </div>
+              <div class="contact-connector">
+                <div class="contact-dot"></div>
+                <div class="contact-dash"></div>
+              </div>
+              <div class="contact-text">contact@email.com</div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  />
+                  <circle
+                    cx="12"
+                    cy="9"
+                    r="2.5"
+                    stroke="#fff"
+                    stroke-width="1.5"
+                    fill="var(--purple-dark)"
+                  />
+                </svg>
+              </div>
+              <div class="contact-connector">
+                <div class="contact-dot"></div>
+                <div class="contact-dash"></div>
+              </div>
+              <div class="contact-text">City, Country</div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg class="filled" viewBox="0 0 24 24">
+                  <path
+                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"
+                  />
+                  <circle cx="4" cy="4" r="2" />
+                </svg>
+              </div>
+              <div class="contact-connector">
+                <div class="contact-dot"></div>
+                <div class="contact-dash"></div>
+              </div>
+              <div class="contact-text">yourname</div>
+            </div>
+            {{/linkedin}}{{/location}}{{/email}}{{/phone}}
           </div>
-          <div class="contact-connector">
-            <div class="contact-dot"></div>
-            <div class="contact-dash"></div>
-          </div>
-          <div class="contact-text">{{phone}}</div>
         </div>
-        {{/phone}}
+        <!-- end sidebar -->
 
-        {{#email}}
-        <div class="contact-item">
-          <div class="contact-icon">
-            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 6 10-6"/></svg>
-          </div>
-          <div class="contact-connector">
-            <div class="contact-dot"></div>
-            <div class="contact-dash"></div>
-          </div>
-          <div class="contact-text">{{email}}</div>
-        </div>
-        {{/email}}
-
-        {{#location}}
-        <div class="contact-item">
-          <div class="contact-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5" stroke="#fff" stroke-width="1.5" fill="var(--purple-dark)"/></svg>
-          </div>
-          <div class="contact-connector">
-            <div class="contact-dot"></div>
-            <div class="contact-dash"></div>
-          </div>
-          <div class="contact-text">{{location}}</div>
-        </div>
-        {{/location}}
-
-        {{#linkedin}}
-        <div class="contact-item">
-          <div class="contact-icon">
-            <svg class="filled" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-          </div>
-          <div class="contact-connector">
-            <div class="contact-dot"></div>
-            <div class="contact-dash"></div>
-          </div>
-          <div class="contact-text">{{linkedin}}</div>
-        </div>
-        {{/linkedin}}
-
-        <!-- default placeholders when no data -->
-        {{^phone}}{{^email}}{{^location}}{{^linkedin}}
-        <div class="contact-item">
-          <div class="contact-icon">
-            <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
-          </div>
-          <div class="contact-connector"><div class="contact-dot"></div><div class="contact-dash"></div></div>
-          <div class="contact-text">+00 000 000 00 00</div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">
-            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 6 10-6"/></svg>
-          </div>
-          <div class="contact-connector"><div class="contact-dot"></div><div class="contact-dash"></div></div>
-          <div class="contact-text">contact@email.com</div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5" stroke="#fff" stroke-width="1.5" fill="var(--purple-dark)"/></svg>
-          </div>
-          <div class="contact-connector"><div class="contact-dot"></div><div class="contact-dash"></div></div>
-          <div class="contact-text">City, Country</div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">
-            <svg class="filled" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-          </div>
-          <div class="contact-connector"><div class="contact-dot"></div><div class="contact-dash"></div></div>
-          <div class="contact-text">yourname</div>
-        </div>
-        {{/linkedin}}{{/location}}{{/email}}{{/phone}}
-      </div>
-
-    </div><!-- end sidebar -->
-
-    <!-- ══════════════════════════════════
+        <!-- ══════════════════════════════════
          MAIN RIGHT PANEL
     ══════════════════════════════════ -->
-    <div class="main">
-
-      <!-- Work Experience -->
-      <div>
-        <div class="main-sec-hdr">
-          <div class="main-sec-icon">
-            <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
-          </div>
-          <div class="main-sec-title">Work Experience</div>
-        </div>
-
-        {{#experience}}
-        <div class="tl-item">
-          <div class="tl-left">
-            <div class="tl-company">{{company}}</div>
-            <div class="tl-date">{{startDate}}{{#endDate}} - {{endDate}}{{/endDate}}</div>
-          </div>
-          <div class="tl-mid">
-            <div class="tl-dot"></div>
-            <div class="tl-vline"></div>
-          </div>
-          <div class="tl-right">
-            <div class="tl-job">{{role}}</div>
-            <div class="tl-desc">{{description}}</div>
-          </div>
-        </div>
-        {{/experience}}
-
-        {{^experience}}
-        <div class="tl-item">
-          <div class="tl-left">
-            <div class="tl-company">Company 1</div>
-            <div class="tl-date">2017 - 2020</div>
-          </div>
-          <div class="tl-mid"><div class="tl-dot"></div><div class="tl-vline"></div></div>
-          <div class="tl-right">
-            <div class="tl-job">Job Position</div>
-            <div class="tl-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-left">
-            <div class="tl-company">Company 2</div>
-            <div class="tl-date">2014 - 2017</div>
-          </div>
-          <div class="tl-mid"><div class="tl-dot"></div><div class="tl-vline"></div></div>
-          <div class="tl-right">
-            <div class="tl-job">Job Position</div>
-            <div class="tl-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-left">
-            <div class="tl-company">Company 3</div>
-            <div class="tl-date">2011 - 2014</div>
-          </div>
-          <div class="tl-mid"><div class="tl-dot"></div><div class="tl-vline"></div></div>
-          <div class="tl-right">
-            <div class="tl-job">Job Position</div>
-            <div class="tl-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat</div>
-          </div>
-        </div>
-        {{/experience}}
-      </div>
-
-      <!-- Education -->
-      <div>
-        <div class="main-sec-hdr">
-          <div class="main-sec-icon">
-            <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3.33 1.67 6.67 1.67 10 0v-5"/></svg>
-          </div>
-          <div class="main-sec-title">Education</div>
-        </div>
-
-        {{#education}}
-        <div class="edu-item">
-          <div class="edu-left">
-            <div class="edu-uni">{{school}}</div>
-            <div class="edu-year">{{year}}</div>
-          </div>
-          <div class="edu-mid">
-            <div class="tl-dot"></div>
-            <div class="tl-vline"></div>
-          </div>
-          <div class="edu-right">
-            <div class="edu-degree-lbl">{{degree}}</div>
-            <div class="edu-desc">{{detail}}</div>
-          </div>
-        </div>
-        {{/education}}
-
-        {{^education}}
-        <div class="edu-item">
-          <div class="edu-left">
-            <div class="edu-uni">University Name</div>
-            <div class="edu-year">2015 - 2020</div>
-          </div>
-          <div class="edu-mid"><div class="tl-dot"></div><div class="tl-vline"></div></div>
-          <div class="edu-right">
-            <div class="edu-degree-lbl">Degree</div>
-            <div class="edu-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod</div>
-          </div>
-        </div>
-        <div class="edu-item">
-          <div class="edu-left">
-            <div class="edu-uni">University Name</div>
-            <div class="edu-year">2010 - 2015</div>
-          </div>
-          <div class="edu-mid"><div class="tl-dot"></div><div class="tl-vline"></div></div>
-          <div class="edu-right">
-            <div class="edu-degree-lbl">Degree</div>
-            <div class="edu-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod</div>
-          </div>
-        </div>
-        {{/education}}
-      </div>
-
-      <!-- Skills + Software -->
-      <div class="skills-row">
-
-        <!-- Skills column -->
-        <div>
-          <div class="sk-sec-hdr">
-            <div class="sk-sec-icon">
-              <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <div class="main">
+          <!-- Work Experience -->
+          <div>
+            <div class="main-sec-hdr">
+              <div class="main-sec-icon">
+                <svg viewBox="0 0 24 24">
+                  <rect x="2" y="7" width="20" height="14" rx="2" />
+                  <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+                </svg>
+              </div>
+              <div class="main-sec-title">Work Experience</div>
             </div>
-            <div class="sk-sec-title">Skills</div>
-            <div class="sk-sec-line"></div>
-          </div>
-          {{#skills}}
-          <div class="sk-item">
-            <div class="sk-name">{{name}}</div>
-            <div class="sk-bar-bg"><div class="sk-bar-fill" data-level="{{level}}"></div></div>
-          </div>
-          {{/skills}}
-          {{^skills}}
-          <div class="sk-item"><div class="sk-name">Your Title</div><div class="sk-bar-bg"><div class="sk-bar-fill" style="width:80%"></div></div></div>
-          <div class="sk-item"><div class="sk-name">Your Title</div><div class="sk-bar-bg"><div class="sk-bar-fill" style="width:60%"></div></div></div>
-          <div class="sk-item"><div class="sk-name">Your Title</div><div class="sk-bar-bg"><div class="sk-bar-fill" style="width:70%"></div></div></div>
-          <div class="sk-item"><div class="sk-name">Your Title</div><div class="sk-bar-bg"><div class="sk-bar-fill" style="width:50%"></div></div></div>
-          <div class="sk-item"><div class="sk-name">Your Title</div><div class="sk-bar-bg"><div class="sk-bar-fill" style="width:40%"></div></div></div>
-          {{/skills}}
-        </div>
 
-        <div class="skills-divider-line"></div>
-
-        <!-- Software column -->
-        <div>
-          <div class="sk-sec-hdr">
-            <div class="sk-sec-icon">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            {{#experience}}
+            <div class="tl-item">
+              <div class="tl-left">
+                <div class="tl-company">{{company}}</div>
+                <div class="tl-date">
+                  {{startDate}}{{#endDate}} - {{endDate}}{{/endDate}}
+                </div>
+              </div>
+              <div class="tl-mid">
+                <div class="tl-dot"></div>
+                <div class="tl-vline"></div>
+              </div>
+              <div class="tl-right">
+                <div class="tl-job">{{role}}</div>
+                <div class="tl-desc">{{description}}</div>
+              </div>
             </div>
-            <div class="sk-sec-title">Software</div>
-            <div class="sk-sec-line"></div>
+            {{/experience}} {{^experience}}
+            <div class="tl-item">
+              <div class="tl-left">
+                <div class="tl-company">Company 1</div>
+                <div class="tl-date">2017 - 2020</div>
+              </div>
+              <div class="tl-mid">
+                <div class="tl-dot"></div>
+                <div class="tl-vline"></div>
+              </div>
+              <div class="tl-right">
+                <div class="tl-job">Job Position</div>
+                <div class="tl-desc">
+                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
+                  diam nonummy nibh euismod tincidunt ut laoreet dolore magna
+                  aliquam erat
+                </div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-left">
+                <div class="tl-company">Company 2</div>
+                <div class="tl-date">2014 - 2017</div>
+              </div>
+              <div class="tl-mid">
+                <div class="tl-dot"></div>
+                <div class="tl-vline"></div>
+              </div>
+              <div class="tl-right">
+                <div class="tl-job">Job Position</div>
+                <div class="tl-desc">
+                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
+                  diam nonummy nibh euismod tincidunt ut laoreet dolore magna
+                  aliquam erat
+                </div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-left">
+                <div class="tl-company">Company 3</div>
+                <div class="tl-date">2011 - 2014</div>
+              </div>
+              <div class="tl-mid">
+                <div class="tl-dot"></div>
+                <div class="tl-vline"></div>
+              </div>
+              <div class="tl-right">
+                <div class="tl-job">Job Position</div>
+                <div class="tl-desc">
+                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
+                  diam nonummy nibh euismod tincidunt ut laoreet dolore magna
+                  aliquam erat
+                </div>
+              </div>
+            </div>
+            {{/experience}}
           </div>
-          {{#software}}
-          <div class="sk-item">
-            <div class="sk-name">{{name}}</div>
-            <div class="sk-bar-bg"><div class="sk-bar-fill" data-level="{{level}}"></div></div>
+
+          <!-- Education -->
+          <div>
+            <div class="main-sec-hdr">
+              <div class="main-sec-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z" />
+                  <path d="M6 12v5c3.33 1.67 6.67 1.67 10 0v-5" />
+                </svg>
+              </div>
+              <div class="main-sec-title">Education</div>
+            </div>
+
+            {{#education}}
+            <div class="edu-item">
+              <div class="edu-left">
+                <div class="edu-uni">{{school}}</div>
+                <div class="edu-year">{{year}}</div>
+              </div>
+              <div class="edu-mid">
+                <div class="tl-dot"></div>
+                <div class="tl-vline"></div>
+              </div>
+              <div class="edu-right">
+                <div class="edu-degree-lbl">{{degree}}</div>
+                {{#location}}
+                <div class="edu-location">{{location}}</div>
+                {{/location}}
+                <div class="edu-desc">{{detail}}</div>
+              </div>
+            </div>
+            {{/education}} {{^education}}
+            <div class="edu-item">
+              <div class="edu-left">
+                <div class="edu-uni">University Name</div>
+                <div class="edu-year">2015 - 2020</div>
+              </div>
+              <div class="edu-mid">
+                <div class="tl-dot"></div>
+                <div class="tl-vline"></div>
+              </div>
+              <div class="edu-right">
+                <div class="edu-degree-lbl">Degree</div>
+                <div class="edu-location">Location</div>
+                <div class="edu-desc">
+                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
+                  diam nonummy nibh euismod
+                </div>
+              </div>
+            </div>
+            <div class="edu-item">
+              <div class="edu-left">
+                <div class="edu-uni">University Name</div>
+                <div class="edu-year">2010 - 2015</div>
+              </div>
+              <div class="edu-mid">
+                <div class="tl-dot"></div>
+                <div class="tl-vline"></div>
+              </div>
+              <div class="edu-right">
+                <div class="edu-degree-lbl">Degree</div>
+                <div class="edu-location">Location</div>
+                <div class="edu-desc">
+                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
+                  diam nonummy nibh euismod
+                </div>
+              </div>
+            </div>
+            {{/education}}
           </div>
-          {{/software}}
-          {{^software}}
-          <div class="sk-item"><div class="sk-name">Your Title</div><div class="sk-bar-bg"><div class="sk-bar-fill" style="width:75%"></div></div></div>
-          <div class="sk-item"><div class="sk-name">Your Title</div><div class="sk-bar-bg"><div class="sk-bar-fill" style="width:65%"></div></div></div>
-          <div class="sk-item"><div class="sk-name">Your Title</div><div class="sk-bar-bg"><div class="sk-bar-fill" style="width:90%"></div></div></div>
-          <div class="sk-item"><div class="sk-name">Your Title</div><div class="sk-bar-bg"><div class="sk-bar-fill" style="width:45%"></div></div></div>
-          <div class="sk-item"><div class="sk-name">Your Title</div><div class="sk-bar-bg"><div class="sk-bar-fill" style="width:55%"></div></div></div>
-          {{/software}}
+
+          <!-- Skills + Software -->
+          <div class="skills-row">
+            <!-- Skills column -->
+            <div>
+              <div class="sk-sec-hdr">
+                <div class="sk-sec-icon">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 20h9" />
+                    <path
+                      d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+                    />
+                  </svg>
+                </div>
+                <div class="sk-sec-title">Skills</div>
+                <div class="sk-sec-line"></div>
+              </div>
+              {{#skills}}
+              <div class="sk-item">
+                <div class="sk-name">{{name}}</div>
+                <div class="sk-bar-bg">
+                  <div class="sk-bar-fill" data-level="{{level}}"></div>
+                </div>
+              </div>
+              {{/skills}} {{^skills}}
+              <div class="sk-item">
+                <div class="sk-name">Your Title</div>
+                <div class="sk-bar-bg">
+                  <div class="sk-bar-fill" style="width: 80%"></div>
+                </div>
+              </div>
+              <div class="sk-item">
+                <div class="sk-name">Your Title</div>
+                <div class="sk-bar-bg">
+                  <div class="sk-bar-fill" style="width: 60%"></div>
+                </div>
+              </div>
+              <div class="sk-item">
+                <div class="sk-name">Your Title</div>
+                <div class="sk-bar-bg">
+                  <div class="sk-bar-fill" style="width: 70%"></div>
+                </div>
+              </div>
+              <div class="sk-item">
+                <div class="sk-name">Your Title</div>
+                <div class="sk-bar-bg">
+                  <div class="sk-bar-fill" style="width: 50%"></div>
+                </div>
+              </div>
+              <div class="sk-item">
+                <div class="sk-name">Your Title</div>
+                <div class="sk-bar-bg">
+                  <div class="sk-bar-fill" style="width: 40%"></div>
+                </div>
+              </div>
+              {{/skills}}
+            </div>
+
+            <div class="skills-divider-line"></div>
+
+            <!-- Software column -->
+            <div>
+              <div class="sk-sec-hdr">
+                <div class="sk-sec-icon">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="3" />
+                    <path
+                      d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
+                    />
+                  </svg>
+                </div>
+                <div class="sk-sec-title">Software</div>
+                <div class="sk-sec-line"></div>
+              </div>
+              {{#software}}
+              <div class="sk-item">
+                <div class="sk-name">{{name}}</div>
+                <div class="sk-bar-bg">
+                  <div class="sk-bar-fill" data-level="{{level}}"></div>
+                </div>
+              </div>
+              {{/software}} {{^software}}
+              <div class="sk-item">
+                <div class="sk-name">Your Title</div>
+                <div class="sk-bar-bg">
+                  <div class="sk-bar-fill" style="width: 75%"></div>
+                </div>
+              </div>
+              <div class="sk-item">
+                <div class="sk-name">Your Title</div>
+                <div class="sk-bar-bg">
+                  <div class="sk-bar-fill" style="width: 65%"></div>
+                </div>
+              </div>
+              <div class="sk-item">
+                <div class="sk-name">Your Title</div>
+                <div class="sk-bar-bg">
+                  <div class="sk-bar-fill" style="width: 90%"></div>
+                </div>
+              </div>
+              <div class="sk-item">
+                <div class="sk-name">Your Title</div>
+                <div class="sk-bar-bg">
+                  <div class="sk-bar-fill" style="width: 45%"></div>
+                </div>
+              </div>
+              <div class="sk-item">
+                <div class="sk-name">Your Title</div>
+                <div class="sk-bar-bg">
+                  <div class="sk-bar-fill" style="width: 55%"></div>
+                </div>
+              </div>
+              {{/software}}
+            </div>
+          </div>
+          <!-- end skills-row -->
         </div>
+        <!-- end main -->
+      </div>
+      <!-- end body -->
+    </div>
+    <!-- end page -->
 
-      </div><!-- end skills-row -->
-
-    </div><!-- end main -->
-  </div><!-- end body -->
-</div><!-- end page -->
-
-<script>
-  if (window.cvConfig && window.cvConfig.accent) {
-    document.documentElement.style.setProperty('--accent-color', window.cvConfig.accent);
-  }
-  document.querySelectorAll('.sk-bar-fill[data-level], .lang-bar-fill[data-level]').forEach(function(el) {
-    var lvl = parseFloat(el.getAttribute('data-level') || '0');
-    if (el.classList.contains('lang-bar-fill') && lvl <= 5) {
-      el.style.width = (lvl * 20) + '%';
-    } else {
-      el.style.width = lvl + '%';
-    }
-  });
-</script>
-</body>
+    <script>
+      if (window.cvConfig && window.cvConfig.accent) {
+        document.documentElement.style.setProperty(
+          "--accent-color",
+          window.cvConfig.accent,
+        );
+      }
+      document
+        .querySelectorAll(
+          ".sk-bar-fill[data-level], .lang-bar-fill[data-level]",
+        )
+        .forEach(function (el) {
+          var lvl = parseFloat(el.getAttribute("data-level") || "0");
+          if (el.classList.contains("lang-bar-fill") && lvl <= 5) {
+            el.style.width = lvl * 20 + "%";
+          } else {
+            el.style.width = lvl + "%";
+          }
+        });
+    </script>
+  </body>
 </html>
