@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV Template 006</title>
+    <script>
+      window.cvConfig = {
+        accent: "#5bc8d8",
+        sections: ["profile", "experience", "education", "skills", "contact"],
+      };
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --accent: var(--accent-color, #5bc8d8);
+        --accent-dark: #3aabb8;
+        --bg: #f4f2ef;
+        --white: #ffffff;
+        --text: #1a1a1a;
+        --muted: #444444;
+        --light: #777777;
+      }
+
+      html,
+      body {
+        width: 210mm;
+        height: 297mm;
+        max-height: 297mm;
+        overflow: hidden;
+        margin: 0;
+        font-family: "Open Sans", sans-serif;
+        background: var(--bg);
+      }
+
+      .page {
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg);
+      }
+
+      /* ═══════════════════════════════════
+         HEADER — name left, photo right
+      ═══════════════════════════════════ */
+      .header {
+        background: var(--bg);
+        display: flex;
+        align-items: flex-end;
+        padding: 7mm 8mm 5mm 8mm;
+        gap: 5mm;
+        flex-shrink: 0;
+        border-bottom: 1px solid #ddd8d0;
+      }
+
+      .header-name-block {
+        flex: 1;
+      }
+
+      .hero-name {
+        font-family: "Playfair Display", serif;
+        font-size: 1.15cm;
+        font-weight: 400;
+        color: var(--text);
+        line-height: 1.1;
+        letter-spacing: -0.5px;
+      }
+
+      .hero-jobtitle {
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.42cm;
+        font-weight: 400;
+        font-style: italic;
+        color: var(--accent-dark);
+        margin-top: 2.5mm;
+        letter-spacing: 0.3px;
+      }
+
+      /* Circular photo */
+      .header-photo {
+        width: 46mm;
+        height: 46mm;
+        border-radius: 50%;
+        border: 2.5px solid #555;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: #c0bab5;
+        align-self: flex-start;
+      }
+
+      .header-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .header-photo-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 1.3cm;
+        font-weight: 700;
+        font-family: "Playfair Display", serif;
+      }
+
+      /* ═══════════════════════════════════
+         BODY — two columns
+      ═══════════════════════════════════ */
+      .body {
+        flex: 1;
+        display: flex;
+        overflow: hidden;
+      }
+
+      /* ── LEFT (75mm) ── */
+      .left-col {
+        width: 75mm;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      /* Top part of left — cream bg */
+      .left-top {
+        background: var(--bg);
+        padding: 5mm 7mm 5mm 8mm;
+        flex-shrink: 0;
+      }
+
+      .contact-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5mm;
+        margin-bottom: 2.5mm;
+      }
+
+      .contact-key {
+        font-size: 0.37cm;
+        font-weight: 700;
+        color: var(--text);
+        flex-shrink: 0;
+        min-width: 8mm;
+      }
+
+      .contact-val {
+        font-size: 0.36cm;
+        color: var(--muted);
+        line-height: 1.45;
+        word-break: break-all;
+      }
+
+      /* Blue/teal panel */
+      .left-panel {
+        background: var(--accent);
+        flex: 1;
+        padding: 5mm 7mm 5mm 8mm;
+        display: flex;
+        flex-direction: column;
+        gap: 5mm;
+        overflow: hidden;
+      }
+
+      .panel-section-title {
+        font-size: 0.45cm;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 2.5mm;
+      }
+
+      .panel-section-title::after {
+        content: ":";
+      }
+
+      /* Skills list */
+      .skills-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5mm;
+      }
+
+      .skill-item {
+        font-size: 0.37cm;
+        color: var(--text);
+        line-height: 1.45;
+      }
+
+      /* Education entry */
+      .edu-entry {
+        margin-bottom: 3mm;
+      }
+
+      .edu-degree {
+        font-size: 0.38cm;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.35;
+        margin-bottom: 1mm;
+      }
+
+      .edu-school {
+        font-size: 0.34cm;
+        color: var(--text);
+        line-height: 1.5;
+      }
+
+      .edu-year {
+        font-size: 0.34cm;
+        color: var(--text);
+        margin-top: 0.5mm;
+      }
+
+      /* ── RIGHT (flex) ── */
+      .right-col {
+        flex: 1;
+        background: var(--white);
+        display: flex;
+        flex-direction: column;
+        padding: 5mm 8mm 5mm 7mm;
+        gap: 4mm;
+        overflow: hidden;
+      }
+
+      /* Section heading */
+      .r-sec-title {
+        font-size: 0.48cm;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 2mm;
+        flex-shrink: 0;
+      }
+
+      .r-sec-title::after {
+        content: ":";
+      }
+
+      /* Summary text */
+      .summary-text {
+        font-size: 0.36cm;
+        color: var(--muted);
+        line-height: 1.7;
+        flex-shrink: 0;
+      }
+
+      /* Divider */
+      .r-divider {
+        height: 1px;
+        background: #e0dbd5;
+        flex-shrink: 0;
+      }
+
+      /* Experience entries */
+      .exp-list {
+        display: flex;
+        flex-direction: column;
+        gap: 3.5mm;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .exp-entry {
+      }
+
+      .exp-role {
+        font-size: 0.41cm;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.3;
+        margin-bottom: 0.8mm;
+      }
+
+      .exp-company {
+        font-size: 0.36cm;
+        color: var(--muted);
+        line-height: 1.4;
+      }
+
+      .exp-dates {
+        font-size: 0.35cm;
+        color: var(--light);
+        margin-bottom: 1.5mm;
+      }
+
+      /* Indented description block */
+      .exp-desc-block {
+        border-left: 3px solid #e0dbd5;
+        padding-left: 3mm;
+        margin-top: 1.5mm;
+      }
+
+      .exp-desc {
+        font-size: 0.34cm;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- ══════════ HEADER ══════════ -->
+      <div class="header">
+        <div class="header-name-block">
+          <div class="hero-name">{{firstName}}<br />{{lastName}}</div>
+          {{#jobTitle}}
+          <div class="hero-jobtitle">{{jobTitle}}</div>
+          {{/jobTitle}}
+        </div>
+        <div class="header-photo">
+          {{#photo}}<img src="{{photo}}" alt="Profile" />{{/photo}} {{^photo}}
+          <div class="header-photo-placeholder">
+            {{firstName.0}}{{lastName.0}}
+          </div>
+          {{/photo}}
+        </div>
+      </div>
+
+      <!-- ══════════ BODY ══════════ -->
+      <div class="body">
+        <!-- ── LEFT ── -->
+        <div class="left-col">
+          <!-- Contact (cream bg) -->
+          <div class="left-top">
+            {{#phone}}
+            <div class="contact-row">
+              <span class="contact-key">P:</span>
+              <span class="contact-val">{{phone}}</span>
+            </div>
+            {{/phone}} {{#email}}
+            <div class="contact-row">
+              <span class="contact-key">E:</span>
+              <span class="contact-val">{{email}}</span>
+            </div>
+            {{/email}} {{#linkedin}}
+            <div class="contact-row">
+              <span class="contact-key">L:</span>
+              <span class="contact-val">{{linkedin}}</span>
+            </div>
+            {{/linkedin}}
+          </div>
+
+          <!-- Teal panel -->
+          <div class="left-panel">
+            <!-- Skills -->
+            <div>
+              <div class="panel-section-title">Skills</div>
+              <div class="skills-list">
+                {{#skills}}
+                <div class="skill-item">{{name}}</div>
+                {{/skills}}
+              </div>
+            </div>
+
+            <!-- Education -->
+            <div>
+              <div class="panel-section-title">Education</div>
+              {{#education}}
+              <div class="edu-entry">
+                <div class="edu-degree">{{degree}}</div>
+                <div class="edu-school">{{school}}</div>
+                {{#year}}
+                <div class="edu-year">Graduated: {{year}}</div>
+                {{/year}}
+              </div>
+              {{/education}}
+            </div>
+          </div>
+        </div>
+        <!-- end left-col -->
+
+        <!-- ── RIGHT ── -->
+        <div class="right-col">
+          <!-- Summary -->
+          <div style="flex-shrink: 0">
+            <div class="r-sec-title">Summary</div>
+            {{#summary}}
+            <div class="summary-text">{{summary}}</div>
+            {{/summary}}
+          </div>
+
+          <div class="r-divider"></div>
+
+          <!-- Professional Experience -->
+          <div style="flex-shrink: 0; overflow: hidden">
+            <div class="r-sec-title">Professional Experience</div>
+            <div class="exp-list">
+              {{#experience}}
+              <div class="exp-entry">
+                <div class="exp-role">{{role}}</div>
+                {{#company}}
+                <div class="exp-company">
+                  {{company}}{{#location}} – {{location}}{{/location}}
+                </div>
+                {{/company}}
+                <div class="exp-dates">
+                  {{startDate}}{{#endDate}} –
+                  {{endDate}}{{/endDate}}{{^endDate}} – Present{{/endDate}}
+                </div>
+                {{#description}}
+                <div class="exp-desc-block">
+                  <div class="exp-desc">{{description}}</div>
+                </div>
+                {{/description}}
+              </div>
+              {{/experience}}
+            </div>
+          </div>
+        </div>
+        <!-- end right-col -->
+      </div>
+      <!-- end body -->
+    </div>
+    <!-- end page -->
+
+    <script>
+      if (window.cvConfig && window.cvConfig.accent) {
+        document.documentElement.style.setProperty(
+          "--accent-color",
+          window.cvConfig.accent,
+        );
+      }
+    </script>
+  </body>
+</html>
