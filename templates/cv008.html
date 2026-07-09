@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV Template 008</title>
+    <script>
+      window.cvConfig = {
+        accent: "#f5c800",
+        sections: ["profile", "experience", "education", "skills", "contact"],
+      };
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --accent: var(--accent-color, #f5c800);
+        --dark: #1a1a1a;
+        --white: #ffffff;
+        --text: #222222;
+        --muted: #555555;
+        --light: #888888;
+        --border: #e8e8e8;
+      }
+
+      html,
+      body {
+        width: 210mm;
+        height: 297mm;
+        max-height: 297mm;
+        overflow: hidden;
+        margin: 0;
+        font-family: "Open Sans", sans-serif;
+        background: var(--white);
+      }
+
+      .page {
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        background: var(--white);
+      }
+
+      /* ═══════════════════════════════════
+         HEADER
+      ═══════════════════════════════════ */
+      .header {
+        display: flex;
+        align-items: stretch;
+        flex-shrink: 0;
+        height: 78mm;
+        overflow: hidden;
+        border-bottom: 1px solid var(--border);
+      }
+
+      /* Left info block */
+      .header-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 7mm 6mm 7mm 9mm;
+        z-index: 1;
+      }
+
+      .hero-name {
+        font-family: "Playfair Display", serif;
+        font-size: 1.1cm;
+        font-weight: 800;
+        color: var(--text);
+        line-height: 1.1;
+        margin-bottom: 3mm;
+      }
+
+      /* Yellow pill badge */
+      .hero-badge {
+        display: inline-block;
+        background: var(--accent);
+        color: var(--dark);
+        font-size: 0.32cm;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        padding: 1.5mm 4mm;
+        border-radius: 20px;
+        margin-bottom: 5mm;
+        white-space: nowrap;
+      }
+
+      /* Company block */
+      .company-block {
+        display: flex;
+        align-items: center;
+        gap: 2.5mm;
+      }
+
+      .company-icon {
+        width: 9mm;
+        height: 9mm;
+        flex-shrink: 0;
+      }
+
+      .company-icon svg {
+        width: 9mm;
+        height: 9mm;
+        fill: var(--accent);
+      }
+
+      .company-name {
+        font-size: 0.37cm;
+        font-weight: 600;
+        color: var(--text);
+        line-height: 1.3;
+      }
+
+      /* Right — photo with yellow circle deco */
+      .header-photo-wrap {
+        width: 85mm;
+        flex-shrink: 0;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+      }
+
+      /* Large yellow circle decoration */
+      .yellow-circle {
+        position: absolute;
+        top: -8mm;
+        right: -6mm;
+        width: 72mm;
+        height: 72mm;
+        border-radius: 50%;
+        background: var(--accent);
+        z-index: 0;
+      }
+
+      /* Small circle top-right corner */
+      .yellow-circle-sm {
+        position: absolute;
+        top: 2mm;
+        right: 2mm;
+        width: 12mm;
+        height: 12mm;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0.4;
+        z-index: 0;
+      }
+
+      .header-photo {
+        position: relative;
+        z-index: 2;
+        width: 74mm;
+        height: 78mm;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+      }
+
+      .header-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        display: block;
+      }
+
+      .header-photo-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--dark);
+        font-size: 1.5cm;
+        font-weight: 900;
+        font-family: "Playfair Display", serif;
+      }
+
+      /* ═══════════════════════════════════
+         GRID — 2×2
+      ═══════════════════════════════════ */
+      .grid {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        overflow: hidden;
+      }
+
+      .grid-cell {
+        padding: 5mm 6mm 4mm 7mm;
+        border-right: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .grid-cell:nth-child(2),
+      .grid-cell:nth-child(4) {
+        border-right: none;
+      }
+
+      .grid-cell:nth-child(3),
+      .grid-cell:nth-child(4) {
+        border-bottom: none;
+      }
+
+      /* Cell heading row */
+      .cell-head {
+        display: flex;
+        align-items: center;
+        gap: 3mm;
+        margin-bottom: 3mm;
+        flex-shrink: 0;
+      }
+
+      /* Yellow circle icon */
+      .cell-icon {
+        width: 11mm;
+        height: 11mm;
+        border-radius: 50%;
+        background: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .cell-icon svg {
+        width: 6mm;
+        height: 6mm;
+        fill: none;
+        stroke: var(--dark);
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .cell-title {
+        font-family: "Playfair Display", serif;
+        font-size: 0.52cm;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.2;
+      }
+
+      /* Cell content */
+      .cell-text {
+        font-size: 0.33cm;
+        color: var(--muted);
+        line-height: 1.65;
+        flex: 1;
+        overflow: hidden;
+      }
+
+      .cell-text p {
+        margin-bottom: 1.5mm;
+      }
+      .cell-text p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Numbered list */
+      .cell-list {
+        padding-left: 4mm;
+        margin-top: 1.5mm;
+      }
+
+      .cell-list li {
+        font-size: 0.33cm;
+        color: var(--muted);
+        line-height: 1.65;
+        margin-bottom: 0.8mm;
+        list-style: decimal;
+      }
+
+      /* Italic quote */
+      .cell-quote {
+        font-size: 0.33cm;
+        color: var(--muted);
+        font-style: italic;
+        line-height: 1.65;
+        margin-top: 2mm;
+      }
+
+      /* ═══════════════════════════════════
+         FOOTER — dark bar
+      ═══════════════════════════════════ */
+      .footer {
+        background: var(--dark);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 3mm 9mm;
+        flex-shrink: 0;
+        gap: 4mm;
+      }
+
+      .footer-contacts {
+        display: flex;
+        gap: 6mm;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .footer-item {
+        display: flex;
+        align-items: center;
+        gap: 2mm;
+      }
+
+      .footer-icon {
+        width: 6.5mm;
+        height: 6.5mm;
+        border-radius: 50%;
+        background: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .footer-icon svg {
+        width: 3.5mm;
+        height: 3.5mm;
+        fill: none;
+        stroke: var(--dark);
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .footer-val {
+        font-size: 0.32cm;
+        color: #cccccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- ══════════════════════════════════
+           HEADER
+      ══════════════════════════════════ -->
+      <div class="header">
+        <div class="header-info">
+          <div class="hero-name">{{firstName}}<br />{{lastName}}</div>
+          {{#jobTitle}}<span class="hero-badge">{{jobTitle}}</span>{{/jobTitle}}
+          {{#company}}
+          <div class="company-block">
+            <div class="company-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                <path d="M2 17l10 5 10-5" />
+                <path d="M2 12l10 5 10-5" />
+              </svg>
+            </div>
+            <div class="company-name">{{company}}</div>
+          </div>
+          {{/company}}
+        </div>
+
+        <div class="header-photo-wrap">
+          <div class="yellow-circle"></div>
+          <div class="yellow-circle-sm"></div>
+          <div class="header-photo">
+            {{#photo}}<img src="{{photo}}" alt="Profile" />{{/photo}} {{^photo}}
+            <div class="header-photo-placeholder">
+              {{firstName.0}}{{lastName.0}}
+            </div>
+            {{/photo}}
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════
+           2×2 GRID
+      ══════════════════════════════════ -->
+      <div class="grid">
+        <!-- Education & Experience -->
+        <div class="grid-cell">
+          <div class="cell-head">
+            <div class="cell-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z" />
+                <path d="M6 12v5c3.33 1.67 6.67 1.67 10 0v-5" />
+              </svg>
+            </div>
+            <div class="cell-title">Education<br />&amp; Experience</div>
+          </div>
+          <div class="cell-text">
+            {{#summary}}
+            <p>{{summary}}</p>
+            {{/summary}} {{#education}}
+            <ol class="cell-list">
+              <li>{{degree}} — {{school}}{{#year}}, {{year}}{{/year}}</li>
+            </ol>
+            {{/education}}
+          </div>
+        </div>
+
+        <!-- Working Approach -->
+        <div class="grid-cell">
+          <div class="cell-head">
+            <div class="cell-icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="2" y="7" width="20" height="14" rx="2" />
+                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+              </svg>
+            </div>
+            <div class="cell-title">Working<br />Approach</div>
+          </div>
+          <div class="cell-text">
+            {{#workingApproach}}
+            <p>{{workingApproach}}</p>
+            {{/workingApproach}} {{^workingApproach}} {{#experience}}
+            <p>
+              <strong>{{role}}</strong>{{#company}} — {{company}}{{/company}}
+            </p>
+            <p>{{description}}</p>
+            {{/experience}} {{/workingApproach}}
+          </div>
+        </div>
+
+        <!-- Achievements -->
+        <div class="grid-cell">
+          <div class="cell-head">
+            <div class="cell-icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="8" r="7" />
+                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+              </svg>
+            </div>
+            <div class="cell-title">Achievements</div>
+          </div>
+          <div class="cell-text">
+            {{#achievements}}
+            <p>{{.}}</p>
+            {{/achievements}} {{^achievements}} {{#skills}}
+            <p>{{name}}</p>
+            {{/skills}} {{/achievements}}
+          </div>
+        </div>
+
+        <!-- Outside the Office -->
+        <div class="grid-cell">
+          <div class="cell-head">
+            <div class="cell-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </div>
+            <div class="cell-title">Outside<br />the Office</div>
+          </div>
+          <div class="cell-text">
+            {{#outsideOffice}}
+            <p>{{outsideOffice}}</p>
+            {{/outsideOffice}} {{^outsideOffice}} {{#interests}}
+            <p>{{.}}</p>
+            {{/interests}} {{/outsideOffice}} {{#quote}}
+            <p class="cell-quote">"{{quote}}"</p>
+            {{/quote}}
+          </div>
+        </div>
+      </div>
+      <!-- end grid -->
+
+      <!-- ══════════════════════════════════
+           FOOTER
+      ══════════════════════════════════ -->
+      <div class="footer">
+        <div class="footer-contacts">
+          {{#email}}
+          <div class="footer-item">
+            <div class="footer-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+            </div>
+            <span class="footer-val">{{email}}</span>
+          </div>
+          {{/email}} {{#phone}}
+          <div class="footer-item">
+            <div class="footer-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"
+                />
+              </svg>
+            </div>
+            <span class="footer-val">{{phone}}</span>
+          </div>
+          {{/phone}}
+        </div>
+
+        <div class="footer-contacts">
+          {{#linkedin}}
+          <div class="footer-item">
+            <div class="footer-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+            </div>
+            <span class="footer-val">{{linkedin}}</span>
+          </div>
+          {{/linkedin}} {{#twitter}}
+          <div class="footer-item">
+            <div class="footer-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
+                />
+              </svg>
+            </div>
+            <span class="footer-val">{{twitter}}</span>
+          </div>
+          {{/twitter}}
+        </div>
+      </div>
+    </div>
+    <!-- end page -->
+
+    <script>
+      if (window.cvConfig && window.cvConfig.accent) {
+        document.documentElement.style.setProperty(
+          "--accent-color",
+          window.cvConfig.accent,
+        );
+      }
+    </script>
+  </body>
+</html>
