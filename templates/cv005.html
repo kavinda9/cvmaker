@@ -56,30 +56,6 @@
       z-index: 1;
     }
 
-    /* ── Decorative shapes top-left of sidebar ── */
-    .sb-top-yellow-1 {
-      position: absolute;
-      top: 12mm;
-      left: -15mm;
-      width: 55mm;
-      height: 5mm;
-      background: var(--yellow);
-      transform: rotate(-45deg);
-      transform-origin: left top;
-      z-index: 2;
-    }
-    .sb-top-yellow-2 {
-      position: absolute;
-      top: 22.6mm;
-      left: -15mm;
-      width: 55mm;
-      height: 1.5mm;
-      background: var(--yellow);
-      transform: rotate(-45deg);
-      transform-origin: left top;
-      z-index: 2;
-    }
-
     /* ── Diamond photo ── */
     /* Underlying square: 48mm → diagonal: 67.9mm (spans most of sidebar) */
     .photo-wrap {
@@ -259,30 +235,6 @@
       margin-top: 2mm;
     }
 
-    /* ── Decorative shapes top-right of main panel ── */
-    .main-top-yellow-1 {
-      position: absolute;
-      top: 12mm;
-      right: -15mm;
-      width: 55mm;
-      height: 5mm;
-      background: var(--yellow);
-      transform: rotate(-45deg);
-      transform-origin: right top;
-      z-index: 3;
-    }
-    .main-top-yellow-2 {
-      position: absolute;
-      top: 22.6mm;
-      right: -15mm;
-      width: 55mm;
-      height: 1.5mm;
-      background: var(--yellow);
-      transform: rotate(-45deg);
-      transform-origin: right top;
-      z-index: 3;
-    }
-
     /* ── Content area ── */
     .main-content {
       position: absolute;
@@ -428,8 +380,6 @@
   ══════════════════════════════════ -->
   <div class="sidebar">
     <div class="sb-black-top"></div>
-    <div class="sb-top-yellow-1"></div>
-    <div class="sb-top-yellow-2"></div>
 
     <!-- Diamond Photo -->
     <div class="photo-wrap">
@@ -524,8 +474,6 @@
     <!-- Black diagonal header -->
     <div class="main-header-accent"></div>
     <div class="main-header-bg"></div>
-    <div class="main-top-yellow-1"></div>
-    <div class="main-top-yellow-2"></div>
 
     <!-- Name + Job Title -->
     <div class="main-name">
