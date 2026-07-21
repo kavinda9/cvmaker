@@ -286,7 +286,7 @@
       flex-shrink: 0;
       margin-top: 1.5mm;
     }
-    .edu-school {
+    .edu-title {
       font-family: 'Oswald', sans-serif;
       font-size: 0.42cm;
       font-weight: 600;
@@ -294,10 +294,22 @@
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
+    .edu-school {
+      font-size: 0.36cm;
+      font-weight: 600;
+      color: #3a3a3a;
+      margin-top: 0.5mm;
+    }
+    .edu-meta {
+      font-size: 0.34cm;
+      color: var(--light);
+      margin-top: 0.5mm;
+    }
     .edu-sub {
       font-size: 0.355cm;
       color: var(--light);
       margin-top: 0.8mm;
+      line-height: 1.4;
     }
 
     /* Experience items */
@@ -319,7 +331,7 @@
       display: flex;
       align-items: flex-start;
       gap: 3.5mm;
-      margin-bottom: 3mm;
+      margin-bottom: 3.5mm;
       position: relative;
     }
     .exp-dot {
@@ -332,17 +344,30 @@
       position: relative;
       z-index: 1;
     }
-    .exp-date {
+    .exp-title {
       font-family: 'Oswald', sans-serif;
       font-size: 0.42cm;
       font-weight: 600;
       color: var(--black);
+      text-transform: uppercase;
       letter-spacing: 0.3px;
+    }
+    .exp-school {
+      font-size: 0.36cm;
+      font-weight: 600;
+      color: #3a3a3a;
+      margin-top: 0.5mm;
+    }
+    .exp-meta {
+      font-size: 0.34cm;
+      color: var(--light);
+      margin-top: 0.5mm;
     }
     .exp-sub {
       font-size: 0.355cm;
       color: var(--light);
       margin-top: 0.8mm;
+      line-height: 1.4;
     }
 
     /* Social icons — bottom of main panel */
@@ -502,8 +527,12 @@
       <div class="edu-item">
         <div class="yellow-dot"></div>
         <div>
-          <div class="edu-school">{{school}}</div>
+          {{#degree}}<div class="edu-title">{{degree}}</div>{{/degree}}
+          {{#school}}<div class="edu-school">{{school}}</div>{{/school}}
+          <div class="edu-meta">{{#year}}{{year}}{{/year}}{{#year}}{{#location}} | {{/location}}{{/year}}{{#location}}{{location}}{{/location}}</div>
+          {{#detail}}
           <div class="edu-sub">{{detail}}</div>
+          {{/detail}}
         </div>
       </div>
       {{/education}}
@@ -511,15 +540,19 @@
       <div class="edu-item">
         <div class="yellow-dot"></div>
         <div>
-          <div class="edu-school">First Business School</div>
-          <div class="edu-sub">Lorem ipsum dolor sit amet, consectetuer</div>
+          <div class="edu-title">BSc Computer Science</div>
+          <div class="edu-school">MIT</div>
+          <div class="edu-meta">2018 | Cambridge, MA</div>
+          <div class="edu-sub">First Class Honours</div>
         </div>
       </div>
       <div class="edu-item">
         <div class="yellow-dot"></div>
         <div>
-          <div class="edu-school">Second Business School</div>
-          <div class="edu-sub">Lorem ipsum dolor sit amet, consectetuer</div>
+          <div class="edu-title">MSc Software Engineering</div>
+          <div class="edu-school">Harvard University</div>
+          <div class="edu-meta">2020 | Boston, MA</div>
+          <div class="edu-sub">Graduated with Distinction</div>
         </div>
       </div>
       {{/education}}
@@ -531,8 +564,12 @@
         <div class="exp-item">
           <div class="exp-dot"></div>
           <div>
-            <div class="exp-date">{{startDate}}{{#endDate}}-{{endDate}}{{/endDate}}</div>
+            {{#role}}<div class="exp-title">{{role}}</div>{{/role}}
+            {{#company}}<div class="exp-school">{{company}}</div>{{/company}}
+            <div class="exp-meta">{{startDate}}{{#endDate}} - {{endDate}}{{/endDate}}{{#location}} | {{location}}{{/location}}</div>
+            {{#description}}
             <div class="exp-sub">{{description}}</div>
+            {{/description}}
           </div>
         </div>
         {{/experience}}
@@ -540,29 +577,19 @@
         <div class="exp-item">
           <div class="exp-dot"></div>
           <div>
-            <div class="exp-date">2001-2005</div>
-            <div class="exp-sub">Lorem ipsum dolor sit amet, consectetuer</div>
+            <div class="exp-title">Senior Software Engineer</div>
+            <div class="exp-school">Acme Corp</div>
+            <div class="exp-meta">2018 - Present | London, UK</div>
+            <div class="exp-sub">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
           </div>
         </div>
         <div class="exp-item">
           <div class="exp-dot"></div>
           <div>
-            <div class="exp-date">2005-2008</div>
-            <div class="exp-sub">Lorem ipsum dolor sit amet, consectetuer</div>
-          </div>
-        </div>
-        <div class="exp-item">
-          <div class="exp-dot"></div>
-          <div>
-            <div class="exp-date">2008-2015</div>
-            <div class="exp-sub">Lorem ipsum dolor sit amet, consectetuer</div>
-          </div>
-        </div>
-        <div class="exp-item">
-          <div class="exp-dot"></div>
-          <div>
-            <div class="exp-date">20015-2018</div>
-            <div class="exp-sub">Lorem ipsum dolor sit amet, consectetuer</div>
+            <div class="exp-title">Web Developer</div>
+            <div class="exp-school">Tech Solutions</div>
+            <div class="exp-meta">2015 - 2018 | New York, US</div>
+            <div class="exp-sub">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
           </div>
         </div>
         {{/experience}}
