@@ -80,30 +80,6 @@
       z-index: 2;
     }
 
-    /* ── Black accent shapes bottom-left of sidebar ── */
-    .sb-bot-1 {
-      position: absolute;
-      top: 265mm;
-      left: -15mm;
-      width: 50mm;
-      height: 25mm;
-      background: var(--black);
-      transform: rotate(-45deg);
-      transform-origin: left top;
-      z-index: 1;
-    }
-    .sb-bot-2 {
-      position: absolute;
-      top: 256.4mm;
-      left: -15mm;
-      width: 50mm;
-      height: 3mm;
-      background: var(--black);
-      transform: rotate(-45deg);
-      transform-origin: left top;
-      z-index: 1;
-    }
-
     /* ── Diamond photo ── */
     /* Underlying square: 48mm → diagonal: 67.9mm (spans most of sidebar) */
     .photo-wrap {
@@ -307,54 +283,6 @@
       z-index: 3;
     }
 
-    /* ── Right-side decorative shapes ── */
-    /* Mid-right pair */
-    .deco-mid-1 {
-      position: absolute;
-      top: 120mm;
-      right: -15mm;
-      width: 50mm;
-      height: 14mm;
-      background: var(--black);
-      transform: rotate(-45deg);
-      transform-origin: right top;
-      z-index: 0;
-    }
-    .deco-mid-2 {
-      position: absolute;
-      top: 140.6mm;
-      right: -15mm;
-      width: 50mm;
-      height: 3mm;
-      background: var(--black);
-      transform: rotate(-45deg);
-      transform-origin: right top;
-      z-index: 0;
-    }
-    /* Bottom-right pair */
-    .deco-bot-1 {
-      position: absolute;
-      top: 235mm;
-      right: -15mm;
-      width: 50mm;
-      height: 14mm;
-      background: var(--black);
-      transform: rotate(-45deg);
-      transform-origin: right top;
-      z-index: 0;
-    }
-    .deco-bot-2 {
-      position: absolute;
-      top: 255.6mm;
-      right: -15mm;
-      width: 50mm;
-      height: 3mm;
-      background: var(--black);
-      transform: rotate(-45deg);
-      transform-origin: right top;
-      z-index: 0;
-    }
-
     /* ── Content area ── */
     .main-content {
       position: absolute;
@@ -502,8 +430,6 @@
     <div class="sb-black-top"></div>
     <div class="sb-top-yellow-1"></div>
     <div class="sb-top-yellow-2"></div>
-    <div class="sb-bot-1"></div>
-    <div class="sb-bot-2"></div>
 
     <!-- Diamond Photo -->
     <div class="photo-wrap">
@@ -608,12 +534,6 @@
       </div>
       <div class="name-job">{{jobTitle}}</div>
     </div>
-
-    <!-- Right-side decorative diagonal shapes -->
-    <div class="deco-mid-1"></div>
-    <div class="deco-mid-2"></div>
-    <div class="deco-bot-1"></div>
-    <div class="deco-bot-2"></div>
 
     <!-- Main content -->
     <div class="main-content">
