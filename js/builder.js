@@ -1579,6 +1579,112 @@ function bindDownload() {
       const pageEl = parsedDoc.querySelector(".page");
       if (!pageEl) throw new Error("No .page element found in template.");
       const pageClone = pageEl.cloneNode(true);
+
+      // Copy computed styles from original element in the live iframe to resolve CSS variables
+      const iframePage = iframe.contentDocument?.querySelector(".page") || iframe.contentWindow?.document?.querySelector(".page");
+      if (iframePage) {
+        const iframeWin = iframe.contentWindow;
+        const origElements = [iframePage, ...Array.from(iframePage.querySelectorAll("*"))];
+        const cloneElements = [pageClone, ...Array.from(pageClone.querySelectorAll("*"))];
+        for (let i = 0; i < origElements.length; i++) {
+          const orig = origElements[i];
+          const cl = cloneElements[i];
+          if (orig && cl) {
+            const style = iframeWin.getComputedStyle(orig);
+            cl.style.backgroundColor = style.backgroundColor;
+            cl.style.color = style.color;
+            cl.style.borderColor = style.borderColor;
+            cl.style.borderTopColor = style.borderTopColor;
+            cl.style.borderBottomColor = style.borderBottomColor;
+            cl.style.borderLeftColor = style.borderLeftColor;
+            cl.style.borderRightColor = style.borderRightColor;
+            cl.style.fill = style.fill;
+            cl.style.stroke = style.stroke;
+          }
+        }
+      }
+
+      // Convert specific clip-path/transform layout designs for CV5 dynamically on download
+      const isCv5 = currentTemplate === "cv005";
+      if (isCv5) {
+        // 1. Convert .sb-black-top to SVG polygon
+        const sbBlackTop = pageClone.querySelector(".sb-black-top");
+        if (sbBlackTop) {
+          sbBlackTop.outerHTML = `
+            <svg class="sb-black-top" viewBox="0 0 77 62" preserveAspectRatio="none" style="position:absolute; top:0; left:0; width:77mm; height:62mm; fill:#1C1C1C; z-index:1; clip-path:none; background:none;">
+              <polygon points="0,0 77,0 77,28 0,62" />
+            </svg>
+          `;
+        }
+
+        // 2. Convert main header accents to SVG polygons
+        const headerAccent = pageClone.querySelector(".main-header-accent");
+        if (headerAccent) {
+          const accentBg = headerAccent.style.backgroundColor || "#F5C200";
+          headerAccent.outerHTML = `
+            <svg class="main-header-accent" viewBox="0 0 133 44" preserveAspectRatio="none" style="position:absolute; top:0; left:0; width:133mm; height:44mm; fill:${accentBg}; z-index:1; clip-path:none; background:none;">
+              <polygon points="0,0 133,0 133,30 0,44" />
+            </svg>
+          `;
+        }
+
+        const headerBg = pageClone.querySelector(".main-header-bg");
+        if (headerBg) {
+          headerBg.outerHTML = `
+            <svg class="main-header-bg" viewBox="0 0 133 40" preserveAspectRatio="none" style="position:absolute; top:0; left:0; width:133mm; height:40mm; fill:#1C1C1C; z-index:2; clip-path:none; background:none;">
+              <polygon points="0,0 133,0 133,26 0,40" />
+            </svg>
+          `;
+        }
+
+        // 3. Convert .c-icon (contact ribbon tags) to wrap + polygon
+        pageClone.querySelectorAll(".c-icon").forEach((cIcon) => {
+          const innerSvg = cIcon.innerHTML;
+          cIcon.outerHTML = `
+            <div class="c-icon-wrap" style="width:13mm; height:7.5mm; margin-left:-7mm; position:relative; display:flex; align-items:center; justify-content:center; padding-right:2.5mm; flex-shrink:0;">
+              <svg class="c-icon-bg" viewBox="0 0 13 7.5" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; fill:#1C1C1C; z-index:1;">
+                <polygon points="0,0 10.14,0 13,3.75 10.14,7.5 0,7.5" />
+              </svg>
+              <div class="c-icon-svg-container" style="position:relative; z-index:2; display:flex; align-items:center; justify-content:center;">
+                ${innerSvg}
+              </div>
+            </div>
+          `;
+        });
+
+        // 4. Convert rotated photo-diamond transforms to SVG masking overlay
+        const photoWrap = pageClone.querySelector(".photo-wrap");
+        if (photoWrap) {
+          const photoImg = photoWrap.querySelector("img");
+          const placeholder = photoWrap.querySelector(".photo-diamond-ph");
+          const yellowColor = pageClone.querySelector(".sidebar")?.style.backgroundColor || "#F5C200";
+
+          let contentHtml = "";
+          if (photoImg) {
+            contentHtml = `<img src="${photoImg.getAttribute("src")}" alt="Profile" style="width:100%; height:100%; object-fit:cover;" />`;
+          } else if (placeholder) {
+            contentHtml = `
+              <div class="photo-placeholder" style="width:100%; height:100%; background:linear-gradient(135deg, #ccc, #999); display:flex; align-items:center; justify-content:center;">
+                <span style="font-family:'Oswald',sans-serif; font-size:1.1cm; font-weight:700; color:#fff;">${placeholder.querySelector("span")?.textContent || ""}</span>
+              </div>
+            `;
+          }
+
+          photoWrap.innerHTML = `
+            <div class="photo-square" style="width:48mm; height:48mm; overflow:hidden; background:#888;">
+              ${contentHtml}
+            </div>
+            <svg class="photo-mask" viewBox="0 0 48 48" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:6;">
+              <polygon class="mask-corner" points="0,0 24,0 0,24" style="fill:${yellowColor};" />
+              <polygon class="mask-corner" points="48,0 48,24 24,0" style="fill:${yellowColor};" />
+              <polygon class="mask-corner" points="48,48 24,48 48,24" style="fill:${yellowColor};" />
+              <polygon class="mask-corner" points="0,48 0,24 24,48" style="fill:${yellowColor};" />
+              <polygon class="mask-border" points="24,0.6 47.4,24 24,47.4 0.6,24" style="fill:none; stroke:#1C1C1C; stroke-width:1.2;" />
+            </svg>
+          `;
+        }
+      }
+
       container.appendChild(pageClone);
 
       document.body.appendChild(container);
