@@ -1652,7 +1652,7 @@ function bindDownload() {
           `;
         });
 
-        // 4. Convert rotated photo-diamond transforms to SVG masking overlay
+        // 4. Convert rotated photo-diamond transforms to SVG masking overlay with context-aware corner colors
         const photoWrap = pageClone.querySelector(".photo-wrap");
         if (photoWrap) {
           const photoImg = photoWrap.querySelector("img");
@@ -1663,9 +1663,10 @@ function bindDownload() {
           if (photoImg) {
             contentHtml = `<img src="${photoImg.getAttribute("src")}" alt="Profile" style="width:100%; height:100%; object-fit:cover;" />`;
           } else if (placeholder) {
+            const initials = placeholder.querySelector("span")?.textContent || "";
             contentHtml = `
               <div class="photo-placeholder" style="width:100%; height:100%; background:linear-gradient(135deg, #ccc, #999); display:flex; align-items:center; justify-content:center;">
-                <span style="font-family:'Oswald',sans-serif; font-size:1.1cm; font-weight:700; color:#fff;">${placeholder.querySelector("span")?.textContent || ""}</span>
+                <span style="font-family:'Oswald',sans-serif; font-size:1.1cm; font-weight:700; color:#fff;">${initials}</span>
               </div>
             `;
           }
@@ -1675,11 +1676,14 @@ function bindDownload() {
               ${contentHtml}
             </div>
             <svg class="photo-mask" viewBox="0 0 48 48" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:6;">
-              <polygon class="mask-corner" points="0,0 24,0 0,24" style="fill:${yellowColor};" />
-              <polygon class="mask-corner" points="48,0 48,24 24,0" style="fill:${yellowColor};" />
-              <polygon class="mask-corner" points="48,48 24,48 48,24" style="fill:${yellowColor};" />
-              <polygon class="mask-corner" points="0,48 0,24 24,48" style="fill:${yellowColor};" />
-              <polygon class="mask-border" points="24,0.6 47.4,24 24,47.4 0.6,24" style="fill:none; stroke:#1C1C1C; stroke-width:1.2;" />
+              <!-- Top-left, top-right, bottom-left corners are black (#1C1C1C) matching background -->
+              <polygon points="0,0 24,0 0,24" style="fill:#1C1C1C;" />
+              <polygon points="48,0 48,24 24,0" style="fill:#1C1C1C;" />
+              <polygon points="0,48 0,24 24,48" style="fill:#1C1C1C;" />
+              <!-- Bottom-right corner is yellow matching the yellow sidebar background -->
+              <polygon points="48,48 24,48 48,24" style="fill:${yellowColor};" />
+              <!-- Diamond border outline -->
+              <polygon points="24,0.6 47.4,24 24,47.4 0.6,24" style="fill:none; stroke:#1C1C1C; stroke-width:1.2;" />
             </svg>
           `;
         }
