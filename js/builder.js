@@ -289,6 +289,10 @@ const DEFAULT_DATA = {
   location: "San Francisco, CA",
   linkedin: "linkedin.com/in/ninalane",
   website: "ninalane.com",
+  facebook: "facebook.com/ninalane",
+  instagram: "instagram.com/ninalane",
+  twitter: "x.com/ninalane",
+  github: "github.com/ninalane",
   summary:
     "Creative and detail-oriented Product Designer with 7+ years of experience crafting user-centric digital experiences. Passionate about design systems, accessibility, and cross-functional collaboration.",
   skills: [
