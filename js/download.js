@@ -68,6 +68,32 @@ async function downloadPDF() {
     const el = liveDoc.querySelector(".page");
     if (!el) throw new Error("No .page element found.");
 
+    // Clone the element to copy styles inline (resolving CSS variables)
+    const clone = el.cloneNode(true);
+    const win = el.ownerDocument.defaultView || window;
+    
+    // Copy computed styles from original element to clone
+    const applyComputedStyles = (orig, cl) => {
+      const style = win.getComputedStyle(orig);
+      cl.style.backgroundColor = style.backgroundColor;
+      cl.style.color = style.color;
+      cl.style.borderColor = style.borderColor;
+      cl.style.borderTopColor = style.borderTopColor;
+      cl.style.borderBottomColor = style.borderBottomColor;
+      cl.style.borderLeftColor = style.borderLeftColor;
+      cl.style.borderRightColor = style.borderRightColor;
+      cl.style.fill = style.fill;
+      cl.style.stroke = style.stroke;
+    };
+
+    applyComputedStyles(el, clone);
+
+    const allOriginals = el.querySelectorAll("*");
+    const allClones = clone.querySelectorAll("*");
+    for (let i = 0; i < allOriginals.length; i++) {
+      applyComputedStyles(allOriginals[i], allClones[i]);
+    }
+
     await html2pdf()
       .set({
         margin: 0,
@@ -90,7 +116,7 @@ async function downloadPDF() {
           hotfixes: ["px_scaling"],
         },
       })
-      .from(el)
+      .from(clone)
       .save();
 
 
