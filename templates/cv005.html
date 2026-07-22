@@ -7,7 +7,7 @@
   <script>
     window.cvConfig = {
       accent: "#F5C200",
-      sections: ["profile", "experience", "education", "skills", "contact"],
+      sections: ["profile", "experience", "education", "skills", "interests", "contact"],
     };
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -498,6 +498,19 @@
         <li>Marketing</li>
         <li>Team work</li>
         {{/skills}}
+      </ul>
+
+      <!-- INTERESTS -->
+      <div class="sb-title" style="margin-top:6mm;">Interests</div>
+      <ul class="sk-list">
+        {{#interests}}
+        <li>{{name}}</li>
+        {{/interests}}
+        {{^interests}}
+        <li>Travel</li>
+        <li>Music</li>
+        <li>Reading</li>
+        {{/interests}}
       </ul>
 
     </div><!-- end sb-content -->
