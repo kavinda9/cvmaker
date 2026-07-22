@@ -1591,7 +1591,11 @@ function bindDownload() {
           const cl = cloneElements[i];
           if (orig && cl) {
             const style = iframeWin.getComputedStyle(orig);
-            cl.style.backgroundColor = style.backgroundColor;
+            // Only set backgroundColor if it's not transparent (avoid white bleed)
+            const bg = style.backgroundColor;
+            if (bg && bg !== "rgba(0, 0, 0, 0)" && bg !== "transparent") {
+              cl.style.backgroundColor = bg;
+            }
             cl.style.color = style.color;
             cl.style.borderColor = style.borderColor;
             cl.style.borderTopColor = style.borderTopColor;
@@ -1652,40 +1656,55 @@ function bindDownload() {
           `;
         });
 
-        // 4. Convert rotated photo-diamond transforms to SVG masking overlay with context-aware corner colors
+        // 4. Convert rotated photo-diamond to pure SVG with clipPath (transparent corners, no background box)
         const photoWrap = pageClone.querySelector(".photo-wrap");
         if (photoWrap) {
           const photoImg = photoWrap.querySelector("img");
           const placeholder = photoWrap.querySelector(".photo-diamond-ph");
-          const yellowColor = pageClone.querySelector(".sidebar")?.style.backgroundColor || "#F5C200";
 
-          let contentHtml = "";
+          // Force no background on the wrap so no white/grey box shows
+          photoWrap.style.background = "none";
+          photoWrap.style.backgroundColor = "transparent";
+
           if (photoImg) {
-            contentHtml = `<img src="${photoImg.getAttribute("src")}" alt="Profile" style="width:100%; height:100%; object-fit:cover;" />`;
+            const uid = "dc" + Date.now();
+            photoWrap.innerHTML = `
+              <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"
+                style="width:48mm; height:48mm; display:block; overflow:hidden; background:transparent;">
+                <defs>
+                  <clipPath id="${uid}">
+                    <polygon points="24,0.6 47.4,24 24,47.4 0.6,24" />
+                  </clipPath>
+                </defs>
+                <image href="${photoImg.getAttribute("src")}"
+                  x="0" y="0" width="48" height="48"
+                  clip-path="url(#${uid})"
+                  preserveAspectRatio="xMidYMid slice" />
+                <polygon points="24,0.6 47.4,24 24,47.4 0.6,24"
+                  style="fill:none; stroke:#1C1C1C; stroke-width:1.2;" />
+              </svg>
+            `;
           } else if (placeholder) {
             const initials = placeholder.querySelector("span")?.textContent || "";
-            contentHtml = `
-              <div class="photo-placeholder" style="width:100%; height:100%; background:linear-gradient(135deg, #ccc, #999); display:flex; align-items:center; justify-content:center;">
-                <span style="font-family:'Oswald',sans-serif; font-size:1.1cm; font-weight:700; color:#fff;">${initials}</span>
-              </div>
+            const uid2 = "dp" + Date.now();
+            photoWrap.innerHTML = `
+              <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"
+                style="width:48mm; height:48mm; display:block; overflow:hidden; background:transparent;">
+                <defs>
+                  <clipPath id="${uid2}">
+                    <polygon points="24,0.6 47.4,24 24,47.4 0.6,24" />
+                  </clipPath>
+                </defs>
+                <rect x="0" y="0" width="48" height="48" fill="#999" clip-path="url(#${uid2})" />
+                <text x="24" y="24"
+                  font-family="'Oswald', sans-serif" font-size="12" font-weight="700"
+                  fill="#fff" text-anchor="middle" dominant-baseline="central"
+                  clip-path="url(#${uid2})">${initials}</text>
+                <polygon points="24,0.6 47.4,24 24,47.4 0.6,24"
+                  style="fill:none; stroke:#1C1C1C; stroke-width:1.2;" />
+              </svg>
             `;
           }
-
-          photoWrap.innerHTML = `
-            <div class="photo-square" style="width:48mm; height:48mm; overflow:hidden; background:#888;">
-              ${contentHtml}
-            </div>
-            <svg class="photo-mask" viewBox="0 0 48 48" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:6;">
-              <!-- Top-left, top-right, bottom-left corners are black (#1C1C1C) matching background -->
-              <polygon points="0,0 24,0 0,24" style="fill:#1C1C1C;" />
-              <polygon points="48,0 48,24 24,0" style="fill:#1C1C1C;" />
-              <polygon points="0,48 0,24 24,48" style="fill:#1C1C1C;" />
-              <!-- Bottom-right corner is yellow matching the yellow sidebar background -->
-              <polygon points="48,48 24,48 48,24" style="fill:${yellowColor};" />
-              <!-- Diamond border outline -->
-              <polygon points="24,0.6 47.4,24 24,47.4 0.6,24" style="fill:none; stroke:#1C1C1C; stroke-width:1.2;" />
-            </svg>
-          `;
         }
       }
 
