@@ -1739,7 +1739,14 @@ function bindDownload() {
             borderCtx.stroke();
 
             const dataUrl = canvas.toDataURL("image/png");
-            photoWrap.innerHTML = `<img src="${dataUrl}" style="width:48mm; height:48mm; display:block; background:transparent;" alt="Profile" />`;
+            // 130% size for PDF (preview stays at 48mm)
+            const pdfSize = "62.4mm";
+            const pdfOffset = "7.2mm"; // (62.4-48)/2 to keep centered
+            photoWrap.style.width = pdfSize;
+            photoWrap.style.height = pdfSize;
+            photoWrap.style.top = `calc(3mm - ${pdfOffset})`;
+            photoWrap.style.left = `calc(50% - 31.2mm)`;
+            photoWrap.innerHTML = `<img src="${dataUrl}" style="width:${pdfSize}; height:${pdfSize}; display:block; background:transparent;" alt="Profile" />`;
           } catch (e) {
             console.warn("[CV Maker] Photo diamond canvas render failed:", e);
           }
