@@ -305,6 +305,9 @@
       color: var(--light);
       margin-top: 0.5mm;
     }
+    .edu-year + .edu-loc::before {
+      content: ' | ';
+    }
     .edu-sub {
       font-size: 0.355cm;
       color: var(--light);
@@ -362,6 +365,10 @@
       font-size: 0.34cm;
       color: var(--light);
       margin-top: 0.5mm;
+    }
+    .exp-start + .exp-loc::before,
+    .exp-end + .exp-loc::before {
+      content: ' | ';
     }
     .exp-sub {
       font-size: 0.355cm;
@@ -529,7 +536,7 @@
         <div>
           {{#degree}}<div class="edu-title">{{degree}}</div>{{/degree}}
           {{#school}}<div class="edu-school">{{school}}</div>{{/school}}
-          <div class="edu-meta">{{#year}}{{year}}{{/year}}{{#year}}{{#location}} | {{/location}}{{/year}}{{#location}}{{location}}{{/location}}</div>
+          <div class="edu-meta">{{#year}}<span class="edu-year">{{year}}</span>{{/year}}{{#location}}<span class="edu-loc">{{location}}</span>{{/location}}</div>
           {{#detail}}
           <div class="edu-sub">{{detail}}</div>
           {{/detail}}
@@ -542,7 +549,7 @@
         <div>
           <div class="edu-title">BSc Computer Science</div>
           <div class="edu-school">MIT</div>
-          <div class="edu-meta">2018 | Cambridge, MA</div>
+          <div class="edu-meta"><span class="edu-year">2018</span><span class="edu-loc">Cambridge, MA</span></div>
           <div class="edu-sub">First Class Honours</div>
         </div>
       </div>
@@ -551,7 +558,7 @@
         <div>
           <div class="edu-title">MSc Software Engineering</div>
           <div class="edu-school">Harvard University</div>
-          <div class="edu-meta">2020 | Boston, MA</div>
+          <div class="edu-meta"><span class="edu-year">2020</span><span class="edu-loc">Boston, MA</span></div>
           <div class="edu-sub">Graduated with Distinction</div>
         </div>
       </div>
@@ -566,7 +573,7 @@
           <div>
             {{#role}}<div class="exp-title">{{role}}</div>{{/role}}
             {{#company}}<div class="exp-school">{{company}}</div>{{/company}}
-            <div class="exp-meta">{{startDate}}{{#endDate}} - {{endDate}}{{/endDate}}{{#location}} | {{location}}{{/location}}</div>
+            <div class="exp-meta">{{#startDate}}<span class="exp-start">{{startDate}}</span>{{/startDate}}{{#endDate}}<span class="exp-end"> - {{endDate}}</span>{{/endDate}}{{#location}}<span class="exp-loc">{{location}}</span>{{/location}}</div>
             {{#description}}
             <div class="exp-sub">{{description}}</div>
             {{/description}}
