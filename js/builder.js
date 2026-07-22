@@ -1656,54 +1656,92 @@ function bindDownload() {
           `;
         });
 
-        // 4. Convert rotated photo-diamond to pure SVG with clipPath (transparent corners, no background box)
+        // 4. Pre-render diamond photo using Canvas 2D API (exact match to preview, no transform issues)
         const photoWrap = pageClone.querySelector(".photo-wrap");
+        const livePhotoDiamond = iframePage?.querySelector(".photo-diamond");
+        const livePhotoImg = livePhotoDiamond?.querySelector("img");
+
         if (photoWrap) {
-          const photoImg = photoWrap.querySelector("img");
-          const placeholder = photoWrap.querySelector(".photo-diamond-ph");
+          try {
+            photoWrap.style.background = "transparent";
+            photoWrap.style.backgroundColor = "transparent";
 
-          // Force no background on the wrap so no white/grey box shows
-          photoWrap.style.background = "none";
-          photoWrap.style.backgroundColor = "transparent";
+            const SIZE = 256; // High-res canvas
+            const canvas = document.createElement("canvas");
+            canvas.width = SIZE;
+            canvas.height = SIZE;
+            const ctx = canvas.getContext("2d");
 
-          if (photoImg) {
-            const uid = "dc" + Date.now();
-            photoWrap.innerHTML = `
-              <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"
-                style="width:48mm; height:48mm; display:block; overflow:hidden; background:transparent;">
-                <defs>
-                  <clipPath id="${uid}">
-                    <polygon points="24,0.6 47.4,24 24,47.4 0.6,24" />
-                  </clipPath>
-                </defs>
-                <image href="${photoImg.getAttribute("src")}"
-                  x="0" y="0" width="48" height="48"
-                  clip-path="url(#${uid})"
-                  preserveAspectRatio="xMidYMid slice" />
-                <polygon points="24,0.6 47.4,24 24,47.4 0.6,24"
-                  style="fill:none; stroke:#1C1C1C; stroke-width:1.2;" />
-              </svg>
-            `;
-          } else if (placeholder) {
-            const initials = placeholder.querySelector("span")?.textContent || "";
-            const uid2 = "dp" + Date.now();
-            photoWrap.innerHTML = `
-              <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"
-                style="width:48mm; height:48mm; display:block; overflow:hidden; background:transparent;">
-                <defs>
-                  <clipPath id="${uid2}">
-                    <polygon points="24,0.6 47.4,24 24,47.4 0.6,24" />
-                  </clipPath>
-                </defs>
-                <rect x="0" y="0" width="48" height="48" fill="#999" clip-path="url(#${uid2})" />
-                <text x="24" y="24"
-                  font-family="'Oswald', sans-serif" font-size="12" font-weight="700"
-                  fill="#fff" text-anchor="middle" dominant-baseline="central"
-                  clip-path="url(#${uid2})">${initials}</text>
-                <polygon points="24,0.6 47.4,24 24,47.4 0.6,24"
-                  style="fill:none; stroke:#1C1C1C; stroke-width:1.2;" />
-              </svg>
-            `;
+            if (livePhotoImg && livePhotoImg.getAttribute("src")) {
+              await new Promise((resolve) => {
+                const img = new Image();
+                img.crossOrigin = "anonymous";
+                img.onload = () => {
+                  // Clip to diamond shape
+                  ctx.beginPath();
+                  ctx.moveTo(SIZE / 2, 0);
+                  ctx.lineTo(SIZE, SIZE / 2);
+                  ctx.lineTo(SIZE / 2, SIZE);
+                  ctx.lineTo(0, SIZE / 2);
+                  ctx.closePath();
+                  ctx.clip();
+
+                  // Cover-fill the image (like object-fit: cover)
+                  const scale = Math.max(SIZE / img.naturalWidth, SIZE / img.naturalHeight);
+                  const w = img.naturalWidth * scale;
+                  const h = img.naturalHeight * scale;
+                  ctx.drawImage(img, (SIZE - w) / 2, (SIZE - h) / 2, w, h);
+
+                  resolve();
+                };
+                img.onerror = resolve;
+                img.src = livePhotoImg.getAttribute("src");
+              });
+            } else {
+              // Placeholder initials
+              const placeholderSpan = livePhotoDiamond?.querySelector(".photo-diamond-ph span");
+              const initials = placeholderSpan?.textContent || "";
+
+              ctx.beginPath();
+              ctx.moveTo(SIZE / 2, 0);
+              ctx.lineTo(SIZE, SIZE / 2);
+              ctx.lineTo(SIZE / 2, SIZE);
+              ctx.lineTo(0, SIZE / 2);
+              ctx.closePath();
+              ctx.clip();
+
+              const grad = ctx.createLinearGradient(0, 0, SIZE, SIZE);
+              grad.addColorStop(0, "#cccccc");
+              grad.addColorStop(1, "#999999");
+              ctx.fillStyle = grad;
+              ctx.fillRect(0, 0, SIZE, SIZE);
+
+              if (initials) {
+                ctx.fillStyle = "#ffffff";
+                ctx.font = `bold ${Math.round(SIZE * 0.35)}px Oswald, sans-serif`;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(initials, SIZE / 2, SIZE / 2);
+              }
+            }
+
+            // Draw the black diamond border on top
+            ctx.restore?.();
+            const borderCtx = canvas.getContext("2d");
+            borderCtx.beginPath();
+            borderCtx.moveTo(SIZE / 2, 2);
+            borderCtx.lineTo(SIZE - 2, SIZE / 2);
+            borderCtx.lineTo(SIZE / 2, SIZE - 2);
+            borderCtx.lineTo(2, SIZE / 2);
+            borderCtx.closePath();
+            borderCtx.strokeStyle = "#1C1C1C";
+            borderCtx.lineWidth = 4;
+            borderCtx.stroke();
+
+            const dataUrl = canvas.toDataURL("image/png");
+            photoWrap.innerHTML = `<img src="${dataUrl}" style="width:48mm; height:48mm; display:block; background:transparent;" alt="Profile" />`;
+          } catch (e) {
+            console.warn("[CV Maker] Photo diamond canvas render failed:", e);
           }
         }
       }
